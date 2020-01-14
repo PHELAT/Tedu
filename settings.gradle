@@ -1,0 +1,2 @@
+include ':mobile'
+rootProject.name='Tedu'
