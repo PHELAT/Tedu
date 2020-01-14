@@ -2,13 +2,13 @@ subprojects {
     afterEvaluate { project ->
         if (project.getPlugins().hasPlugin('com.android.library')) {
             android {
-                compileSdkVersion 29
-                buildToolsVersion "29.0.2"
+                compileSdkVersion build.compileSdkVersion
+                buildToolsVersion build.buildToolsVersion
                 defaultConfig {
-                    minSdkVersion 17
-                    targetSdkVersion 29
-                    versionCode 1
-                    versionName "1.0"
+                    minSdkVersion build.minSdkVersion
+                    targetSdkVersion build.targetSdkVersion
+                    versionCode app.versionCode
+                    versionName app.versionName
                     consumerProguardFiles 'consumer-rules.pro'
                 }
                 buildTypes {
