@@ -17,6 +17,8 @@ allprojects {
     }
 }
 
+apply from: "$rootDir/buildScript/androidLibraryModule.gradle"
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
