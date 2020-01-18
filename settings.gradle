@@ -1,5 +1,11 @@
+// Platform Modules
 include ':mobile'
+// Feature Modules
 include ':feature:todolist'
+// Common Modules
 include ':common:ui-view',
         ':common:designsystem'
+// Library Modules
+include ':library:translation'
+
 rootProject.name='Tedu'
