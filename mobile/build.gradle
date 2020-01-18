@@ -36,5 +36,6 @@ dependencies {
 
     implementation project(":feature:todolist")
     implementation project(":common:designsystem")
+    implementation project(":library:translation")
 
 }
