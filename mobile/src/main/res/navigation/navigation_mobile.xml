@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_mobile"
+    app:startDestination="@id/rootFragment">
+
+    <include app:graph="@navigation/navigation_todolist" />
+
+    <fragment
+        android:id="@+id/rootFragment"
+        android:name="com.phelat.tedu.RootFragment" />
+
+    <action
+        android:id="@+id/to_todoList"
+        app:destination="@id/navigation_todolist" />
+
+</navigation>
