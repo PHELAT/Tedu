@@ -32,6 +32,8 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$library.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$library.navigation"
 
+    implementation "com.google.android.material:material:$library.material"
+
     implementation project(":feature:todolist")
 
 }
