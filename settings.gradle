@@ -1,3 +1,4 @@
 include ':mobile'
 include ':feature:todolist'
+include ':common:ui-view'
 rootProject.name='Tedu'
