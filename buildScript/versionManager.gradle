@@ -14,7 +14,8 @@ ext {
 
     library = [
             kotlin: '1.3.61',
-            appcompat: '1.1.0'
+            appcompat: '1.1.0',
+            navigation: '2.1.0'
     ]
 
 }
