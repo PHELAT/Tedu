@@ -8,4 +8,9 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$library.kotlin"
 
+    implementation "androidx.navigation:navigation-fragment-ktx:$library.navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$library.navigation"
+
+    implementation "com.google.android.material:material:$library.material"
+
 }
