@@ -17,8 +17,10 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_alignParentBottom="true"
-        app:backgroundTint="#F1F1F1"
+        app:backgroundTint="@color/surface_color_1"
         app:elevation="4dp"
+        app:itemIconTint="@color/selector_bottom_navigation_item"
+        app:labelVisibilityMode="unlabeled"
         app:menu="@menu/menu_bottom_navigation" />
 
 </RelativeLayout>
