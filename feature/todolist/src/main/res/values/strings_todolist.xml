@@ -2,5 +2,6 @@
 <resources>
 
     <string name="todolist_feature_title_name">Todos</string>
+    <string name="todolist_add_todo_text">Add todo…</string>
 
 </resources>

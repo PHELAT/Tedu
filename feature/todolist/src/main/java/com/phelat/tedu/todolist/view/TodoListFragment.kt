@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.phelat.tedu.todolist.R
+import kotlinx.android.synthetic.main.fragment_todolist.addTodoButton
 import kotlinx.android.synthetic.main.fragment_todolist.todoListRecycler
 
 class TodoListFragment : Fragment() {
@@ -24,6 +26,9 @@ class TodoListFragment : Fragment() {
         with(todoListRecycler) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = TodoListAdapter(mutableListOf("Do this", "And that"))
+        }
+        addTodoButton.setOnClickListener {
+            findNavController().navigate(R.id.navigation_addtodo)
         }
     }
 
