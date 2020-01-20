@@ -1,7 +1,8 @@
 // Platform Modules
 include ':mobile'
 // Feature Modules
-include ':feature:todolist'
+include ':feature:todolist',
+        ':feature:addtodo'
 // Common Modules
 include ':common:ui-view',
         ':common:designsystem'
