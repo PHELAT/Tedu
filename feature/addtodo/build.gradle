@@ -10,4 +10,6 @@ dependencies {
 
     implementation "androidx.fragment:fragment-ktx:$library.fragment"
 
+    implementation "com.google.android.material:material:$library.material"
+
 }
