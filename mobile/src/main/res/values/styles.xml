@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppThemeBase" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/surface_color_0</item>
         <item name="colorPrimaryDark">@color/surface_color_0</item>
         <item name="colorAccent">@color/brand_primary</item>
