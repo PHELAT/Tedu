@@ -5,7 +5,8 @@ include ':feature:todolist',
         ':feature:addtodo'
 // Common Modules
 include ':common:ui-view',
-        ':common:designsystem'
+        ':common:designsystem',
+        ':common:todo'
 // Library Modules
 include ':library:translation'
 

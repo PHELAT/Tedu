@@ -15,5 +15,6 @@ dependencies {
 
     implementation project(":common:designsystem")
     implementation project(":common:ui-view")
+    implementation project(":common:todo")
 
 }
