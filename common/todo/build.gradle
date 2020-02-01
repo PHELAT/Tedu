@@ -1,10 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation "androidx.room:room-runtime:$library.room"
+    implementation "androidx.room:room-ktx:$library.room"
+    kapt "androidx.room:room-compiler:$library.room"
 
 }
