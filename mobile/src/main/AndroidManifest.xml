@@ -4,6 +4,7 @@
     package="com.phelat.tedu">
 
     <application
+        android:name=".Tedu"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
