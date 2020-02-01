@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -39,6 +40,11 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$library.navigation"
 
     implementation "com.google.android.material:material:$library.material"
+
+    implementation "com.google.dagger:dagger:$library.dagger"
+    kapt "com.google.dagger:dagger-compiler:$library.dagger"
+    implementation "com.google.dagger:dagger-android:$library.dagger"
+    kapt "com.google.dagger:dagger-android-processor:$library.dagger"
 
     implementation project(":feature:addtodo")
     implementation project(":feature:todolist")
