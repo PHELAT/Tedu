@@ -8,5 +8,5 @@ import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
 interface TodoEntityDao {
 
     @Insert(entity = TodoDatabaseEntity::class)
-    fun addTodo(todo: TodoDatabaseEntity)
+    suspend fun addTodo(todo: TodoDatabaseEntity): Long
 }
