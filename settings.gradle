@@ -8,6 +8,7 @@ include ':common:ui-view',
         ':common:designsystem',
         ':common:todo'
 // Library Modules
-include ':library:translation'
+include ':library:translation',
+        ':library:datasource'
 
 rootProject.name='Tedu'

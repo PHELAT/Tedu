@@ -12,4 +12,6 @@ dependencies {
     implementation "androidx.room:room-ktx:$library.room"
     kapt "androidx.room:room-compiler:$library.room"
 
+    implementation project(":library:datasource")
+
 }
