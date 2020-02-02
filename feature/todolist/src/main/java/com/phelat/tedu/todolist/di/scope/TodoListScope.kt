@@ -1,7 +1,7 @@
-package com.phelat.tedu.di.scope
+package com.phelat.tedu.todolist.di.scope
 
 import javax.inject.Scope
 
 @Scope
 @Retention(AnnotationRetention.RUNTIME)
-annotation class ApplicationScope
+annotation class TodoListScope

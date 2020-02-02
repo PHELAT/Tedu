@@ -9,11 +9,13 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class TodoDataSource(private val todoEntityDao: TodoEntityDao) : Writable<TodoEntity> {
+class TodoDataSource(
+    private val todoEntityDao: TodoEntityDao
+) : Writable<TodoEntity> {
 
     override fun write(input: TodoEntity) {
         val todoDatabaseEntity = TodoDatabaseEntity(
-            todoId = input.todoId,
+            todoId = input.todoId.takeIf { it > -1 },
             todo = input.todo
         )
         GlobalScope.launch {
