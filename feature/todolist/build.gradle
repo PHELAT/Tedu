@@ -22,6 +22,6 @@ dependencies {
     implementation project(":common:designsystem")
     implementation project(":common:ui-view")
     implementation project(":common:todo")
-    implementation project(":library:dagger")
+    implementation project(":common:daggerandroid")
 
 }

@@ -1,29 +1,26 @@
 package com.phelat.tedu
 
+import com.phelat.tedu.addtodo.di.component.AddTodoComponent
 import com.phelat.tedu.addtodo.di.component.DaggerAddTodoComponent
-import com.phelat.tedu.di.component.DaggerTeduComponent
+import com.phelat.tedu.daggerandroid.DaggerAndroidApplication
 import com.phelat.tedu.todo.di.component.DaggerTodoComponent
 import com.phelat.tedu.todolist.di.component.DaggerTodoListComponent
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
-import dagger.android.HasAndroidInjector
+import com.phelat.tedu.todolist.di.component.TodoListComponent
 
-class Tedu : DaggerApplication(), HasAndroidInjector {
+class Tedu : DaggerAndroidApplication() {
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+    override fun onCreate() {
+        super.onCreate()
         val todoComponent = DaggerTodoComponent.builder()
             .context(this)
             .build()
-        val todoListComponent = DaggerTodoListComponent.builder()
+        DaggerTodoListComponent.builder()
             .todoComponent(todoComponent)
             .build()
-        val addTodoComponent = DaggerAddTodoComponent.builder()
+            .also { dispatchers += TodoListComponent::class to it.dispatcher() }
+        DaggerAddTodoComponent.builder()
             .todoComponent(todoComponent)
             .build()
-        return DaggerTeduComponent.builder()
-            .addTodoComponent(addTodoComponent)
-            .todoListComponent(todoListComponent)
-            .build()
+            .also { dispatchers += AddTodoComponent::class to it.dispatcher() }
     }
-
 }

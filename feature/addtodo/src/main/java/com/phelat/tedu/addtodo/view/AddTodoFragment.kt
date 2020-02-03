@@ -7,9 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.phelat.tedu.addtodo.R
+import com.phelat.tedu.addtodo.di.component.AddTodoComponent
+import com.phelat.tedu.daggerandroid.Injector
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.todo.entity.TodoEntity
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_addtodo.saveTodo
 import kotlinx.android.synthetic.main.fragment_addtodo.todoInput
 import javax.inject.Inject
@@ -20,7 +21,7 @@ class AddTodoFragment : Fragment() {
     lateinit var dataSource: Writable<TodoEntity>
 
     override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
+        Injector.inject(AddTodoComponent::class,this)
         super.onAttach(context)
     }
 

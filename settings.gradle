@@ -6,7 +6,8 @@ include ':feature:todolist',
 // Common Modules
 include ':common:ui-view',
         ':common:designsystem',
-        ':common:todo'
+        ':common:todo',
+        ':common:daggerandroid'
 // Library Modules
 include ':library:translation',
         ':library:datasource',

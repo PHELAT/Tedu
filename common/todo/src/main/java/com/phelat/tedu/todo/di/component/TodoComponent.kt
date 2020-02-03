@@ -18,8 +18,10 @@ interface TodoComponent {
 
     @Component.Builder
     interface Builder {
+
         @BindsInstance
         fun context(context: Context): Builder
+
         fun build(): TodoComponent
     }
 
