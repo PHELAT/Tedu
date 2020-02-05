@@ -2,6 +2,19 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
+android {
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        "room.schemaLocation": "$projectDir/schemas".toString(),
+                        "room.incremental"   : "true"
+                ]
+            }
+        }
+    }
+}
+
 dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
