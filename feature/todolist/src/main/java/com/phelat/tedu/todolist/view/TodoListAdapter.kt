@@ -3,10 +3,11 @@ package com.phelat.tedu.todolist.view
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todolist.R
 
 class TodoListAdapter(
-    private val todos: MutableList<String>
+    private val todos: List<TodoEntity>
 ) : RecyclerView.Adapter<TodoListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoListViewHolder {

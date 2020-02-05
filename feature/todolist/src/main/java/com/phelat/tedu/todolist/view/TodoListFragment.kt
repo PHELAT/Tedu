@@ -9,12 +9,24 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.phelat.tedu.daggerandroid.Injector
+import com.phelat.tedu.datasource.Readable
+import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todolist.R
 import com.phelat.tedu.todolist.di.component.TodoListComponent
 import kotlinx.android.synthetic.main.fragment_todolist.addTodoButton
 import kotlinx.android.synthetic.main.fragment_todolist.todoListRecycler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class TodoListFragment : Fragment() {
+
+    @Inject
+    lateinit var todoReadableDataSource: Readable<Flow<List<TodoEntity>>>
 
     override fun onAttach(context: Context) {
         Injector.inject(TodoListComponent::class, this)
@@ -33,7 +45,16 @@ class TodoListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         with(todoListRecycler) {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = TodoListAdapter(mutableListOf("Do this", "And that"))
+            GlobalScope.launch {
+                withContext(Dispatchers.IO) {
+                    todoReadableDataSource.read()
+                        .collect {
+                            withContext(Dispatchers.Main) {
+                                adapter = TodoListAdapter(it)
+                            }
+                        }
+                }
+            }
         }
         addTodoButton.setOnClickListener {
             findNavController().navigate(R.id.navigation_addtodo)
