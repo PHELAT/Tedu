@@ -4,16 +4,13 @@ import android.content.Context
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.todo.di.module.TodoBindingModule
 import com.phelat.tedu.todo.di.module.TodoDatabaseModule
+import com.phelat.tedu.todo.di.scope.TodoScope
 import com.phelat.tedu.todo.entity.TodoEntity
 import dagger.BindsInstance
 import dagger.Component
 
-@Component(
-    modules = [
-        TodoBindingModule::class,
-        TodoDatabaseModule::class
-    ]
-)
+@TodoScope
+@Component(modules = [TodoBindingModule::class, TodoDatabaseModule::class])
 interface TodoComponent {
 
     @Component.Builder
