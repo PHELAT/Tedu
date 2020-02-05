@@ -22,5 +22,5 @@ interface TodoComponent {
         fun build(): TodoComponent
     }
 
-    fun writable(): Writable<TodoEntity>
+    fun todoWritableDataSource(): Writable<TodoEntity>
 }
