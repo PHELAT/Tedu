@@ -2,12 +2,13 @@ package com.phelat.tedu.todolist.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todolist.R
 
 class TodoListAdapter(
-    private val todos: List<TodoEntity>
+    private val todos: MutableList<TodoEntity> = mutableListOf()
 ) : RecyclerView.Adapter<TodoListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoListViewHolder {
@@ -23,6 +24,14 @@ class TodoListAdapter(
 
     override fun getItemCount(): Int {
         return todos.size
+    }
+
+    fun update(newTodos: List<TodoEntity>) {
+        val todoListDiff = TodoListDiff(newTodos, todos)
+        val diffResult = DiffUtil.calculateDiff(todoListDiff)
+        todos.clear()
+        todos.addAll(newTodos)
+        diffResult.dispatchUpdatesTo(this)
     }
 
 }

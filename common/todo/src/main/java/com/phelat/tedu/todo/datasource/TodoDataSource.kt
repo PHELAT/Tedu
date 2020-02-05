@@ -35,7 +35,7 @@ class TodoDataSource @Inject constructor(
         return todoEntityDao.selectAllTodos()
             .map { todoDatabaseEntities ->
                 todoDatabaseEntities.map {
-                    TodoEntity(it.todoId ?: -1, it.todo)
+                    TodoEntity(it.todo, it.todoId ?: -1)
                 }
             }
     }

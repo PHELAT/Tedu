@@ -11,6 +11,7 @@ include ':common:ui-view',
 // Library Modules
 include ':library:translation',
         ':library:datasource',
-        ':library:dagger'
+        ':library:dagger',
+        ':library:lifecycle'
 
 rootProject.name='Tedu'

@@ -1,6 +1,6 @@
 package com.phelat.tedu.todo.entity
 
 data class TodoEntity(
-    val todoId: Int = -1,
-    val todo: String
+    val todo: String,
+    val todoId: Int = -1
 )
