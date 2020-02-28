@@ -13,7 +13,7 @@ interface TodoEntityDao {
     @Insert(entity = TodoDatabaseEntity::class)
     suspend fun insertTodo(todo: TodoDatabaseEntity): Long
 
-    @Query("SELECT * FROM todo_table")
+    @Query("SELECT * FROM todo_table ORDER BY todoId DESC")
     fun selectAllTodos(): Flow<List<TodoDatabaseEntity>>
 
     @Update(entity = TodoDatabaseEntity::class)

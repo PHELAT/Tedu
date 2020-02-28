@@ -22,10 +22,12 @@ class TodoListViewModel(
         .flowOn(Dispatchers.IO)
         .asLiveData()
 
-    fun onTodoClick(todoEntity: TodoEntity) = viewModelScope.launch {
-        val updatedTodo = todoEntity.copy(isDone = todoEntity.isDone.not())
-        delay(UPDATE_DELAY_IN_MILLIS)
-        todoDataSourceUpdatable.update(updatedTodo)
+    fun onTodoClick(todoEntity: TodoEntity) {
+        viewModelScope.launch {
+            val updatedTodo = todoEntity.copy(isDone = todoEntity.isDone.not())
+            delay(UPDATE_DELAY_IN_MILLIS)
+            todoDataSourceUpdatable.update(updatedTodo)
+        }
     }
 
     companion object {
