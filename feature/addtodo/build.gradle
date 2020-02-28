@@ -11,6 +11,9 @@ dependencies {
 
     implementation "androidx.fragment:fragment-ktx:$library.fragment"
 
+    implementation "androidx.navigation:navigation-fragment-ktx:$library.navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$library.navigation"
+
     implementation "com.google.android.material:material:$library.material"
 
     implementation "com.google.dagger:dagger:$library.dagger"
@@ -25,5 +28,6 @@ dependencies {
     implementation project(":common:designsystem")
     implementation project(":common:todo")
     implementation project(":common:daggerandroid")
+    implementation project(":library:lifecycle")
 
 }
