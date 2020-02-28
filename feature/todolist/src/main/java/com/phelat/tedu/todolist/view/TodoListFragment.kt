@@ -31,7 +31,7 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val todoAdapter = TodoListAdapter()
+        val todoAdapter = TodoListAdapter(onClickListener = todoListViewModel::onTodoClick)
         with(todoListRecycler) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = todoAdapter

@@ -2,6 +2,7 @@ package com.phelat.tedu.todo.di.component
 
 import android.content.Context
 import com.phelat.tedu.datasource.Readable
+import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.todo.di.module.TodoBindingModule
 import com.phelat.tedu.todo.di.module.TodoDatabaseModule
@@ -27,4 +28,6 @@ interface TodoComponent {
     fun todoWritableDataSource(): Writable<TodoEntity>
 
     fun todoReadableDataSource(): Readable<Flow<List<TodoEntity>>>
+
+    fun todoUpdatableDataSource(): Updatable<TodoEntity>
 }

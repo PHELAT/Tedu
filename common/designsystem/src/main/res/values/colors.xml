@@ -46,5 +46,6 @@
 
     <color name="transparent">#00000000</color>
     <color name="ripple_color">#39000000</color>
+    <color name="ripple_draw_color">#8F000000</color>
 
 </resources>

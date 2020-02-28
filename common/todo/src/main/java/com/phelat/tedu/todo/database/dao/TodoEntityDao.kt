@@ -3,6 +3,7 @@ package com.phelat.tedu.todo.database.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -14,4 +15,7 @@ interface TodoEntityDao {
 
     @Query("SELECT * FROM todo_table")
     fun selectAllTodos(): Flow<List<TodoDatabaseEntity>>
+
+    @Update(entity = TodoDatabaseEntity::class)
+    suspend fun updateTodo(todo: TodoDatabaseEntity): Int
 }

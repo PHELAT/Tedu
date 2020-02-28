@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class TodoDatabaseEntity(
     @PrimaryKey(autoGenerate = true)
     val todoId: Int?,
-    val todo: String
+    val todo: String,
+    val isDone: Boolean
 )

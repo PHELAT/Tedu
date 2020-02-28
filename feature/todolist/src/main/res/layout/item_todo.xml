@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/selector_click_rectangle"
+    android:clickable="true"
+    android:focusable="true"
     android:padding="4dp">
 
     <androidx.appcompat.widget.AppCompatTextView

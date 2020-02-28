@@ -1,6 +1,7 @@
 package com.phelat.tedu.todo.di.module
 
 import com.phelat.tedu.datasource.Readable
+import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.todo.datasource.TodoDataSource
 import com.phelat.tedu.todo.di.scope.TodoScope
@@ -19,4 +20,8 @@ interface TodoBindingModule {
     @TodoScope
     @Binds
     fun bindTodoDataSourceToReadable(todoDataSource: TodoDataSource): Readable<Flow<List<TodoEntity>>>
+
+    @TodoScope
+    @Binds
+    fun bindTodoDataSourceToUpdatable(todoDataSource: TodoDataSource): Updatable<TodoEntity>
 }

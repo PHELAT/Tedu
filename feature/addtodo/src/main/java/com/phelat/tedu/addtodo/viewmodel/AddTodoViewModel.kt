@@ -7,6 +7,6 @@ import com.phelat.tedu.todo.entity.TodoEntity
 class AddTodoViewModel(private val todoDataSourceWritable: Writable<TodoEntity>) : ViewModel() {
 
     fun onSaveTodoClicked(todo: String) {
-        todoDataSourceWritable.write(TodoEntity(todo))
+        todoDataSourceWritable.write(TodoEntity(todo = todo))
     }
 }

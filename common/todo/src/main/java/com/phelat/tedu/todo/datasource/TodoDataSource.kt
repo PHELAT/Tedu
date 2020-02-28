@@ -1,6 +1,7 @@
 package com.phelat.tedu.todo.datasource
 
 import com.phelat.tedu.datasource.Readable
+import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.todo.database.dao.TodoEntityDao
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
@@ -17,12 +18,15 @@ import javax.inject.Inject
 @TodoScope
 class TodoDataSource @Inject constructor(
     private val todoEntityDao: TodoEntityDao
-) : Writable<TodoEntity>, Readable<@JvmSuppressWildcards Flow<List<TodoEntity>>> {
+) : Writable<TodoEntity>,
+    Readable<@JvmSuppressWildcards Flow<List<TodoEntity>>>,
+    Updatable<TodoEntity> {
 
     override fun write(input: TodoEntity) {
         val todoDatabaseEntity = TodoDatabaseEntity(
             todoId = input.todoId.takeIf { it > -1 },
-            todo = input.todo
+            todo = input.todo,
+            isDone = input.isDone
         )
         GlobalScope.launch {
             withContext(Dispatchers.IO) {
@@ -35,8 +39,21 @@ class TodoDataSource @Inject constructor(
         return todoEntityDao.selectAllTodos()
             .map { todoDatabaseEntities ->
                 todoDatabaseEntities.map {
-                    TodoEntity(it.todo, it.todoId ?: -1)
+                    TodoEntity(todoId = it.todoId ?: -1, todo = it.todo, isDone = it.isDone)
                 }
             }
+    }
+
+    override fun update(input: TodoEntity) {
+        val todoDatabaseEntity = TodoDatabaseEntity(
+            todoId = input.todoId.takeIf { it > -1 },
+            todo = input.todo,
+            isDone = input.isDone
+        )
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                todoEntityDao.updateTodo(todoDatabaseEntity)
+            }
+        }
     }
 }
