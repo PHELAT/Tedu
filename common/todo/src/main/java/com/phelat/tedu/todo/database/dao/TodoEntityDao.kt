@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface TodoEntityDao {
 
     @Insert(entity = TodoDatabaseEntity::class)
-    suspend fun addTodo(todo: TodoDatabaseEntity): Long
+    suspend fun insertTodo(todo: TodoDatabaseEntity): Long
 
     @Query("SELECT * FROM todo_table")
     fun selectAllTodos(): Flow<List<TodoDatabaseEntity>>

@@ -30,7 +30,7 @@ class TodoDataSource @Inject constructor(
         )
         GlobalScope.launch {
             withContext(Dispatchers.IO) {
-                todoEntityDao.addTodo(todoDatabaseEntity)
+                todoEntityDao.insertTodo(todoDatabaseEntity)
             }
         }
     }
