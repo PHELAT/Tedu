@@ -32,6 +32,7 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
         saveTodo.setOnClickListener {
             val todo = todoInput.text.toString()
             addTodoViewModel.onSaveTodoClicked(todo)
+            findNavController().navigateUp()
         }
     }
 
