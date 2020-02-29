@@ -31,14 +31,17 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        addTodoButton.setOnClickListener {
+            findNavController().navigate(R.id.navigation_addtodo)
+        }
         val todoAdapter = TodoListAdapter(onClickListener = todoListViewModel::onTodoClick)
         with(todoListRecycler) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = todoAdapter
         }
-        todoListViewModel.todoObservable.observe(viewLifecycleOwner, todoAdapter::update)
-        addTodoButton.setOnClickListener {
-            findNavController().navigate(R.id.navigation_addtodo)
+        todoListViewModel.todoObservable.observe(viewLifecycleOwner) { todos ->
+            todoListRecycler.scrollToPosition(0)
+            todoAdapter.update(todos)
         }
     }
 }

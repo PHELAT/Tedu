@@ -10,6 +10,7 @@ import com.phelat.tedu.todo.entity.TodoEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
@@ -19,6 +20,7 @@ class TodoListViewModel(
 ) : ViewModel() {
 
     val todoObservable: LiveData<List<TodoEntity>> = todoDataSourceReadable.read()
+        .debounce(UPDATE_DELAY_IN_MILLIS)
         .flowOn(Dispatchers.IO)
         .asLiveData()
 
