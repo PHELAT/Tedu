@@ -10,4 +10,16 @@ interface Readable<O> {
 
     }
 
+    interface Suspendable<O> {
+
+        suspend fun read(): O
+
+        interface IO<I, O> {
+
+            suspend fun read(input: I): O
+
+        }
+
+    }
+
 }

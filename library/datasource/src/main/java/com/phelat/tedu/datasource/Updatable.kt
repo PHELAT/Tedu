@@ -10,4 +10,16 @@ interface Updatable<I> {
 
     }
 
+    interface Suspendable<I> {
+
+        suspend fun update(input: I)
+
+        interface IO<I, O> {
+
+            suspend fun update(input: I): O
+
+        }
+
+    }
+
 }

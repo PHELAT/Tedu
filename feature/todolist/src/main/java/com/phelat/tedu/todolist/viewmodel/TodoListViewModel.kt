@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class TodoListViewModel(
-    private val todoDataSourceUpdatable: Updatable<TodoEntity>,
+    private val todoDataSourceUpdatable: Updatable.Suspendable<TodoEntity>,
     todoDataSourceReadable: Readable<Flow<List<TodoEntity>>>
 ) : ViewModel() {
 
@@ -23,7 +23,7 @@ class TodoListViewModel(
         .asLiveData()
 
     fun onTodoClick(todoEntity: TodoEntity) {
-        viewModelScope.launch {
+        viewModelScope.launch(context = Dispatchers.IO) {
             val updatedTodo = todoEntity.copy(isDone = todoEntity.isDone.not())
             delay(UPDATE_DELAY_IN_MILLIS)
             todoDataSourceUpdatable.update(updatedTodo)

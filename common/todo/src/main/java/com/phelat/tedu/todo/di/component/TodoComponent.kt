@@ -20,14 +20,15 @@ interface TodoComponent {
     interface Builder {
 
         @BindsInstance
+        // TODO: USE QUALIFIER
         fun context(context: Context): Builder
 
         fun build(): TodoComponent
     }
 
-    fun todoWritableDataSource(): Writable<TodoEntity>
+    fun todoWritableDataSource(): Writable.Suspendable<TodoEntity>
 
     fun todoReadableDataSource(): Readable<Flow<List<TodoEntity>>>
 
-    fun todoUpdatableDataSource(): Updatable<TodoEntity>
+    fun todoUpdatableDataSource(): Updatable.Suspendable<TodoEntity>
 }

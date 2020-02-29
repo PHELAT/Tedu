@@ -16,7 +16,7 @@ class TodoListModule {
     @Provides
     @TodoListSubScope
     fun provideTodoListViewModelFactory(
-        todoDataSourceUpdatable: Updatable<TodoEntity>,
+        todoDataSourceUpdatable: Updatable.Suspendable<TodoEntity>,
         todoDataSourceReadable: Readable<Flow<List<TodoEntity>>>
     ) = viewModelFactory {
         TodoListViewModel(todoDataSourceUpdatable, todoDataSourceReadable)

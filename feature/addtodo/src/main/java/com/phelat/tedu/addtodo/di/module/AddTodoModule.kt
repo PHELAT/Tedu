@@ -14,7 +14,7 @@ class AddTodoModule {
     @Provides
     @AddTodoSubScope
     fun provideAddTodoViewModelFactory(
-        todoWritableDataSource: Writable<TodoEntity>
+        todoWritableDataSource: Writable.Suspendable<TodoEntity>
     ) = viewModelFactory {
         AddTodoViewModel(todoWritableDataSource)
     }

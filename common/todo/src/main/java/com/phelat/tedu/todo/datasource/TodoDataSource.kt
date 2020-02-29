@@ -7,32 +7,25 @@ import com.phelat.tedu.todo.database.dao.TodoEntityDao
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
 import com.phelat.tedu.todo.di.scope.TodoScope
 import com.phelat.tedu.todo.entity.TodoEntity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @TodoScope
 class TodoDataSource @Inject constructor(
     private val todoEntityDao: TodoEntityDao
-) : Writable<TodoEntity>,
+) : Writable.Suspendable<TodoEntity>,
     Readable<@JvmSuppressWildcards Flow<List<TodoEntity>>>,
-    Updatable<TodoEntity> {
+    Updatable.Suspendable<TodoEntity> {
 
-    override fun write(input: TodoEntity) {
+    override suspend fun write(input: TodoEntity) {
+        // TODO: use a mapper class
         val todoDatabaseEntity = TodoDatabaseEntity(
             todoId = input.todoId.takeIf { it > -1 },
             todo = input.todo,
             isDone = input.isDone
         )
-        GlobalScope.launch {
-            withContext(Dispatchers.IO) {
-                todoEntityDao.insertTodo(todoDatabaseEntity)
-            }
-        }
+        todoEntityDao.insertTodo(todoDatabaseEntity)
     }
 
     override fun read(): Flow<List<TodoEntity>> {
@@ -44,16 +37,12 @@ class TodoDataSource @Inject constructor(
             }
     }
 
-    override fun update(input: TodoEntity) {
+    override suspend fun update(input: TodoEntity) {
         val todoDatabaseEntity = TodoDatabaseEntity(
             todoId = input.todoId.takeIf { it > -1 },
             todo = input.todo,
             isDone = input.isDone
         )
-        GlobalScope.launch {
-            withContext(Dispatchers.IO) {
-                todoEntityDao.updateTodo(todoDatabaseEntity)
-            }
-        }
+        todoEntityDao.updateTodo(todoDatabaseEntity)
     }
 }

@@ -10,4 +10,16 @@ interface Writable<I> {
 
     }
 
+    interface Suspendable<I> {
+
+        suspend fun write(input: I)
+
+        interface IO<I, O> {
+
+            suspend fun write(input: I): O
+
+        }
+
+    }
+
 }

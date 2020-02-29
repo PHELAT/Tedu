@@ -15,7 +15,7 @@ interface TodoBindingModule {
 
     @TodoScope
     @Binds
-    fun bindTodoDataSourceToWritable(todoDataSource: TodoDataSource): Writable<TodoEntity>
+    fun bindTodoDataSourceToWritable(todoDataSource: TodoDataSource): Writable.Suspendable<TodoEntity>
 
     @TodoScope
     @Binds
@@ -23,5 +23,5 @@ interface TodoBindingModule {
 
     @TodoScope
     @Binds
-    fun bindTodoDataSourceToUpdatable(todoDataSource: TodoDataSource): Updatable<TodoEntity>
+    fun bindTodoDataSourceToUpdatable(todoDataSource: TodoDataSource): Updatable.Suspendable<TodoEntity>
 }
