@@ -15,7 +15,7 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$library.kotlin"
 
     implementation "androidx.room:room-runtime:$library.room"
     implementation "androidx.room:room-ktx:$library.room"

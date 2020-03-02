@@ -5,7 +5,7 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$library.kotlin"
 
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:$library.lifecycle"
     api "androidx.lifecycle:lifecycle-livedata-ktx:$library.lifecycle"
