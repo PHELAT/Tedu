@@ -12,6 +12,7 @@ include ':common:ui-view',
 include ':library:translation',
         ':library:datasource',
         ':library:dagger',
-        ':library:lifecycle'
+        ':library:lifecycle',
+        ':library:coroutines'
 
 rootProject.name='Tedu'
