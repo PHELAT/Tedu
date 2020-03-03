@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.todo.entity.TodoEntity
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class TodoListViewModel(
+    private val dispatcher: Dispatcher,
     private val todoDataSourceUpdatable: Updatable.Suspendable<TodoEntity>,
     todoDataSourceReadable: Readable<Flow<List<TodoEntity>>>
 ) : ViewModel() {
@@ -25,7 +27,7 @@ class TodoListViewModel(
         .asLiveData()
 
     fun onTodoClick(todoEntity: TodoEntity) {
-        viewModelScope.launch(context = Dispatchers.IO) {
+        viewModelScope.launch(context = dispatcher.iO) {
             val updatedTodo = todoEntity.copy(isDone = todoEntity.isDone.not())
             delay(UPDATE_DELAY_IN_MILLIS)
             todoDataSourceUpdatable.update(updatedTodo)

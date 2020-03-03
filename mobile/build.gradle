@@ -52,6 +52,8 @@ dependencies {
     implementation project(":common:ui-view")
     implementation project(":common:daggerandroid")
     implementation project(":library:translation")
+    implementation project(":library:dagger")
+    implementation project(":library:coroutines")
 
     compileOnly project(":common:todo")
 

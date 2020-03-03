@@ -24,5 +24,6 @@ dependencies {
     implementation project(":common:todo")
     implementation project(":common:daggerandroid")
     implementation project(":library:lifecycle")
+    implementation project(":library:coroutines")
 
 }

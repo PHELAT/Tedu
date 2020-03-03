@@ -1,5 +1,6 @@
 package com.phelat.tedu.todolist.di.module
 
+import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.lifecycle.viewModelFactory
@@ -16,9 +17,10 @@ class TodoListModule {
     @Provides
     @TodoListSubScope
     fun provideTodoListViewModelFactory(
+        dispatcher: Dispatcher,
         todoDataSourceUpdatable: Updatable.Suspendable<TodoEntity>,
         todoDataSourceReadable: Readable<Flow<List<TodoEntity>>>
     ) = viewModelFactory {
-        TodoListViewModel(todoDataSourceUpdatable, todoDataSourceReadable)
+        TodoListViewModel(dispatcher, todoDataSourceUpdatable, todoDataSourceReadable)
     }
 }
