@@ -1,5 +1,6 @@
 package com.phelat.tedu.todo.di.module
 
+import com.phelat.tedu.datasource.Deletable
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
@@ -27,6 +28,10 @@ internal interface TodoBindingModule {
     @TodoScope
     @Binds
     fun bindTodoDataSourceToUpdatable(todoDataSource: TodoDataSource): Updatable.Suspendable<TodoEntity>
+
+    @TodoScope
+    @Binds
+    fun bindTodoDataSourceToDeletable(todoDataSource: TodoDataSource): Deletable.Suspendable<TodoEntity>
 
     @TodoScope
     @Binds

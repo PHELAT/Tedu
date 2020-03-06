@@ -1,6 +1,7 @@
 package com.phelat.tedu.todo.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -18,4 +19,7 @@ internal interface TodoEntityDao {
 
     @Update(entity = TodoDatabaseEntity::class)
     suspend fun updateTodo(todo: TodoDatabaseEntity): Int
+
+    @Delete(entity = TodoDatabaseEntity::class)
+    suspend fun deleteTodo(todo: TodoDatabaseEntity): Int
 }

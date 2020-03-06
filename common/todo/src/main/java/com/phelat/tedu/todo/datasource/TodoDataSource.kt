@@ -1,5 +1,6 @@
 package com.phelat.tedu.todo.datasource
 
+import com.phelat.tedu.datasource.Deletable
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
@@ -18,7 +19,8 @@ internal class TodoDataSource @Inject constructor(
     private val mapper: Mapper<TodoDatabaseEntity, TodoEntity>
 ) : Writable.Suspendable<TodoEntity>,
     Readable<@JvmSuppressWildcards Flow<List<TodoEntity>>>,
-    Updatable.Suspendable<TodoEntity> {
+    Updatable.Suspendable<TodoEntity>,
+    Deletable.Suspendable<TodoEntity> {
 
     override suspend fun write(input: TodoEntity) {
         val todoDatabaseEntity = mapper.mapSecondToFirst(input)
@@ -37,5 +39,10 @@ internal class TodoDataSource @Inject constructor(
     override suspend fun update(input: TodoEntity) {
         val todoDatabaseEntity = mapper.mapSecondToFirst(input)
         todoEntityDao.updateTodo(todoDatabaseEntity)
+    }
+
+    override suspend fun delete(input: TodoEntity) {
+        val todoDatabaseEntity = mapper.mapSecondToFirst(input)
+        todoEntityDao.deleteTodo(todoDatabaseEntity)
     }
 }

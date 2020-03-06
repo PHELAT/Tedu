@@ -11,7 +11,11 @@ class TodoListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val todoTitle: AppCompatTextView = view.todoTitle
 
-    fun bind(todoEntity: TodoEntity, onClickListener: (entity: TodoEntity) -> Unit) {
+    fun bind(
+        todoEntity: TodoEntity,
+        onClickListener: (entity: TodoEntity) -> Unit,
+        onLongClickListener: (entity: TodoEntity) -> Unit
+    ) {
         todoTitle.text = todoEntity.todo
         if (todoEntity.isDone) {
             todoTitle.paintFlags = todoTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
@@ -21,6 +25,9 @@ class TodoListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         itemView.setOnClickListener {
             onClickListener.invoke(todoEntity)
         }
+        itemView.setOnLongClickListener {
+            onLongClickListener.invoke(todoEntity)
+            true
+        }
     }
-
 }

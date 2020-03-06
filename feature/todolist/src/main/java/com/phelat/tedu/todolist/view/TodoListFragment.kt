@@ -9,12 +9,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.phelat.tedu.daggerandroid.Injector
+import com.phelat.tedu.designsystem.component.view.BottomSheetView
+import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.todolist.R
 import com.phelat.tedu.todolist.di.component.TodoListComponent
 import com.phelat.tedu.todolist.viewmodel.TodoListViewModel
 import kotlinx.android.synthetic.main.fragment_todolist.addTodoButton
 import kotlinx.android.synthetic.main.fragment_todolist.todoListRecycler
+import kotlinx.android.synthetic.main.fragment_todolist.viewRoot
 import javax.inject.Inject
 
 class TodoListFragment : Fragment(R.layout.fragment_todolist) {
@@ -23,6 +27,8 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val todoListViewModel by viewModels<TodoListViewModel> { viewModelFactory }
+
+    private var todoSheet: BottomSheetView? = null
 
     override fun onAttach(context: Context) {
         Injector.inject(TodoListComponent::class, this)
@@ -34,11 +40,48 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
         addTodoButton.setOnClickListener {
             findNavController().navigate(R.id.navigation_addtodo)
         }
-        val todoAdapter = TodoListAdapter(onClickListener = todoListViewModel::onTodoClick)
-        with(todoListRecycler) {
+        val todoAdapter = TodoListAdapter(
+            onClickListener = todoListViewModel::onTodoClick,
+            onLongClickListener = todoListViewModel::onTodoLongClick
+        )
+        todoListRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = todoAdapter
         }
-        todoListViewModel.todoObservable.observe(viewLifecycleOwner, todoAdapter::update)
+        todoListViewModel.apply {
+            todoObservable.observe(viewLifecycleOwner, todoAdapter::update)
+            todoSheetObservable.observe(viewLifecycleOwner, ::observeTodoSheet)
+            dismissTodoSheetObservable.observe(viewLifecycleOwner) { dismissTodoSheet() }
+            todoDeletionObservable.observe(viewLifecycleOwner) { observeTodoDeletion() }
+        }
+    }
+
+    private fun observeTodoDeletion() {
+        Snackbar.make(viewRoot, R.string.todolist_todo_deletion_message, Snackbar.LENGTH_LONG)
+            .setAction(R.string.general_undo_text) {
+                todoListViewModel.onTodoDeletionUndoClick()
+            }
+            .show()
+    }
+
+    private fun observeTodoSheet(items: List<BottomSheetItemEntity>) {
+        todoSheet?.setItems(items)
+            ?.show()
+            ?: run {
+                todoSheet = BottomSheetView(requireContext())
+                observeTodoSheet(items)
+            }
+    }
+
+    private fun dismissTodoSheet() {
+        if (todoSheet?.isShowing == true) {
+            todoSheet?.dismiss()
+            todoSheet = null
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        dismissTodoSheet()
     }
 }

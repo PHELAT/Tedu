@@ -1,27 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:id="@+id/viewRoot"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/addTodoButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/selector_click_rectangle"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="20dp"
-        android:text="@string/todolist_add_todo_text"
-        android:textColor="@color/text_hint_color"
-        android:textSize="@dimen/font_size_title_1" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/todoListRecycler"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_todo" />
+        android:orientation="vertical">
 
-</LinearLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/addTodoButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_click_rectangle"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="20dp"
+            android:text="@string/todolist_add_todo_text"
+            android:textColor="@color/text_hint_color"
+            android:textSize="@dimen/font_size_title_1" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/todoListRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_todo" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

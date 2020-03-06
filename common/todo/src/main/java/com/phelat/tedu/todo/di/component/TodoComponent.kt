@@ -1,6 +1,7 @@
 package com.phelat.tedu.todo.di.component
 
 import android.content.Context
+import com.phelat.tedu.datasource.Deletable
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
@@ -31,4 +32,6 @@ interface TodoComponent {
     fun todoReadableDataSource(): Readable<Flow<List<TodoEntity>>>
 
     fun todoUpdatableDataSource(): Updatable.Suspendable<TodoEntity>
+
+    fun todoDeletableDataSource(): Deletable.Suspendable<TodoEntity>
 }

@@ -3,5 +3,8 @@
 
     <string name="todolist_feature_title_name">Todos</string>
     <string name="todolist_add_todo_text">Add todo…</string>
+    <string name="todolist_todo_sheet_delete">Delete todo forever</string>
+
+    <string name="todolist_todo_deletion_message">Todo deleted successfully</string>
 
 </resources>

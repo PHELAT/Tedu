@@ -10,6 +10,7 @@ import com.phelat.tedu.todolist.R
 
 class TodoListAdapter(
     private val onClickListener: (entity: TodoEntity) -> Unit,
+    private val onLongClickListener: (entity: TodoEntity) -> Unit,
     private val todos: MutableList<TodoEntity> = mutableListOf()
 ) : RecyclerView.Adapter<TodoListViewHolder>() {
 
@@ -21,7 +22,7 @@ class TodoListAdapter(
 
     override fun onBindViewHolder(holder: TodoListViewHolder, position: Int) {
         val todo = todos[position]
-        holder.bind(todo, onClickListener)
+        holder.bind(todo, onClickListener, onLongClickListener)
     }
 
     override fun getItemCount(): Int {
