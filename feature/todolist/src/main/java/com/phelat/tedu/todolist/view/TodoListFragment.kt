@@ -39,9 +39,6 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = todoAdapter
         }
-        todoListViewModel.todoObservable.observe(viewLifecycleOwner) { todos ->
-            todoListRecycler.scrollToPosition(0)
-            todoAdapter.update(todos)
-        }
+        todoListViewModel.todoObservable.observe(viewLifecycleOwner, todoAdapter::update)
     }
 }
