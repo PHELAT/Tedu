@@ -9,7 +9,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class TodoDatabaseModule {
+internal class TodoDatabaseModule {
 
     @TodoScope
     @Provides

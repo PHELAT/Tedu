@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "todo_table")
-data class TodoDatabaseEntity(
+internal data class TodoDatabaseEntity(
     @PrimaryKey(autoGenerate = true)
     val todoId: Int?,
     val todo: String,

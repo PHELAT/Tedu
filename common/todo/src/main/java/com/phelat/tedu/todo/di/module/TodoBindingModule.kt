@@ -14,7 +14,7 @@ import dagger.Module
 import kotlinx.coroutines.flow.Flow
 
 @Module
-interface TodoBindingModule {
+internal interface TodoBindingModule {
 
     @TodoScope
     @Binds

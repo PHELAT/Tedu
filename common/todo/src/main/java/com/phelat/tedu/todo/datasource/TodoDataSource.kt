@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @TodoScope
-class TodoDataSource @Inject constructor(
+internal class TodoDataSource @Inject constructor(
     private val todoEntityDao: TodoEntityDao,
     private val mapper: Mapper<TodoDatabaseEntity, TodoEntity>
 ) : Writable.Suspendable<TodoEntity>,

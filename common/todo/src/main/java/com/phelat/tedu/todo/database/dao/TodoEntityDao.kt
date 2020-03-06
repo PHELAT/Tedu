@@ -8,7 +8,7 @@ import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface TodoEntityDao {
+internal interface TodoEntityDao {
 
     @Insert(entity = TodoDatabaseEntity::class)
     suspend fun insertTodo(todo: TodoDatabaseEntity): Long
