@@ -30,5 +30,6 @@ dependencies {
     implementation project(":common:daggerandroid")
     implementation project(":library:lifecycle")
     implementation project(":library:coroutines")
+    implementation project(":library:datasource")
 
 }

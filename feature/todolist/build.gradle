@@ -11,6 +11,10 @@ dependencies {
 
     implementation "androidx.recyclerview:recyclerview:$library.recyclerview"
 
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$library.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$library.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$library.lifecycle"
+
     implementation "androidx.navigation:navigation-fragment-ktx:$library.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$library.navigation"
 
@@ -25,5 +29,6 @@ dependencies {
     implementation project(':library:navigation')
     implementation project(":library:lifecycle")
     implementation project(":library:coroutines")
+    implementation project(":library:datasource")
 
 }
