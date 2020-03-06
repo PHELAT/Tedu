@@ -20,9 +20,9 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$library.dagger"
 
     implementation project(":common:designsystem")
-    implementation project(":common:ui-view")
     implementation project(":common:todo")
     implementation project(":common:daggerandroid")
+    implementation project(':library:navigation')
     implementation project(":library:lifecycle")
     implementation project(":library:coroutines")
 

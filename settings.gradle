@@ -4,8 +4,7 @@ include ':mobile'
 include ':feature:todolist',
         ':feature:addtodo'
 // Common Modules
-include ':common:ui-view',
-        ':common:designsystem',
+include ':common:designsystem',
         ':common:todo',
         ':common:daggerandroid'
 // Library Modules
@@ -14,6 +13,7 @@ include ':library:translation',
         ':library:dagger',
         ':library:lifecycle',
         ':library:coroutines',
-        ':library:mapper'
+        ':library:mapper',
+        ':library:navigation'
 
-rootProject.name='Tedu'
+rootProject.name = 'Tedu'
