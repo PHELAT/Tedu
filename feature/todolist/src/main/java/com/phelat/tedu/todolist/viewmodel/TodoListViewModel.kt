@@ -8,7 +8,6 @@ import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.todo.entity.TodoEntity
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.debounce
@@ -23,7 +22,7 @@ class TodoListViewModel(
 
     val todoObservable: LiveData<List<TodoEntity>> = todoDataSourceReadable.read()
         .debounce(UPDATE_DELAY_IN_MILLIS)
-        .flowOn(Dispatchers.IO)
+        .flowOn(dispatcher.iO)
         .asLiveData()
 
     fun onTodoClick(todoEntity: TodoEntity) {
