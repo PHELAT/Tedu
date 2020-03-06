@@ -28,6 +28,7 @@ dependencies {
 
     implementation project(":library:dagger")
     implementation project(":library:lifecycle")
+    implementation project(":library:mapper")
     api project(":library:datasource")
 
 }

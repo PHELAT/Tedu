@@ -3,6 +3,7 @@ package com.phelat.tedu.todo.datasource
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
+import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.database.dao.TodoEntityDao
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
 import com.phelat.tedu.todo.di.scope.TodoScope
@@ -13,18 +14,14 @@ import javax.inject.Inject
 
 @TodoScope
 class TodoDataSource @Inject constructor(
-    private val todoEntityDao: TodoEntityDao
+    private val todoEntityDao: TodoEntityDao,
+    private val mapper: Mapper<TodoDatabaseEntity, TodoEntity>
 ) : Writable.Suspendable<TodoEntity>,
     Readable<@JvmSuppressWildcards Flow<List<TodoEntity>>>,
     Updatable.Suspendable<TodoEntity> {
 
     override suspend fun write(input: TodoEntity) {
-        // TODO: use a mapper class
-        val todoDatabaseEntity = TodoDatabaseEntity(
-            todoId = input.todoId.takeIf { it > -1 },
-            todo = input.todo,
-            isDone = input.isDone
-        )
+        val todoDatabaseEntity = mapper.mapSecondToFirst(input)
         todoEntityDao.insertTodo(todoDatabaseEntity)
     }
 
@@ -38,11 +35,7 @@ class TodoDataSource @Inject constructor(
     }
 
     override suspend fun update(input: TodoEntity) {
-        val todoDatabaseEntity = TodoDatabaseEntity(
-            todoId = input.todoId.takeIf { it > -1 },
-            todo = input.todo,
-            isDone = input.isDone
-        )
+        val todoDatabaseEntity = mapper.mapSecondToFirst(input)
         todoEntityDao.updateTodo(todoDatabaseEntity)
     }
 }

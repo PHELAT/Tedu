@@ -13,6 +13,7 @@ include ':library:translation',
         ':library:datasource',
         ':library:dagger',
         ':library:lifecycle',
-        ':library:coroutines'
+        ':library:coroutines',
+        ':library:mapper'
 
 rootProject.name='Tedu'
