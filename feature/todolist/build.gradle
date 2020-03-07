@@ -23,6 +23,9 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$library.dagger"
     kapt "com.google.dagger:dagger-android-processor:$library.dagger"
 
+    implementation "com.xwray:groupie:$library.groupie"
+    implementation "com.xwray:groupie-kotlin-android-extensions:$library.groupie"
+
     implementation project(":common:designsystem")
     implementation project(":common:todo")
     implementation project(":common:daggerandroid")

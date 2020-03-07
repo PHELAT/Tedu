@@ -16,7 +16,8 @@ import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.todolist.R
 import com.phelat.tedu.todolist.di.component.TodoListComponent
 import com.phelat.tedu.todolist.viewmodel.TodoListViewModel
-import kotlinx.android.synthetic.main.fragment_todolist.addTodoButton
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_todolist.todoListRecycler
 import kotlinx.android.synthetic.main.fragment_todolist.viewRoot
 import javax.inject.Inject
@@ -37,22 +38,17 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addTodoButton.setOnClickListener {
-            findNavController().navigate(R.id.navigation_addtodo)
-        }
-        val todoAdapter = TodoListAdapter(
-            onClickListener = todoListViewModel::onTodoClick,
-            onLongClickListener = todoListViewModel::onTodoLongClick
-        )
+        val groupAdapter = GroupAdapter<GroupieViewHolder>()
         todoListRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = todoAdapter
+            adapter = groupAdapter
         }
         todoListViewModel.apply {
-            todoObservable.observe(viewLifecycleOwner, todoAdapter::update)
+            todoObservable.observe(viewLifecycleOwner, groupAdapter::update)
             todoSheetObservable.observe(viewLifecycleOwner, ::observeTodoSheet)
             dismissTodoSheetObservable.observe(viewLifecycleOwner) { dismissTodoSheet() }
             todoDeletionObservable.observe(viewLifecycleOwner) { observeTodoDeletion() }
+            navigationObservable.observe(viewLifecycleOwner, findNavController()::navigate)
         }
     }
 

@@ -6,29 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/todoListRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/addTodoButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/selector_click_rectangle"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="20dp"
-            android:text="@string/todolist_add_todo_text"
-            android:textColor="@color/text_hint_color"
-            android:textSize="@dimen/font_size_title_1" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/todoListRecycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_todo" />
-
-    </LinearLayout>
+        tools:listitem="@layout/item_todo" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

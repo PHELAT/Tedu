@@ -1,5 +1,6 @@
 package com.phelat.tedu.todolist.viewmodel
 
+import androidx.annotation.IdRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -13,10 +14,15 @@ import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todolist.R
+import com.phelat.tedu.todolist.view.AddTodoItem
+import com.phelat.tedu.todolist.view.TodoListItem
+import com.xwray.groupie.Section
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class TodoListViewModel(
@@ -27,9 +33,30 @@ class TodoListViewModel(
     todoDataSourceReadable: Readable<Flow<List<TodoEntity>>>
 ) : ViewModel() {
 
-    val todoObservable: LiveData<List<TodoEntity>> = todoDataSourceReadable.read()
+    private val headerSection = Section().apply {
+        add(AddTodoItem(onAddTodoClickListener = ::onAddTodoClick))
+    }
+    private val todoSection = Section()
+
+    val todoObservable: LiveData<List<Section>> = todoDataSourceReadable.read()
         .debounce(UPDATE_DELAY_IN_MILLIS)
+        .map { todoEntities ->
+            todoEntities.map { todoEntity ->
+                TodoListItem(
+                    todoEntity,
+                    onClickListener = ::onTodoClick,
+                    onLongClickListener = ::onTodoLongClick
+                )
+            }
+        }
         .flowOn(dispatcher.iO)
+        .onEach {
+            todoSection.update(it)
+        }
+        .map {
+            listOf(headerSection, todoSection)
+        }
+        .flowOn(dispatcher.main)
         .asLiveData()
 
     private val _todoSheetObservable = SingleLiveData<List<BottomSheetItemEntity>>()
@@ -41,10 +68,13 @@ class TodoListViewModel(
     private val _todoDeletionObservable = SingleLiveData<Unit>()
     val todoDeletionObservable: LiveData<Unit> = _todoDeletionObservable
 
+    private val _navigationObservable = SingleLiveData<@IdRes Int>()
+    val navigationObservable: LiveData<Int> = _navigationObservable
+
     @Volatile
     private var deletedTodo: TodoEntity? = null
 
-    fun onTodoClick(todoEntity: TodoEntity) {
+    private fun onTodoClick(todoEntity: TodoEntity) {
         viewModelScope.launch(context = dispatcher.iO) {
             val updatedTodo = todoEntity.copy(isDone = todoEntity.isDone.not())
             delay(UPDATE_DELAY_IN_MILLIS)
@@ -52,7 +82,7 @@ class TodoListViewModel(
         }
     }
 
-    fun onTodoLongClick(todoEntity: TodoEntity) {
+    private fun onTodoLongClick(todoEntity: TodoEntity) {
         _todoSheetObservable.value = listOf(
             BottomSheetItemEntity(
                 itemIconResource = R.drawable.ic_delete_forever_icon_secondary_24dp,
@@ -70,6 +100,10 @@ class TodoListViewModel(
             deletedTodo = todoEntity
             _todoDeletionObservable.postCall()
         }
+    }
+
+    private fun onAddTodoClick() {
+        _navigationObservable.value = R.id.navigation_addtodo
     }
 
     fun onTodoDeletionUndoClick() {
