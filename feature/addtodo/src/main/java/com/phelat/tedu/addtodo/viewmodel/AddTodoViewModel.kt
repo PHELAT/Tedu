@@ -23,8 +23,8 @@ class AddTodoViewModel(
 
     private var todoForEdit: TodoEntity? = null
 
-    fun onBundleReceive(bundle: Bundle) {
-        val todoForEdit = bundle.getSerializable(TodoConstant.TODO_FOR_EDIT)
+    fun onBundleReceive(bundle: Bundle?) {
+        val todoForEdit = bundle?.getSerializable(TodoConstant.TODO_FOR_EDIT)
         if (todoForEdit is TodoEntity) {
             this.todoForEdit = todoForEdit
             _todoTextObservable.value = todoForEdit.todo

@@ -25,7 +25,7 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        addTodoViewModel.onBundleReceive(requireArguments())
+        addTodoViewModel.onBundleReceive(arguments)
     }
 
     override fun onAttach(context: Context) {
