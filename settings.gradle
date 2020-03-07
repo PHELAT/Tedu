@@ -14,6 +14,7 @@ include ':library:translation',
         ':library:lifecycle',
         ':library:coroutines',
         ':library:mapper',
-        ':library:navigation'
+        ':library:navigation',
+        ':library:core'
 
 rootProject.name = 'Tedu'

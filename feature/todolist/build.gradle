@@ -34,5 +34,6 @@ dependencies {
     implementation project(":library:coroutines")
     implementation project(":library:datasource")
     implementation project(":library:translation")
+    implementation project(":library:core")
 
 }

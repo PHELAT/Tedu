@@ -2,6 +2,7 @@ package com.phelat.tedu.todo.di.module
 
 import android.content.Context
 import androidx.room.Room
+import com.phelat.tedu.core.qualifier.ApplicationContext
 import com.phelat.tedu.todo.database.TodoDatabase
 import com.phelat.tedu.todo.database.dao.TodoEntityDao
 import com.phelat.tedu.todo.di.scope.TodoScope
@@ -13,7 +14,7 @@ internal class TodoDatabaseModule {
 
     @TodoScope
     @Provides
-    fun provideTodoDatabase(context: Context): TodoDatabase  {
+    fun provideTodoDatabase(@ApplicationContext context: Context): TodoDatabase  {
         return Room.databaseBuilder(context, TodoDatabase::class.java, "todo_database")
             .build()
     }

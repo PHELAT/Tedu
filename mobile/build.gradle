@@ -54,6 +54,7 @@ dependencies {
     implementation project(":library:translation")
     implementation project(":library:dagger")
     implementation project(":library:coroutines")
+    implementation project(":library:core")
 
     compileOnly project(":common:todo")
 
