@@ -48,7 +48,9 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
             todoSheetObservable.observe(viewLifecycleOwner, ::observeTodoSheet)
             dismissTodoSheetObservable.observe(viewLifecycleOwner) { dismissTodoSheet() }
             todoDeletionObservable.observe(viewLifecycleOwner) { observeTodoDeletion() }
-            navigationObservable.observe(viewLifecycleOwner, findNavController()::navigate)
+            navigationObservable.observe(viewLifecycleOwner) { navigationPair ->
+                findNavController().navigate(navigationPair.first, navigationPair.second)
+            }
         }
     }
 

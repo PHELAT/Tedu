@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.phelat.tedu.addtodo.R
 import com.phelat.tedu.addtodo.di.component.AddTodoComponent
@@ -22,6 +23,11 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
 
     private val addTodoViewModel by viewModels<AddTodoViewModel> { viewModelFactory }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        addTodoViewModel.onBundleReceive(requireArguments())
+    }
+
     override fun onAttach(context: Context) {
         Injector.inject(AddTodoComponent::class,this)
         super.onAttach(context)
@@ -33,6 +39,9 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
             val todo = todoInput.text.toString()
             addTodoViewModel.onSaveTodoClicked(todo)
             findNavController().navigateUp()
+        }
+        addTodoViewModel.apply {
+            todoTextObservable.observe(viewLifecycleOwner, todoInput::setText)
         }
     }
 

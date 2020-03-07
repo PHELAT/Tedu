@@ -1,5 +1,6 @@
 package com.phelat.tedu.todolist.viewmodel
 
+import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.lifecycle.SingleLiveData
+import com.phelat.tedu.todo.constant.TodoConstant
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todolist.R
 import com.phelat.tedu.todolist.view.AddTodoItem
@@ -68,8 +70,8 @@ class TodoListViewModel(
     private val _todoDeletionObservable = SingleLiveData<Unit>()
     val todoDeletionObservable: LiveData<Unit> = _todoDeletionObservable
 
-    private val _navigationObservable = SingleLiveData<@IdRes Int>()
-    val navigationObservable: LiveData<Int> = _navigationObservable
+    private val _navigationObservable = SingleLiveData<Pair<@IdRes Int, Bundle?>>()
+    val navigationObservable: LiveData<Pair<Int, Bundle?>> = _navigationObservable
 
     @Volatile
     private var deletedTodo: TodoEntity? = null
@@ -85,11 +87,22 @@ class TodoListViewModel(
     private fun onTodoLongClick(todoEntity: TodoEntity) {
         _todoSheetObservable.value = listOf(
             BottomSheetItemEntity(
+                itemIconResource = R.drawable.ic_edit_icon_secondary_24dp,
+                itemTitleResource = R.string.todolist_todo_sheet_edit,
+                itemOnClickListener = { onEditTodoClick(todoEntity) }
+            ),
+            BottomSheetItemEntity(
                 itemIconResource = R.drawable.ic_delete_forever_icon_secondary_24dp,
                 itemTitleResource = R.string.todolist_todo_sheet_delete,
                 itemOnClickListener = { onDeleteTodoClick(todoEntity) }
             )
         )
+    }
+
+    private fun onEditTodoClick(todoEntity: TodoEntity) {
+        val editBundle = Bundle()
+        editBundle.putSerializable(TodoConstant.TODO_FOR_EDIT, todoEntity)
+        _navigationObservable.value = R.id.navigation_addtodo to editBundle
     }
 
     private fun onDeleteTodoClick(todoEntity: TodoEntity) {
@@ -103,7 +116,7 @@ class TodoListViewModel(
     }
 
     private fun onAddTodoClick() {
-        _navigationObservable.value = R.id.navigation_addtodo
+        _navigationObservable.value = R.id.navigation_addtodo to null
     }
 
     fun onTodoDeletionUndoClick() {
