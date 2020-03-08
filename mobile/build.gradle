@@ -42,20 +42,12 @@ dependencies {
     implementation "com.google.android.material:material:$library.material"
 
     implementation "com.google.dagger:dagger:$library.dagger"
-    kapt "com.google.dagger:dagger-compiler:$library.dagger"
     implementation "com.google.dagger:dagger-android-support:$library.dagger"
-    kapt "com.google.dagger:dagger-android-processor:$library.dagger"
 
     implementation project(":feature:addtodo")
     implementation project(":feature:todolist")
-    implementation project(":common:designsystem")
     implementation project(":common:daggerandroid")
     implementation project(':library:navigation')
     implementation project(":library:translation")
-    implementation project(":library:dagger")
-    implementation project(":library:coroutines")
-    implementation project(":library:core")
-
-    compileOnly project(":common:todo")
 
 }
