@@ -24,7 +24,8 @@ ext {
             inject      : '1',
             lifecycle   : '2.2.0',
             coroutines  : '1.3.3',
-            groupie     : '2.7.0'
+            groupie     : '2.7.0',
+            toothpick   : '3.1.0'
     ]
 
 }

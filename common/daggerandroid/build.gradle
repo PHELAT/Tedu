@@ -12,6 +12,4 @@ dependencies {
     implementation "com.google.dagger:dagger:$library.dagger"
     implementation "com.google.dagger:dagger-android-support:$library.dagger"
 
-    implementation project(":library:dagger")
-
 }

@@ -13,6 +13,9 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$library.dagger"
     kapt "com.google.dagger:dagger-android-processor:$library.dagger"
 
+    implementation "com.github.stephanenicolas.toothpick:ktp:$library.toothpick"
+    kapt "com.github.stephanenicolas.toothpick:toothpick-compiler:$library.toothpick"
+
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$library.coroutines"
 
     implementation project(":library:coroutines")

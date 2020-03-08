@@ -10,7 +10,6 @@ include ':common:designsystem',
 // Library Modules
 include ':library:translation',
         ':library:datasource',
-        ':library:dagger',
         ':library:lifecycle',
         ':library:coroutines',
         ':library:mapper',
