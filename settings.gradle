@@ -1,5 +1,5 @@
 // Platform Modules
-include ':mobile'
+include ':platform:mobile'
 // Feature Modules
 include ':feature:todolist',
         ':feature:addtodo'
