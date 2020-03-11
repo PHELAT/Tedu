@@ -1,25 +1,16 @@
 package com.phelat.tedu.addtodo.di.module
 
-import com.phelat.tedu.addtodo.di.scope.AddTodoSubScope
 import com.phelat.tedu.addtodo.viewmodel.AddTodoViewModel
-import com.phelat.tedu.coroutines.Dispatcher
-import com.phelat.tedu.datasource.Updatable
-import com.phelat.tedu.datasource.Writable
-import com.phelat.tedu.lifecycle.viewModelFactory
-import com.phelat.tedu.todo.entity.TodoEntity
-import dagger.Module
-import dagger.Provides
+import com.phelat.tedu.coroutines.di.module.ThreadModule
+import com.phelat.tedu.todo.di.module.TodoModule
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.context.loadKoinModules
+import org.koin.dsl.module
 
-@Module
-class AddTodoModule {
+object AddTodoModule {
 
-    @Provides
-    @AddTodoSubScope
-    fun provideAddTodoViewModelFactory(
-        dispatcher: Dispatcher,
-        todoWritableDataSource: Writable.Suspendable<TodoEntity>,
-        todoUpdatableDataSource: Updatable.Suspendable<TodoEntity>
-    ) = viewModelFactory {
-        AddTodoViewModel(dispatcher, todoWritableDataSource, todoUpdatableDataSource)
+    fun getModule() = module {
+        loadKoinModules(listOf(ThreadModule.getModule(), TodoModule.getModule()))
+        viewModel { AddTodoViewModel(get(), get(), get()) }
     }
 }

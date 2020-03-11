@@ -1,40 +1,27 @@
 package com.phelat.tedu.todolist.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.phelat.tedu.daggerandroid.Injector
 import com.phelat.tedu.designsystem.component.view.BottomSheetView
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.todolist.R
-import com.phelat.tedu.todolist.di.component.TodoListComponent
 import com.phelat.tedu.todolist.viewmodel.TodoListViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_todolist.todoListRecycler
 import kotlinx.android.synthetic.main.fragment_todolist.viewRoot
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TodoListFragment : Fragment(R.layout.fragment_todolist) {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val todoListViewModel by viewModels<TodoListViewModel> { viewModelFactory }
+    private val todoListViewModel by viewModel<TodoListViewModel>()
 
     private var todoSheet: BottomSheetView? = null
-
-    override fun onAttach(context: Context) {
-        Injector.inject(TodoListComponent::class, this)
-        super.onAttach(context)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
