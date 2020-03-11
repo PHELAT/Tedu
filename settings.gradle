@@ -10,7 +10,7 @@ include ':common:designsystem',
 include ':library:translation',
         ':library:datasource',
         ':library:lifecycle',
-        ':library:coroutines',
+        ':library:thread',
         ':library:mapper',
         ':library:navigation'
 

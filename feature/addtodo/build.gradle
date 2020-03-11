@@ -28,7 +28,7 @@ dependencies {
     implementation project(":common:designsystem")
     implementation project(":common:todo")
     implementation project(":library:lifecycle")
-    implementation project(":library:coroutines")
+    implementation project(':library:thread')
     implementation project(":library:datasource")
 
 }
