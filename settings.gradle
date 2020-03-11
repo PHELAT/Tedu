@@ -5,15 +5,13 @@ include ':feature:todolist',
         ':feature:addtodo'
 // Common Modules
 include ':common:designsystem',
-        ':common:todo',
-        ':common:daggerandroid'
+        ':common:todo'
 // Library Modules
 include ':library:translation',
         ':library:datasource',
         ':library:lifecycle',
         ':library:coroutines',
         ':library:mapper',
-        ':library:navigation',
-        ':library:core'
+        ':library:navigation'
 
 rootProject.name = 'Tedu'

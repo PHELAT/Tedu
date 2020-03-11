@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'koin'
 
 dependencies {
 
@@ -16,21 +17,18 @@ dependencies {
 
     implementation "com.google.android.material:material:$library.material"
 
-    implementation "com.google.dagger:dagger:$library.dagger"
-    kapt "com.google.dagger:dagger-compiler:$library.dagger"
-    implementation "com.google.dagger:dagger-android-support:$library.dagger"
-    kapt "com.google.dagger:dagger-android-processor:$library.dagger"
-
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$library.lifecycle"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$library.lifecycle"
     implementation "androidx.lifecycle:lifecycle-common-java8:$library.lifecycle"
 
+    implementation "org.koin:koin-core:$library.koin"
+    implementation "org.koin:koin-android:$library.koin"
+    implementation "org.koin:koin-androidx-viewmodel:$library.koin"
+
     implementation project(":common:designsystem")
     implementation project(":common:todo")
-    implementation project(":common:daggerandroid")
     implementation project(":library:lifecycle")
     implementation project(":library:coroutines")
     implementation project(":library:datasource")
-    implementation project(":library:core")
 
 }
