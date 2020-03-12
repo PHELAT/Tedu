@@ -8,13 +8,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$library.kotlin"
 
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$library.coroutines"
-
     implementation "org.koin:koin-core:$library.koin"
 
-    implementation project(":library:dependencyinjection")
-
 }
-
-sourceCompatibility = "8"
-targetCompatibility = "8"

@@ -32,5 +32,6 @@ dependencies {
     implementation project(':library:thread')
     implementation project(":library:datasource")
     implementation project(":library:translation")
+    implementation project(":library:dependencyinjection")
 
 }

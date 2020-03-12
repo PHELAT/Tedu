@@ -5,6 +5,7 @@ import com.phelat.tedu.datasource.Deletable
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
+import com.phelat.tedu.dependencyinjection.ModuleContainer
 import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.database.TodoDatabase
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
@@ -16,9 +17,9 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-object TodoModule {
+object TodoModule : ModuleContainer {
 
-    fun getModule() = module(override = true) {
+    override fun getModule() = module {
         single {
             Room.databaseBuilder(androidContext(), TodoDatabase::class.java, "todo_database")
                 .build()

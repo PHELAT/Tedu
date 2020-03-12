@@ -48,5 +48,6 @@ dependencies {
     implementation project(":feature:todolist")
     implementation project(':library:navigation')
     implementation project(":library:translation")
+    implementation project(":library:dependencyinjection")
 
 }
