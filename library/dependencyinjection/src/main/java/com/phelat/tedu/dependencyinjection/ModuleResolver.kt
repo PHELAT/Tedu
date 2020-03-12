@@ -6,17 +6,12 @@ import org.koin.core.module.Module
 import java.util.LinkedList
 import java.util.Queue
 
-fun KoinApplication.installFeatures(
-    vararg features: ModuleContainer
-) {
-    val resolvedModules = resolveModules(this, *features)
+fun KoinApplication.installFeatures(vararg features: ModuleContainer) {
+    val resolvedModules = resolveModules(*features)
     loadKoinModules(resolvedModules)
 }
 
-private fun resolveModules(
-    koinApplication: KoinApplication,
-    vararg containers: ModuleContainer
-): List<Module> {
+private fun resolveModules(vararg containers: ModuleContainer): List<Module> {
     val uniqueContainers = HashSet<ModuleContainer>()
     val listOfUniqueModules = mutableListOf<Module>()
     val containerStack: Queue<ModuleContainer> = LinkedList()
