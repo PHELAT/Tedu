@@ -5,6 +5,7 @@
         <item name="colorPrimaryDark">@color/surface_color_0</item>
         <item name="colorAccent">@color/brand_primary</item>
         <item name="android:windowBackground">@color/surface_color_0</item>
+        <item name="fontFamily">@font/robotoslab_regular</item>
     </style>
 
     <style name="AppTheme" parent="AppThemeBase" />
