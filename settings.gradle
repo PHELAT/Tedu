@@ -12,6 +12,7 @@ include ':library:translation',
         ':library:lifecycle',
         ':library:thread',
         ':library:mapper',
-        ':library:navigation'
+        ':library:navigation',
+        ':library:dependencyinjection'
 
 rootProject.name = 'Tedu'

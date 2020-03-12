@@ -1,14 +1,15 @@
 package com.phelat.tedu.coroutines.di.module
 
 import com.phelat.tedu.coroutines.Dispatcher
+import com.phelat.tedu.dependencyinjection.ModuleContainer
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
-object ThreadModule {
+object ThreadModule : ModuleContainer {
 
-    fun getModule() = module(override = true) {
+    override fun getModule() = module {
         single {
-            Dispatcher(Dispatchers.IO, Dispatchers.Main)
+            Dispatcher(iO = Dispatchers.IO, main = Dispatchers.Main)
         }
     }
 }
