@@ -44,6 +44,8 @@ dependencies {
     implementation "org.koin:koin-core:$library.koin"
     implementation "org.koin:koin-android:$library.koin"
 
+    implementation "com.jakewharton.threetenabp:threetenabp:$library.threetenABP"
+
     implementation project(":feature:addtodo")
     implementation project(":feature:todolist")
     implementation project(':library:navigation')
