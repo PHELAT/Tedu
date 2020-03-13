@@ -25,6 +25,8 @@ dependencies {
     implementation "org.koin:koin-android:$library.koin"
     implementation "org.koin:koin-androidx-viewmodel:$library.koin"
 
+    implementation "com.github.kizitonwose:CalendarView:$library.calendarView"
+
     implementation project(":common:designsystem")
     implementation project(":common:todo")
     implementation project(":library:lifecycle")
