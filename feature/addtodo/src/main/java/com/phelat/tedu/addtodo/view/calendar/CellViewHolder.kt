@@ -10,21 +10,20 @@ import com.phelat.tedu.addtodo.R
 import kotlinx.android.synthetic.main.item_calendar_cell.view.cellText
 import org.threeten.bp.LocalDate
 
-class CellViewHolder(view: View) : ViewContainer(view) {
+class CellViewHolder(view: View, private val selectedDate: () -> LocalDate) : ViewContainer(view) {
 
     private val cellText: AppCompatTextView = view.cellText
 
     fun bind(
         day: CalendarDay,
         today: LocalDate,
-        selectedDate: LocalDate,
         onClickListener: () -> Unit
     ) {
         if (day.owner == DayOwner.THIS_MONTH) {
             cellText.visibility = View.VISIBLE
             cellText.text = day.date.dayOfMonth.toString()
             when {
-                day.date == selectedDate -> {
+                day.date == selectedDate() -> {
                     cellText.setBackgroundResource(R.drawable.shape_calendar_selected_date)
                     cellText.setTextColor(
                         ContextCompat.getColor(

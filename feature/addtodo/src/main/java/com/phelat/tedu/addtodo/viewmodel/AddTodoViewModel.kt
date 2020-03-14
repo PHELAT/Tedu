@@ -12,12 +12,12 @@ import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
+import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.todo.constant.TodoConstant
 import com.phelat.tedu.todo.entity.TodoEntity
 import kotlinx.coroutines.launch
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import org.threeten.bp.ZoneId
 import java.util.Date
@@ -32,12 +32,15 @@ class AddTodoViewModel(
     private val _todoTextObservable = MutableLiveData<String>()
     val todoTextObservable: LiveData<String> = _todoTextObservable
 
-    private var todoForEdit: TodoEntity? = null
-
     private val _todoDateObservable = MutableLiveData<String>()
     val todoDateObservable: LiveData<String> = _todoDateObservable
 
-    private var selectedDate: LocalDate? = null
+    private val _todoDateSheetObservable = SingleLiveData<Unit>()
+    val todoDateSheetObservable: LiveData<Unit> = _todoDateSheetObservable
+
+    private var todoForEdit: TodoEntity? = null
+
+    private var selectedDate: LocalDate = LocalDate.now()
 
     fun onBundleReceive(bundle: Bundle?) {
         val todoForEdit = bundle?.getSerializable(TodoConstant.TODO_FOR_EDIT)
@@ -68,7 +71,7 @@ class AddTodoViewModel(
 
     private fun convertSelectedLocalDate(): Date {
         // TODO: move date logic to a data source class
-        return (selectedDate?.atTime(LocalTime.now()) ?: LocalDateTime.now())
+        return (selectedDate.atTime(LocalTime.now()))
             .atZone(ZoneId.systemDefault())
             .toInstant()
             .toEpochMilli()
@@ -95,5 +98,14 @@ class AddTodoViewModel(
         return (today.year == selectedDate.year)
             .and(today.monthValue == selectedDate.monthValue)
             .and(selectedDate.dayOfMonth - today.dayOfMonth == 1)
+    }
+
+    fun onSelectDateClick() {
+        _todoDateSheetObservable.call()
+    }
+
+    fun getSelectedDate(): LocalDate {
+        // TODO: refactor this
+        return selectedDate
     }
 }

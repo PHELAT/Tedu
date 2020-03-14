@@ -34,18 +34,23 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
             findNavController().navigateUp()
         }
         dateClick.setOnClickListener {
-            showCalendarSheet()
+            addTodoViewModel.onSelectDateClick()
         }
         addTodoViewModel.apply {
             todoTextObservable.observe(viewLifecycleOwner, todoInput::setText)
             todoDateObservable.observe(viewLifecycleOwner, todoDate::setText)
+            todoDateSheetObservable.observe(viewLifecycleOwner) { showCalendarSheet() }
         }
     }
 
     private fun showCalendarSheet() {
         calendarSheet?.show()
             ?: run {
-                calendarSheet = CalendarSheet(requireContext(), addTodoViewModel::onDateSelect)
+                calendarSheet = CalendarSheet(
+                    requireContext(),
+                    addTodoViewModel::onDateSelect,
+                    addTodoViewModel::getSelectedDate
+                )
                 showCalendarSheet()
             }
     }

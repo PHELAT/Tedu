@@ -12,7 +12,8 @@ import java.util.Locale
 
 class CalendarSheet(
     context: Context,
-    onDateSelect: (LocalDate) -> Unit
+    onDateSelect: (LocalDate) -> Unit,
+    selectedDate: () -> LocalDate
 ) : BottomSheetDialog(context, R.style.AppBottomSheetDialogTheme) {
 
     init {
@@ -23,10 +24,11 @@ class CalendarSheet(
             notifyDateChange = { changedDate ->
                 calendarView.notifyDateChanged(changedDate)
             },
-            onSelectNewDate = { selectedDate ->
+            onSelectNewDate = { newDate ->
                 dismiss()
-                onDateSelect.invoke(selectedDate)
-            }
+                onDateSelect.invoke(newDate)
+            },
+            selectedDate = selectedDate
         )
         calendarView.monthHeaderBinder = HeaderViewBinder()
         val currentMonth = YearMonth.now()
