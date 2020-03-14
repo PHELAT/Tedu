@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.bind
 import org.koin.dsl.module
+import java.util.Date
 
 object TodoModule : ModuleContainer {
 
@@ -29,7 +30,7 @@ object TodoModule : ModuleContainer {
             .bind<Mapper<TodoDatabaseEntity, TodoEntity>>()
         single { TodoDataSource(get(), get()) }
             .bind<Writable.Suspendable<TodoEntity>>()
-            .bind<Readable<Flow<List<TodoEntity>>>>()
+            .bind<Readable.IO<Date, Flow<List<TodoEntity>>>>()
             .bind<Updatable.Suspendable<TodoEntity>>()
             .bind<Deletable.Suspendable<TodoEntity>>()
     }

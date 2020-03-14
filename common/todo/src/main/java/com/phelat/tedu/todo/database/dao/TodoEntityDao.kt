@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
 import kotlinx.coroutines.flow.Flow
+import java.util.Date
 
 @Dao
 internal interface TodoEntityDao {
@@ -14,8 +15,8 @@ internal interface TodoEntityDao {
     @Insert(entity = TodoDatabaseEntity::class)
     suspend fun insertTodo(todo: TodoDatabaseEntity): Long
 
-    @Query("SELECT * FROM todo_table ORDER BY isDone ASC, todoId DESC")
-    fun selectAllTodos(): Flow<List<TodoDatabaseEntity>>
+    @Query("SELECT * FROM todo_table WHERE date < :before ORDER BY isDone ASC, todoId DESC")
+    fun selectAllTodosBefore(before: Date): Flow<List<TodoDatabaseEntity>>
 
     @Update(entity = TodoDatabaseEntity::class)
     suspend fun updateTodo(todo: TodoDatabaseEntity): Int

@@ -10,7 +10,8 @@ internal class TodoDatabaseEntityToTodoEntity : Mapper<TodoDatabaseEntity, TodoE
         return TodoEntity(
             todo = first.todo,
             isDone = first.isDone,
-            todoId = requireNotNull(first.todoId)
+            todoId = requireNotNull(first.todoId),
+            date = first.date
         )
     }
 
@@ -18,7 +19,8 @@ internal class TodoDatabaseEntityToTodoEntity : Mapper<TodoDatabaseEntity, TodoE
         return TodoDatabaseEntity(
             todoId = second.todoId.takeIf { it > -1 },
             todo = second.todo,
-            isDone = second.isDone
+            isDone = second.isDone,
+            date = second.date
         )
     }
 }

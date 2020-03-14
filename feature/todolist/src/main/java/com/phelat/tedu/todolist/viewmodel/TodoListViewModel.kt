@@ -26,13 +26,16 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import org.threeten.bp.LocalDate
+import org.threeten.bp.ZoneId
+import java.util.Date
 
 class TodoListViewModel(
     private val dispatcher: Dispatcher,
     private val todoDataSourceUpdatable: Updatable.Suspendable<TodoEntity>,
     private val todoDataSourceDeletable: Deletable.Suspendable<TodoEntity>,
     private val todoDataSourceWritable: Writable.Suspendable<TodoEntity>,
-    todoDataSourceReadable: Readable<Flow<List<TodoEntity>>>
+    todoDataSourceReadable: Readable.IO<Date, Flow<List<TodoEntity>>>
 ) : ViewModel() {
 
     private val headerSection = Section().apply {
@@ -40,26 +43,7 @@ class TodoListViewModel(
     }
     private val todoSection = Section()
 
-    val todoObservable: LiveData<List<Section>> = todoDataSourceReadable.read()
-        .debounce(UPDATE_DELAY_IN_MILLIS)
-        .map { todoEntities ->
-            todoEntities.map { todoEntity ->
-                TodoListItem(
-                    todoEntity,
-                    onClickListener = ::onTodoClick,
-                    onLongClickListener = ::onTodoLongClick
-                )
-            }
-        }
-        .flowOn(dispatcher.iO)
-        .onEach {
-            todoSection.update(it)
-        }
-        .map {
-            listOf(headerSection, todoSection)
-        }
-        .flowOn(dispatcher.main)
-        .asLiveData()
+    val todoObservable: LiveData<List<Section>>
 
     private val _todoSheetObservable = SingleLiveData<List<BottomSheetItemEntity>>()
     val todoSheetObservable: LiveData<List<BottomSheetItemEntity>> = _todoSheetObservable
@@ -75,6 +59,36 @@ class TodoListViewModel(
 
     @Volatile
     private var deletedTodo: TodoEntity? = null
+
+    init {
+        // TODO: move date logic to a data source class
+        val today = LocalDate.now(ZoneId.systemDefault())
+            .atStartOfDay()
+        val tomorrow = today.plusDays(1)
+            .atZone(ZoneId.systemDefault())
+            .toInstant()
+            .toEpochMilli()
+        todoObservable = todoDataSourceReadable.read(Date(tomorrow))
+            .debounce(UPDATE_DELAY_IN_MILLIS)
+            .map { todoEntities ->
+                todoEntities.map { todoEntity ->
+                    TodoListItem(
+                        todoEntity,
+                        onClickListener = ::onTodoClick,
+                        onLongClickListener = ::onTodoLongClick
+                    )
+                }
+            }
+            .flowOn(dispatcher.iO)
+            .onEach {
+                todoSection.update(it)
+            }
+            .map {
+                listOf(headerSection, todoSection)
+            }
+            .flowOn(dispatcher.main)
+            .asLiveData()
+    }
 
     private fun onTodoClick(todoEntity: TodoEntity) {
         viewModelScope.launch(context = dispatcher.iO) {

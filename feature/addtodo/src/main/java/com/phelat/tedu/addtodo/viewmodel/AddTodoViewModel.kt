@@ -15,7 +15,12 @@ import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.todo.constant.TodoConstant
 import com.phelat.tedu.todo.entity.TodoEntity
 import kotlinx.coroutines.launch
+import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.LocalTime
+import org.threeten.bp.ZoneId
+import java.util.Date
 
 class AddTodoViewModel(
     private val dispatcher: Dispatcher,
@@ -32,25 +37,46 @@ class AddTodoViewModel(
     private val _todoDateObservable = MutableLiveData<String>()
     val todoDateObservable: LiveData<String> = _todoDateObservable
 
+    private var selectedDate: LocalDate? = null
+
     fun onBundleReceive(bundle: Bundle?) {
         val todoForEdit = bundle?.getSerializable(TodoConstant.TODO_FOR_EDIT)
         if (todoForEdit is TodoEntity) {
             this.todoForEdit = todoForEdit
             _todoTextObservable.value = todoForEdit.todo
+            val date = Instant.ofEpochMilli(todoForEdit.date.time).atZone(ZoneId.systemDefault())
+                .toLocalDate()
+            onDateSelect(date)
         }
     }
 
     fun onSaveTodoClicked(todo: String) {
         viewModelScope.launch(context = dispatcher.iO) {
             if (todoForEdit != null) {
-                todoDataSourceUpdatable.update(requireNotNull(todoForEdit).copy(todo))
+                val updatedTodo = requireNotNull(todoForEdit).copy(todo, convertSelectedLocalDate())
+                todoDataSourceUpdatable.update(updatedTodo)
             } else {
-                todoDataSourceWritable.write(TodoEntity(todo = todo))
+                todoDataSourceWritable.write(
+                    TodoEntity(
+                        todo = todo,
+                        date = convertSelectedLocalDate()
+                    )
+                )
             }
         }
     }
 
+    private fun convertSelectedLocalDate(): Date {
+        // TODO: move date logic to a data source class
+        return (selectedDate?.atTime(LocalTime.now()) ?: LocalDateTime.now())
+            .atZone(ZoneId.systemDefault())
+            .toInstant()
+            .toEpochMilli()
+            .run { Date(this) }
+    }
+
     fun onDateSelect(selectedDate: LocalDate) {
+        this.selectedDate = selectedDate
         val today = LocalDate.now()
         _todoDateObservable.value = when {
             selectedDate == today -> {
