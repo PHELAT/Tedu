@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/viewRoot"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/headerYear"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingStart="16dp"
+        android:textColor="@color/text_hint_color"
+        android:textSize="@dimen/font_size_title_2"
+        tools:ignore="RtlSymmetry"
+        tools:text="2021" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/headerMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="@color/text_primary_color"
+        android:textSize="@dimen/font_size_title_2"
+        app:fontFamily="@font/robotoslab_black"
+        tools:text="January" />
+
+</LinearLayout>

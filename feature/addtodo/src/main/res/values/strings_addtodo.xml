@@ -3,5 +3,8 @@
 
     <string name="addtodo_hint_text">Write down a todo…</string>
     <string name="addtodo_save_todo_text">Save</string>
+    <string name="addtodo_date_text">Date</string>
+    <string name="addtodo_date_today_text">Today</string>
+    <string name="addtodo_date_tomorrow_text">Tomorrow</string>
 
 </resources>

@@ -13,6 +13,10 @@
     <color name="text_secondary_color">@color/black_secondary</color>
     <color name="text_hint_color">@color/black_hint</color>
 
+    <color name="text_primary_revert_color">@color/white_primary</color>
+    <color name="text_secondary_revert_color">@color/white_secondary</color>
+    <color name="text_hint_revert_color">@color/white_hint</color>
+
     <color name="icon_primary_color">@color/black_primary</color>
     <color name="icon_secondary_color">@color/black_secondary</color>
     <color name="icon_hint_color">@color/black_hint</color>

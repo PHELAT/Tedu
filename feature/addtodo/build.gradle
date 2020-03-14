@@ -12,6 +12,8 @@ dependencies {
 
     implementation "androidx.fragment:fragment-ktx:$library.fragment"
 
+    implementation "androidx.constraintlayout:constraintlayout:$library.constraintlayout"
+
     implementation "androidx.navigation:navigation-fragment-ktx:$library.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$library.navigation"
 
@@ -33,5 +35,6 @@ dependencies {
     implementation project(':library:thread')
     implementation project(":library:datasource")
     implementation project(":library:dependencyinjection")
+    implementation project(":library:androidresource")
 
 }

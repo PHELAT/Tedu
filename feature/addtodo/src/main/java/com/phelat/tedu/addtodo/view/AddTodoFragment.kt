@@ -6,14 +6,19 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.phelat.tedu.addtodo.R
+import com.phelat.tedu.addtodo.view.calendar.CalendarSheet
 import com.phelat.tedu.addtodo.viewmodel.AddTodoViewModel
+import kotlinx.android.synthetic.main.fragment_addtodo.dateClick
 import kotlinx.android.synthetic.main.fragment_addtodo.saveTodo
+import kotlinx.android.synthetic.main.fragment_addtodo.todoDate
 import kotlinx.android.synthetic.main.fragment_addtodo.todoInput
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
 
     private val addTodoViewModel by viewModel<AddTodoViewModel>()
+
+    private var calendarSheet: CalendarSheet? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +32,27 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
             addTodoViewModel.onSaveTodoClicked(todo)
             findNavController().navigateUp()
         }
+        dateClick.setOnClickListener {
+            showCalendarSheet()
+        }
         addTodoViewModel.apply {
             todoTextObservable.observe(viewLifecycleOwner, todoInput::setText)
+            todoDateObservable.observe(viewLifecycleOwner, todoDate::setText)
         }
     }
 
+    private fun showCalendarSheet() {
+        calendarSheet?.show()
+            ?: run {
+                calendarSheet = CalendarSheet(requireContext(), addTodoViewModel::onDateSelect)
+                showCalendarSheet()
+            }
+    }
+
+    override fun onDestroyView() {
+        if (calendarSheet?.isShowing == true) {
+            calendarSheet?.dismiss()
+        }
+        super.onDestroyView()
+    }
 }

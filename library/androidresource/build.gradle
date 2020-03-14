@@ -1,0 +1,16 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+dependencies {
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$library.kotlin"
+
+    implementation "androidx.annotation:annotation:$library.annotation"
+
+    implementation "org.koin:koin-core:$library.koin"
+
+    implementation project(":library:dependencyinjection")
+
+}

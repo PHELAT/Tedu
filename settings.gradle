@@ -13,6 +13,7 @@ include ':library:translation',
         ':library:thread',
         ':library:mapper',
         ':library:navigation',
-        ':library:dependencyinjection'
+        ':library:dependencyinjection',
+        ':library:androidresource'
 
 rootProject.name = 'Tedu'

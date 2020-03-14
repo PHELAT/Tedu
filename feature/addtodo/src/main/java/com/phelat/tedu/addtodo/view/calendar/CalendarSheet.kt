@@ -1,0 +1,38 @@
+package com.phelat.tedu.addtodo.view.calendar
+
+import android.content.Context
+import android.view.LayoutInflater
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.kizitonwose.calendarview.CalendarView
+import com.phelat.tedu.addtodo.R
+import org.threeten.bp.LocalDate
+import org.threeten.bp.YearMonth
+import org.threeten.bp.temporal.WeekFields
+import java.util.Locale
+
+class CalendarSheet(
+    context: Context,
+    onDateSelect: (LocalDate) -> Unit
+) : BottomSheetDialog(context, R.style.AppBottomSheetDialogTheme) {
+
+    init {
+        val view = LayoutInflater.from(context)
+            .inflate(R.layout.view_bottom_sheet_calendar, null, false)
+        val calendarView: CalendarView = view.findViewById(R.id.calendarView)
+        calendarView.dayBinder = CellViewBinder(
+            notifyDateChange = { changedDate ->
+                calendarView.notifyDateChanged(changedDate)
+            },
+            onSelectNewDate = { selectedDate ->
+                dismiss()
+                onDateSelect.invoke(selectedDate)
+            }
+        )
+        calendarView.monthHeaderBinder = HeaderViewBinder()
+        val currentMonth = YearMonth.now()
+        val lastMonth = currentMonth.plusMonths(11)
+        val firstDayOfWeek = WeekFields.of(Locale.ENGLISH).firstDayOfWeek
+        calendarView.setup(currentMonth, lastMonth, firstDayOfWeek)
+        setContentView(view)
+    }
+}
