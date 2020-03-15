@@ -36,5 +36,6 @@ dependencies {
     implementation project(":library:datasource")
     implementation project(":library:dependencyinjection")
     implementation project(":library:androidresource")
+    implementation project(":library:navigation")
 
 }

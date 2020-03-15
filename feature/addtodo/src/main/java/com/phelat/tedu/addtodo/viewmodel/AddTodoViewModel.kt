@@ -15,6 +15,7 @@ import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.todo.constant.TodoConstant
 import com.phelat.tedu.todo.entity.TodoEntity
+import com.phelat.tedu.uiview.Navigate
 import kotlinx.coroutines.launch
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
@@ -37,6 +38,9 @@ class AddTodoViewModel(
 
     private val _todoDateSheetObservable = SingleLiveData<Unit>()
     val todoDateSheetObservable: LiveData<Unit> = _todoDateSheetObservable
+
+    private val _navigationObservable = SingleLiveData<Navigate>()
+    val navigationObservable: LiveData<Navigate> = _navigationObservable
 
     private var todoForEdit: TodoEntity? = null
 
@@ -66,6 +70,7 @@ class AddTodoViewModel(
                     )
                 )
             }
+            _navigationObservable.postValue(Navigate.Up)
         }
     }
 

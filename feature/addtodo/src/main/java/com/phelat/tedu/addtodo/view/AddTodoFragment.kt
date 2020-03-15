@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.phelat.tedu.addtodo.R
 import com.phelat.tedu.addtodo.view.calendar.CalendarSheet
 import com.phelat.tedu.addtodo.viewmodel.AddTodoViewModel
+import com.phelat.tedu.uiview.observeNavigation
 import kotlinx.android.synthetic.main.fragment_addtodo.dateClick
 import kotlinx.android.synthetic.main.fragment_addtodo.saveTodo
 import kotlinx.android.synthetic.main.fragment_addtodo.todoDate
@@ -30,8 +31,6 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
         saveTodo.setOnClickListener {
             val todo = todoInput.text.toString()
             addTodoViewModel.onSaveTodoClicked(todo)
-            // TODO: Move to view model
-            findNavController().navigateUp()
         }
         dateClick.setOnClickListener {
             addTodoViewModel.onSelectDateClick()
@@ -40,6 +39,7 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
             todoTextObservable.observe(viewLifecycleOwner, todoInput::setText)
             todoDateObservable.observe(viewLifecycleOwner, todoDate::setText)
             todoDateSheetObservable.observe(viewLifecycleOwner) { showCalendarSheet() }
+            navigationObservable.observeNavigation(this@AddTodoFragment)
         }
     }
 
