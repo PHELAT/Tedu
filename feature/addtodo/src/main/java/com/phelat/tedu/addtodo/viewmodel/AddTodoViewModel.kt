@@ -13,23 +13,23 @@ import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.lifecycle.SingleLiveData
+import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.constant.TodoConstant
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.uiview.Navigate
 import kotlinx.coroutines.launch
-import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
-import org.threeten.bp.ZoneId
 import java.util.Date
 
 class AddTodoViewModel(
     private val dispatcher: Dispatcher,
     private val todoDataSourceWritable: Writable.Suspendable<TodoEntity>,
     private val todoDataSourceUpdatable: Updatable.Suspendable<TodoEntity>,
-    private val stringResourceProvider: ResourceProvider<StringId, StringResource>
+    private val stringResourceProvider: ResourceProvider<StringId, StringResource>,
+    private val dateToLocalDate: Mapper<Date, LocalDate>
 ) : ViewModel() {
 
+    // FIXME: resets edited text on config change
     private val _todoTextObservable = MutableLiveData<String>()
     val todoTextObservable: LiveData<String> = _todoTextObservable
 
@@ -51,8 +51,7 @@ class AddTodoViewModel(
         if (todoForEdit is TodoEntity) {
             this.todoForEdit = todoForEdit
             _todoTextObservable.value = todoForEdit.todo
-            val date = Instant.ofEpochMilli(todoForEdit.date.time).atZone(ZoneId.systemDefault())
-                .toLocalDate()
+            val date = dateToLocalDate.mapFirstToSecond(todoForEdit.date)
             onDateSelect(date)
         }
     }
@@ -60,27 +59,19 @@ class AddTodoViewModel(
     fun onSaveTodoClicked(todo: String) {
         viewModelScope.launch(context = dispatcher.iO) {
             if (todoForEdit != null) {
-                val updatedTodo = requireNotNull(todoForEdit).copy(todo, convertSelectedLocalDate())
+                val updatedTodo = requireNotNull(todoForEdit)
+                    .copy(todo, dateToLocalDate.mapSecondToFirst(selectedDate))
                 todoDataSourceUpdatable.update(updatedTodo)
             } else {
                 todoDataSourceWritable.write(
                     TodoEntity(
                         todo = todo,
-                        date = convertSelectedLocalDate()
+                        date = dateToLocalDate.mapSecondToFirst(selectedDate)
                     )
                 )
             }
             _navigationObservable.postValue(Navigate.Up)
         }
-    }
-
-    private fun convertSelectedLocalDate(): Date {
-        // TODO: move date logic to a data source class
-        return (selectedDate.atTime(LocalTime.now()))
-            .atZone(ZoneId.systemDefault())
-            .toInstant()
-            .toEpochMilli()
-            .run { Date(this) }
     }
 
     fun onDateSelect(selectedDate: LocalDate) {

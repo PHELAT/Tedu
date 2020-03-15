@@ -6,6 +6,7 @@ import com.phelat.tedu.coroutines.di.module.ThreadModule
 import com.phelat.tedu.dependencyinjection.ModuleContainer
 import com.phelat.tedu.todo.di.module.TodoModule
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
 object AddTodoModule : ModuleContainer {
@@ -20,7 +21,8 @@ object AddTodoModule : ModuleContainer {
                 dispatcher = get(),
                 todoDataSourceWritable = get(),
                 todoDataSourceUpdatable = get(),
-                stringResourceProvider = get()
+                stringResourceProvider = get(),
+                dateToLocalDate = get(qualifier("DateToLocalDate"))
             )
         }
     }

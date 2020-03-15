@@ -11,11 +11,14 @@ import com.phelat.tedu.todo.database.TodoDatabase
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
 import com.phelat.tedu.todo.datasource.TodoDataSource
 import com.phelat.tedu.todo.entity.TodoEntity
+import com.phelat.tedu.todo.mapper.DateToLocalDate
 import com.phelat.tedu.todo.mapper.TodoDatabaseEntityToTodoEntity
 import kotlinx.coroutines.flow.Flow
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.qualifier.qualifier
 import org.koin.dsl.bind
 import org.koin.dsl.module
+import org.threeten.bp.LocalDate
 import java.util.Date
 
 object TodoModule : ModuleContainer {
@@ -26,12 +29,19 @@ object TodoModule : ModuleContainer {
                 .build()
         }
         single { get<TodoDatabase>().todoEntityDao() }
-        single { TodoDatabaseEntityToTodoEntity() }
+        // TODO: use concrete typed qualifier
+        single(qualifier("TodoDatabaseEntityToTodoEntity")) { TodoDatabaseEntityToTodoEntity() }
             .bind<Mapper<TodoDatabaseEntity, TodoEntity>>()
-        single { TodoDataSource(get(), get()) }
-            .bind<Writable.Suspendable<TodoEntity>>()
+        single {
+            TodoDataSource(
+                todoEntityDao = get(),
+                mapper = get(qualifier("TodoDatabaseEntityToTodoEntity"))
+            )
+        }.bind<Writable.Suspendable<TodoEntity>>()
             .bind<Readable.IO<Date, Flow<List<TodoEntity>>>>()
             .bind<Updatable.Suspendable<TodoEntity>>()
             .bind<Deletable.Suspendable<TodoEntity>>()
+        single(qualifier("DateToLocalDate")) { DateToLocalDate() }
+            .bind<Mapper<Date, LocalDate>>()
     }
 }
