@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'koin'
+apply plugin: 'kotlin-kapt'
 
 dependencies {
 
@@ -18,9 +18,10 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$library.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$library.navigation"
 
-    implementation "org.koin:koin-core:$library.koin"
-    implementation "org.koin:koin-android:$library.koin"
-    implementation "org.koin:koin-androidx-viewmodel:$library.koin"
+    implementation "com.google.dagger:dagger:$library.dagger"
+    kapt "com.google.dagger:dagger-compiler:$library.dagger"
+    implementation "com.google.dagger:dagger-android-support:$library.dagger"
+    kapt "com.google.dagger:dagger-android-processor:$library.dagger"
 
     implementation "com.xwray:groupie:$library.groupie"
     implementation "com.xwray:groupie-kotlin-android-extensions:$library.groupie"
@@ -35,5 +36,8 @@ dependencies {
     implementation project(":library:datasource")
     implementation project(":library:translation")
     implementation project(":library:dependencyinjection")
+    implementation project(":library:androidcore")
+    implementation project(":library:androiddagger")
+    implementation project(":library:mapper")
 
 }

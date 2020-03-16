@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'koin'
 
 dependencies {
 
@@ -23,9 +22,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$library.lifecycle"
     implementation "androidx.lifecycle:lifecycle-common-java8:$library.lifecycle"
 
-    implementation "org.koin:koin-core:$library.koin"
-    implementation "org.koin:koin-android:$library.koin"
-    implementation "org.koin:koin-androidx-viewmodel:$library.koin"
+    implementation "com.google.dagger:dagger:$library.dagger"
+    kapt "com.google.dagger:dagger-compiler:$library.dagger"
+    implementation "com.google.dagger:dagger-android-support:$library.dagger"
+    kapt "com.google.dagger:dagger-android-processor:$library.dagger"
 
     implementation "com.github.kizitonwose:CalendarView:$library.calendarView"
 
@@ -38,5 +38,7 @@ dependencies {
     implementation project(":library:androidresource")
     implementation project(":library:navigation")
     implementation project(":library:mapper")
+    implementation project(":library:androidcore")
+    implementation project(":library:androiddagger")
 
 }

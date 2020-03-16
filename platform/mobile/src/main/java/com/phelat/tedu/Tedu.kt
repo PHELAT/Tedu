@@ -1,21 +1,18 @@
 package com.phelat.tedu
 
-import android.app.Application
 import com.jakewharton.threetenabp.AndroidThreeTen
-import com.phelat.tedu.addtodo.di.module.AddTodoModule
-import com.phelat.tedu.dependencyinjection.installFeatures
-import com.phelat.tedu.todolist.di.module.TodoListModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
+import com.phelat.tedu.addtodo.di.builder.AddTodoComponentBuilder
+import com.phelat.tedu.androidcore.di.builder.AndroidCoreComponentBuilder
+import com.phelat.tedu.androiddagger.DaggerAndroidApplication
+import com.phelat.tedu.todolist.di.builder.TodoListComponentBuilder
 
-class Tedu : Application() {
+class Tedu : DaggerAndroidApplication() {
 
     override fun onCreate() {
         super.onCreate()
         AndroidThreeTen.init(this)
-        startKoin {
-            androidContext(this@Tedu)
-            installFeatures(TodoListModule, AddTodoModule)
-        }
+        AndroidCoreComponentBuilder.application = this
+        installFeature(TodoListComponentBuilder)
+        installFeature(AddTodoComponentBuilder)
     }
 }

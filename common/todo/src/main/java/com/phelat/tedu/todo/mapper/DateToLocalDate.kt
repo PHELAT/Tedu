@@ -1,13 +1,16 @@
 package com.phelat.tedu.todo.mapper
 
 import com.phelat.tedu.mapper.Mapper
+import com.phelat.tedu.todo.di.scope.TodoScope
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.ZoneId
 import java.util.Date
+import javax.inject.Inject
 
-internal class DateToLocalDate : Mapper<Date, LocalDate> {
+@TodoScope
+internal class DateToLocalDate @Inject constructor() : Mapper<Date, LocalDate> {
 
     override fun mapFirstToSecond(first: Date): LocalDate {
         return Instant.ofEpochMilli(first.time)

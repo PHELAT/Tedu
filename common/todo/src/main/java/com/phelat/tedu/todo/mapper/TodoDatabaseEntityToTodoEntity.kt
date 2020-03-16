@@ -2,9 +2,13 @@ package com.phelat.tedu.todo.mapper
 
 import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
+import com.phelat.tedu.todo.di.scope.TodoScope
 import com.phelat.tedu.todo.entity.TodoEntity
+import javax.inject.Inject
 
-internal class TodoDatabaseEntityToTodoEntity : Mapper<TodoDatabaseEntity, TodoEntity> {
+@TodoScope
+internal class TodoDatabaseEntityToTodoEntity @Inject constructor() :
+    Mapper<TodoDatabaseEntity, TodoEntity> {
 
     override fun mapFirstToSecond(first: TodoDatabaseEntity): TodoEntity {
         return TodoEntity(

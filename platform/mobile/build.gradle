@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'koin'
 
 android {
     compileSdkVersion 29
@@ -41,8 +40,8 @@ dependencies {
 
     implementation "com.google.android.material:material:$library.material"
 
-    implementation "org.koin:koin-core:$library.koin"
-    implementation "org.koin:koin-android:$library.koin"
+    implementation "com.google.dagger:dagger:$library.dagger"
+    implementation "com.google.dagger:dagger-android-support:$library.dagger"
 
     implementation "com.jakewharton.threetenabp:threetenabp:$library.threetenABP"
 
@@ -51,5 +50,7 @@ dependencies {
     implementation project(':library:navigation')
     implementation project(":library:translation")
     implementation project(":library:dependencyinjection")
+    implementation project(":library:androiddagger")
+    implementation project(":library:androidcore")
 
 }

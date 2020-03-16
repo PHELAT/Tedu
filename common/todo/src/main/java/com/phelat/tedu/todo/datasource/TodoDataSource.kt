@@ -7,16 +7,19 @@ import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.database.dao.TodoEntityDao
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
+import com.phelat.tedu.todo.di.scope.TodoScope
 import com.phelat.tedu.todo.entity.TodoEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.Date
+import javax.inject.Inject
 
-internal class TodoDataSource constructor(
+@TodoScope
+internal class TodoDataSource @Inject constructor(
     private val todoEntityDao: TodoEntityDao,
     private val mapper: Mapper<TodoDatabaseEntity, TodoEntity>
 ) : Writable.Suspendable<TodoEntity>,
-    Readable.IO<Date, Flow<List<TodoEntity>>>,
+    Readable.IO<Date, @JvmSuppressWildcards Flow<@JvmSuppressWildcards List<TodoEntity>>>,
     Updatable.Suspendable<TodoEntity>,
     Deletable.Suspendable<TodoEntity> {
 
