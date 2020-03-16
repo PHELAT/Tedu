@@ -1,12 +1,12 @@
 package com.phelat.tedu.todo.mapper
 
+import com.phelat.tedu.dependencyinjection.scope.CommonScope
 import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
-import com.phelat.tedu.todo.di.scope.TodoScope
 import com.phelat.tedu.todo.entity.TodoEntity
 import javax.inject.Inject
 
-@TodoScope
+@CommonScope
 internal class TodoDatabaseEntityToTodoEntity @Inject constructor() :
     Mapper<TodoDatabaseEntity, TodoEntity> {
 

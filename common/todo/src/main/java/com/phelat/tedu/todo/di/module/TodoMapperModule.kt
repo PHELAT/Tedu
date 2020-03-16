@@ -1,8 +1,8 @@
 package com.phelat.tedu.todo.di.module
 
+import com.phelat.tedu.dependencyinjection.scope.CommonScope
 import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
-import com.phelat.tedu.todo.di.scope.TodoScope
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.mapper.DateToLocalDate
 import com.phelat.tedu.todo.mapper.TodoDatabaseEntityToTodoEntity
@@ -15,12 +15,12 @@ import java.util.Date
 internal interface TodoMapperModule {
 
     @Binds
-    @TodoScope
+    @CommonScope
     fun bindTodoDatabaseEntityToTodoEntity(
         input: TodoDatabaseEntityToTodoEntity
     ): Mapper<TodoDatabaseEntity, TodoEntity>
 
     @Binds
-    @TodoScope
+    @CommonScope
     fun bindDateToLocalDate(input: DateToLocalDate): Mapper<Date, LocalDate>
 }

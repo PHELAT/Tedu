@@ -1,7 +1,7 @@
 package com.phelat.tedu.coroutines.di.module
 
 import com.phelat.tedu.coroutines.Dispatcher
-import com.phelat.tedu.coroutines.di.scope.ThreadScope
+import com.phelat.tedu.dependencyinjection.scope.LibraryScope
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.Dispatchers
@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 class ThreadModule {
 
     @Provides
-    @ThreadScope
+    @LibraryScope
     fun provideDispatcher(): Dispatcher {
         return Dispatcher(iO = Dispatchers.IO, main = Dispatchers.Main)
     }
