@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'koin'
 
 android.defaultConfig.javaCompileOptions {
     annotationProcessorOptions {
@@ -22,8 +21,8 @@ dependencies {
     implementation "androidx.room:room-ktx:$library.room"
     kapt "androidx.room:room-compiler:$library.room"
 
-    implementation "org.koin:koin-core:$library.koin"
-    implementation "org.koin:koin-android:$library.koin"
+    implementation "com.google.dagger:dagger:$library.dagger"
+    kapt "com.google.dagger:dagger-compiler:$library.dagger"
 
     implementation "com.jakewharton.threetenabp:threetenabp:$library.threetenABP"
 
@@ -32,5 +31,6 @@ dependencies {
     implementation project(":library:datasource")
     implementation project(':library:thread')
     implementation project(':library:dependencyinjection')
+    implementation project(':library:androidcore')
 
 }

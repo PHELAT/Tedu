@@ -1,29 +1,39 @@
 package com.phelat.tedu.addtodo.di.module
 
+import com.phelat.tedu.addtodo.di.scope.AddTodoSubScope
 import com.phelat.tedu.addtodo.viewmodel.AddTodoViewModel
-import com.phelat.tedu.androidresource.di.AndroidResourceModule
-import com.phelat.tedu.coroutines.di.module.ThreadModule
-import com.phelat.tedu.dependencyinjection.ModuleContainer
-import com.phelat.tedu.todo.di.module.TodoModule
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.qualifier.qualifier
-import org.koin.dsl.module
+import com.phelat.tedu.androidresource.ResourceProvider
+import com.phelat.tedu.androidresource.input.StringId
+import com.phelat.tedu.androidresource.resource.StringResource
+import com.phelat.tedu.coroutines.Dispatcher
+import com.phelat.tedu.datasource.Updatable
+import com.phelat.tedu.datasource.Writable
+import com.phelat.tedu.lifecycle.viewModelFactory
+import com.phelat.tedu.mapper.Mapper
+import com.phelat.tedu.todo.entity.TodoEntity
+import dagger.Module
+import dagger.Provides
+import org.threeten.bp.LocalDate
+import java.util.Date
 
-object AddTodoModule : ModuleContainer {
+@Module
+class AddTodoModule {
 
-    override fun getModuleDependencies(): List<ModuleContainer> {
-        return listOf(ThreadModule, TodoModule, AndroidResourceModule)
-    }
-
-    override fun getModule() = module {
-        viewModel {
-            AddTodoViewModel(
-                dispatcher = get(),
-                todoDataSourceWritable = get(),
-                todoDataSourceUpdatable = get(),
-                stringResourceProvider = get(),
-                dateToLocalDate = get(qualifier("DateToLocalDate"))
-            )
-        }
+    @Provides
+    @AddTodoSubScope
+    fun provideAddTodoViewModelFactory(
+        dispatcher: Dispatcher,
+        todoDataSourceWritable: Writable.Suspendable<TodoEntity>,
+        todoDataSourceUpdatable: Updatable.Suspendable<TodoEntity>,
+        stringResourceProvider: ResourceProvider<StringId, StringResource>,
+        dateToLocalDate: Mapper<Date, LocalDate>
+    ) = viewModelFactory {
+        AddTodoViewModel(
+            dispatcher,
+            todoDataSourceWritable,
+            todoDataSourceUpdatable,
+            stringResourceProvider,
+            dateToLocalDate
+        )
     }
 }

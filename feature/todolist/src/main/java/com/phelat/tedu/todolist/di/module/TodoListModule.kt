@@ -1,27 +1,37 @@
 package com.phelat.tedu.todolist.di.module
 
-import com.phelat.tedu.coroutines.di.module.ThreadModule
-import com.phelat.tedu.dependencyinjection.ModuleContainer
-import com.phelat.tedu.todo.di.module.TodoModule
+import com.phelat.tedu.coroutines.Dispatcher
+import com.phelat.tedu.datasource.Deletable
+import com.phelat.tedu.datasource.Readable
+import com.phelat.tedu.datasource.Updatable
+import com.phelat.tedu.datasource.Writable
+import com.phelat.tedu.lifecycle.viewModelFactory
+import com.phelat.tedu.todo.entity.TodoEntity
+import com.phelat.tedu.todolist.di.scope.TodoListSubScope
 import com.phelat.tedu.todolist.viewmodel.TodoListViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
+import kotlinx.coroutines.flow.Flow
+import java.util.Date
 
-object TodoListModule : ModuleContainer {
+@Module
+class TodoListModule {
 
-    override fun getModuleDependencies(): List<ModuleContainer> {
-        return listOf(ThreadModule, TodoModule)
-    }
-
-    override fun getModule() = module {
-        viewModel {
-            TodoListViewModel(
-                dispatcher = get(),
-                todoDataSourceUpdatable = get(),
-                todoDataSourceWritable = get(),
-                todoDataSourceReadable = get(),
-                todoDataSourceDeletable = get()
-            )
-        }
+    @Provides
+    @TodoListSubScope
+    fun provideTodoListViewModelFactory(
+        dispatcher: Dispatcher,
+        todoDataSourceUpdatable: Updatable.Suspendable<TodoEntity>,
+        todoDataSourceDeletable: Deletable.Suspendable<TodoEntity>,
+        todoDataSourceWritable: Writable.Suspendable<TodoEntity>,
+        todoDataSourceReadable: Readable.IO<Date, Flow<List<TodoEntity>>>
+    ) = viewModelFactory {
+        TodoListViewModel(
+            dispatcher,
+            todoDataSourceUpdatable,
+            todoDataSourceDeletable,
+            todoDataSourceWritable,
+            todoDataSourceReadable
+        )
     }
 }

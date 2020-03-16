@@ -1,0 +1,17 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+dependencies {
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$library.kotlin"
+
+    implementation "androidx.appcompat:appcompat:$library.appcompat"
+
+    implementation "com.google.dagger:dagger:$library.dagger"
+    implementation "com.google.dagger:dagger-android-support:$library.dagger"
+
+    implementation project(":library:dependencyinjection")
+
+}
