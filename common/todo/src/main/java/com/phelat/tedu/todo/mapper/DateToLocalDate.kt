@@ -1,7 +1,7 @@
 package com.phelat.tedu.todo.mapper
 
+import com.phelat.tedu.dependencyinjection.scope.CommonScope
 import com.phelat.tedu.mapper.Mapper
-import com.phelat.tedu.todo.di.scope.TodoScope
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
@@ -9,7 +9,7 @@ import org.threeten.bp.ZoneId
 import java.util.Date
 import javax.inject.Inject
 
-@TodoScope
+@CommonScope
 internal class DateToLocalDate @Inject constructor() : Mapper<Date, LocalDate> {
 
     override fun mapFirstToSecond(first: Date): LocalDate {

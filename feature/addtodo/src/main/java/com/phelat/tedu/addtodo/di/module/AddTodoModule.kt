@@ -1,6 +1,6 @@
 package com.phelat.tedu.addtodo.di.module
 
-import com.phelat.tedu.addtodo.di.scope.AddTodoSubScope
+import com.phelat.tedu.addtodo.di.scope.AddTodoScope
 import com.phelat.tedu.addtodo.viewmodel.AddTodoViewModel
 import com.phelat.tedu.androidresource.ResourceProvider
 import com.phelat.tedu.androidresource.input.StringId
@@ -20,7 +20,7 @@ import java.util.Date
 class AddTodoModule {
 
     @Provides
-    @AddTodoSubScope
+    @AddTodoScope
     fun provideAddTodoViewModelFactory(
         dispatcher: Dispatcher,
         todoDataSourceWritable: Writable.Suspendable<TodoEntity>,

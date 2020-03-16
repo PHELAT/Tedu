@@ -7,7 +7,7 @@ import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.lifecycle.viewModelFactory
 import com.phelat.tedu.todo.entity.TodoEntity
-import com.phelat.tedu.todolist.di.scope.TodoListSubScope
+import com.phelat.tedu.todolist.di.scope.TodoListScope
 import com.phelat.tedu.todolist.viewmodel.TodoListViewModel
 import dagger.Module
 import dagger.Provides
@@ -18,7 +18,7 @@ import java.util.Date
 class TodoListModule {
 
     @Provides
-    @TodoListSubScope
+    @TodoListScope
     fun provideTodoListViewModelFactory(
         dispatcher: Dispatcher,
         todoDataSourceUpdatable: Updatable.Suspendable<TodoEntity>,
