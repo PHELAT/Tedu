@@ -19,7 +19,7 @@ internal class TodoDataSource @Inject constructor(
     private val todoEntityDao: TodoEntityDao,
     private val mapper: Mapper<TodoDatabaseEntity, TodoEntity>
 ) : Writable.Suspendable<TodoEntity>,
-    Readable.IO<Date, @JvmSuppressWildcards Flow<@JvmSuppressWildcards List<TodoEntity>>>,
+    Readable.IO<Date, Flow<@JvmSuppressWildcards List<TodoEntity>>>,
     Updatable.Suspendable<TodoEntity>,
     Deletable.Suspendable<TodoEntity> {
 
