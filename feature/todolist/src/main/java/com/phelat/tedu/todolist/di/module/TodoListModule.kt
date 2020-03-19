@@ -7,6 +7,7 @@ import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.lifecycle.viewModelFactory
 import com.phelat.tedu.todo.entity.TodoEntity
+import com.phelat.tedu.todo.type.ArchivableTodos
 import com.phelat.tedu.todolist.di.scope.TodoListScope
 import com.phelat.tedu.todolist.viewmodel.TodoListViewModel
 import dagger.Module
@@ -24,14 +25,18 @@ class TodoListModule {
         todoDataSourceUpdatable: Updatable.Suspendable<TodoEntity>,
         todoDataSourceDeletable: Deletable.Suspendable<TodoEntity>,
         todoDataSourceWritable: Writable.Suspendable<TodoEntity>,
-        todoDataSourceReadable: Readable.IO<Date, Flow<List<TodoEntity>>>
+        todoDataSourceReadable: Readable.IO<Date, Flow<List<TodoEntity>>>,
+        archivableTodoDataSourceReadable: Readable.Suspendable.IO<Date, ArchivableTodos>,
+        archivableTodoDataSourceDeletable: Deletable.Suspendable.IO<ArchivableTodos, Boolean>
     ) = viewModelFactory {
         TodoListViewModel(
             dispatcher,
             todoDataSourceUpdatable,
             todoDataSourceDeletable,
             todoDataSourceWritable,
-            todoDataSourceReadable
+            todoDataSourceReadable,
+            archivableTodoDataSourceReadable,
+            archivableTodoDataSourceDeletable
         )
     }
 }
