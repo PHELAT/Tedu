@@ -54,3 +54,5 @@ dependencies {
     implementation project(":library:androidcore")
 
 }
+
+preBuild.dependsOn "detekt"

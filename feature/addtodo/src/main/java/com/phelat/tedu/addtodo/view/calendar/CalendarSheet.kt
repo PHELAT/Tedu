@@ -32,9 +32,13 @@ class CalendarSheet(
         )
         calendarView.monthHeaderBinder = HeaderViewBinder()
         val currentMonth = YearMonth.now()
-        val lastMonth = currentMonth.plusMonths(11)
+        val lastMonth = currentMonth.plusMonths(MONTHS_IN_A_YEAR - 1)
         val firstDayOfWeek = WeekFields.of(Locale.ENGLISH).firstDayOfWeek
         calendarView.setup(currentMonth, lastMonth, firstDayOfWeek)
         setContentView(view)
+    }
+
+    companion object {
+        private const val MONTHS_IN_A_YEAR = 12L
     }
 }

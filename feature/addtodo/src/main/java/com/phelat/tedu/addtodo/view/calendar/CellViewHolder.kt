@@ -22,49 +22,53 @@ class CellViewHolder(view: View, private val selectedDate: () -> LocalDate) : Vi
         if (day.owner == DayOwner.THIS_MONTH) {
             cellText.visibility = View.VISIBLE
             cellText.text = day.date.dayOfMonth.toString()
-            when {
-                day.date == selectedDate() -> {
-                    cellText.setBackgroundResource(R.drawable.shape_calendar_selected_date)
-                    cellText.setTextColor(
-                        ContextCompat.getColor(
-                            cellText.context,
-                            R.color.text_primary_revert_color
-                        )
-                    )
-                }
-                day.date == today -> {
-                    cellText.setBackgroundResource(R.drawable.selector_calendar_today)
-                    cellText.setTextColor(
-                        ContextCompat.getColor(
-                            cellText.context,
-                            R.color.text_secondary_color
-                        )
-                    )
-                }
-                day.date.isBefore(today) -> {
-                    cellText.background = null
-                    cellText.setTextColor(
-                        ContextCompat.getColor(
-                            cellText.context,
-                            R.color.text_hint_color
-                        )
-                    )
-                }
-                else -> {
-                    cellText.setBackgroundResource(R.drawable.selector_click_oval)
-                    cellText.setTextColor(
-                        ContextCompat.getColor(
-                            cellText.context,
-                            R.color.text_secondary_color
-                        )
-                    )
-                }
-            }
+            bindRegardingToDateInformation(day, today)
         } else {
             cellText.visibility = View.GONE
         }
         cellText.setOnClickListener {
             onClickListener.invoke()
+        }
+    }
+
+    private fun bindRegardingToDateInformation(day: CalendarDay, today: LocalDate) {
+        when {
+            day.date == selectedDate() -> {
+                cellText.setBackgroundResource(R.drawable.shape_calendar_selected_date)
+                cellText.setTextColor(
+                    ContextCompat.getColor(
+                        cellText.context,
+                        R.color.text_primary_revert_color
+                    )
+                )
+            }
+            day.date == today -> {
+                cellText.setBackgroundResource(R.drawable.selector_calendar_today)
+                cellText.setTextColor(
+                    ContextCompat.getColor(
+                        cellText.context,
+                        R.color.text_secondary_color
+                    )
+                )
+            }
+            day.date.isBefore(today) -> {
+                cellText.background = null
+                cellText.setTextColor(
+                    ContextCompat.getColor(
+                        cellText.context,
+                        R.color.text_hint_color
+                    )
+                )
+            }
+            else -> {
+                cellText.setBackgroundResource(R.drawable.selector_click_oval)
+                cellText.setTextColor(
+                    ContextCompat.getColor(
+                        cellText.context,
+                        R.color.text_secondary_color
+                    )
+                )
+            }
         }
     }
 }

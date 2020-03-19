@@ -1,0 +1,7 @@
+subprojects {
+    afterEvaluate { project ->
+        if (project.getPlugins().hasPlugin('java-library')) {
+            compileKotlin.dependsOn "detekt"
+        }
+    }
+}

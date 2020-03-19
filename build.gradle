@@ -3,10 +3,12 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$library.kotlin"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$library.detekt"
     }
 }
 
@@ -19,7 +21,29 @@ allprojects {
     }
 }
 
+subprojects {
+    apply plugin: "io.gitlab.arturbosch.detekt"
+    detekt {
+        toolVersion = library.detekt
+        config = files("${rootDir}/detekt.yml")
+        parallel = true
+        reports {
+            xml.enabled = false
+            txt.enabled = false
+            html {
+                enabled = true
+                destination = file("${rootDir}/build/reports/detekt_${project.name}.html")
+            }
+        }
+    }
+    tasks.withType(io.gitlab.arturbosch.detekt.Detekt) {
+        exclude(".*/resources/.*")
+        exclude(".*/build/.*")
+    }
+}
+
 apply from: "$rootDir/buildScript/androidLibraryModule.gradle"
+apply from: "$rootDir/buildScript/kotlinLibraryModule.gradle"
 apply from: "$rootDir/buildScript/projectDependency.gradle"
 
 task clean(type: Delete) {
