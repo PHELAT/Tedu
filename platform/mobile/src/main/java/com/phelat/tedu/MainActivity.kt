@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupBottomNavigationView() {
         bottomNavigationView.setupWithNavController(
-            listOf(R.navigation.navigation_todolist),
+            listOf(R.navigation.navigation_todolist, R.navigation.navigation_settings),
             supportFragmentManager,
             R.id.fragmentContainer,
             intent

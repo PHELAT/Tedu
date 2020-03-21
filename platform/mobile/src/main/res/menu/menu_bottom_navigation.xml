@@ -7,4 +7,9 @@
         android:icon="@drawable/ic_notes_icon_primary_24dp"
         android:title="@string/todolist_feature_title_name" />
 
+    <item
+        android:id="@id/navigation_settings"
+        android:icon="@drawable/ic_settings_icon_primary_24dp"
+        android:title="@string/settings_feature_title_name" />
+
 </menu>
