@@ -2,5 +2,6 @@
 <resources>
 
     <string name="settings_feature_title_name">Settings</string>
+    <string name="settings_dark_mode_title">Enable dark mode</string>
 
 </resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="color_primary">@color/white_primary</color>
+    <color name="color_hint">@color/white_hint</color>
+    <color name="color_divider">@color/white_divider</color>
+
+    <color name="surface_color_0">@color/grey_900</color>
+    <color name="surface_color_1">@color/grey_850</color>
+    <color name="surface_color_2">@color/grey_800</color>
+
+    <color name="text_primary_color">@color/white_primary</color>
+    <color name="text_secondary_color">@color/white_secondary</color>
+    <color name="text_hint_color">@color/white_hint</color>
+
+    <color name="text_primary_revert_color">@color/black_primary</color>
+    <color name="text_secondary_revert_color">@color/black_secondary</color>
+    <color name="text_hint_revert_color">@color/black_hint</color>
+
+    <color name="icon_primary_color">@color/white_primary</color>
+    <color name="icon_secondary_color">@color/white_secondary</color>
+    <color name="icon_hint_color">@color/white_hint</color>
+
+    <color name="brand_primary">@color/grey_50</color>
+    <color name="brand_secondary">@color/white_secondary</color>
+    <color name="brand_hint">@color/white_hint</color>
+    <color name="brand_divider">@color/white_divider</color>
+
+    <color name="ripple_color">#39FFFFFF</color>
+    <color name="ripple_draw_color">#8FFFFFFF</color>
+
+</resources>

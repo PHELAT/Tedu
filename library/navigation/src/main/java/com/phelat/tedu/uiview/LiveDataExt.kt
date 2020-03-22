@@ -14,6 +14,9 @@ inline fun <reified T : Navigate> LiveData<T>.observeNavigation(fragment: Fragme
             is Navigate.Up -> {
                 fragment.findNavController().navigateUp()
             }
+            is Navigate.Recreate -> {
+                fragment.requireActivity().recreate()
+            }
         }
     })
 }

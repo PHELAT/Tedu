@@ -4,20 +4,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/viewRoot"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/selector_click_rectangle"
-    android:clickable="true"
-    android:focusable="true"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/addTodoButton"
+        android:id="@+id/settingsTitleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="@string/todolist_add_todo_text"
+        android:text="@string/settings_feature_title_name"
         android:textColor="@color/text_secondary_color"
         android:textSize="@dimen/font_size_title_1"
         app:fontFamily="@font/robotoslab_black" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/darkModeSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:padding="16dp"
+        android:text="@string/settings_dark_mode_title" />
 
 </LinearLayout>
