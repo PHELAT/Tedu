@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 
-inline fun <reified T : Navigate> LiveData<T>.observeNavigation(fragment: Fragment) {
+fun <T : Navigate> LiveData<T>.observeNavigation(fragment: Fragment) {
     observe(fragment.viewLifecycleOwner, Observer {
         when (it) {
             is Navigate.ToDirection -> {
