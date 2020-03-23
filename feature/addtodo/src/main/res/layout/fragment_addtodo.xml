@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@null"
+        android:focusable="true"
         android:hint="@string/addtodo_hint_text"
         android:maxLength="64"
         android:padding="20dp"

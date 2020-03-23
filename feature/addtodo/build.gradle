@@ -40,5 +40,6 @@ dependencies {
     implementation project(":library:mapper")
     implementation project(":library:androidcore")
     implementation project(":library:androiddagger")
+    implementation project(":library:sdkextensions")
 
 }

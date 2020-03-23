@@ -3,6 +3,7 @@ package com.phelat.tedu.addtodo.view
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +13,7 @@ import com.phelat.tedu.addtodo.di.component.AddTodoComponent
 import com.phelat.tedu.addtodo.view.calendar.CalendarSheet
 import com.phelat.tedu.addtodo.viewmodel.AddTodoViewModel
 import com.phelat.tedu.androiddagger.inject
+import com.phelat.tedu.sdkextensions.showKeyboard
 import com.phelat.tedu.uiview.observeNavigation
 import kotlinx.android.synthetic.main.fragment_addtodo.dateClick
 import kotlinx.android.synthetic.main.fragment_addtodo.saveTodo
@@ -53,6 +55,7 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
             todoDateSheetObservable.observe(viewLifecycleOwner) { showCalendarSheet() }
             navigationObservable.observeNavigation(this@AddTodoFragment)
         }
+        showKeyboard()
     }
 
     private fun showCalendarSheet() {
