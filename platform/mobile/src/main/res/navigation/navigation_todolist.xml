@@ -4,13 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@id/navigation_todolist"
-    app:startDestination="@id/navigation_todolist"
+    app:startDestination="@id/todolist_fragment"
     tools:ignore="UnusedNavigation">
 
     <include app:graph="@navigation/navigation_addtodo" />
 
     <fragment
-        android:id="@id/navigation_todolist"
+        android:id="@+id/todolist_fragment"
         android:name="com.phelat.tedu.todolist.view.TodoListFragment" />
 
 </navigation>

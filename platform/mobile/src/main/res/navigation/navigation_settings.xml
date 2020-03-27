@@ -4,11 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@id/navigation_settings"
-    app:startDestination="@id/navigation_settings"
+    app:startDestination="@id/settings_fragment"
     tools:ignore="UnusedNavigation">
 
     <fragment
-        android:id="@id/navigation_settings"
+        android:id="@+id/settings_fragment"
         android:name="com.phelat.tedu.settings.view.SettingsFragment" />
 
 </navigation>
