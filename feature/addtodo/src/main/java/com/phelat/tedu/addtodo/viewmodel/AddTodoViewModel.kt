@@ -29,8 +29,7 @@ class AddTodoViewModel(
     private val dateToLocalDate: Mapper<Date, LocalDate>
 ) : ViewModel() {
 
-    // FIXME: resets edited text on config change
-    private val _todoTextObservable = MutableLiveData<String>()
+    private val _todoTextObservable = SingleLiveData<String>()
     val todoTextObservable: LiveData<String> = _todoTextObservable
 
     private val _todoDateObservable = MutableLiveData<String>()
@@ -50,9 +49,13 @@ class AddTodoViewModel(
         val todoForEdit = bundle?.getSerializable(TodoConstant.TODO_FOR_EDIT)
         if (todoForEdit is TodoEntity) {
             this.todoForEdit = todoForEdit
-            _todoTextObservable.value = todoForEdit.todo
-            val date = dateToLocalDate.mapFirstToSecond(todoForEdit.date)
-            onDateSelect(date)
+            if (_todoTextObservable.value == null) {
+                _todoTextObservable.value = todoForEdit.todo
+            }
+            if (_todoDateObservable.value == null) {
+                val date = dateToLocalDate.mapFirstToSecond(todoForEdit.date)
+                onDateSelect(date)
+            }
         }
     }
 
