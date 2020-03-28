@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.phelat.tedu.androiddagger.inject
@@ -16,6 +15,7 @@ import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.todolist.R
 import com.phelat.tedu.todolist.di.component.TodoListComponent
 import com.phelat.tedu.todolist.viewmodel.TodoListViewModel
+import com.phelat.tedu.uiview.observeNavigation
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_todolist.todoListRecycler
@@ -48,9 +48,7 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
             todoSheetObservable.observe(viewLifecycleOwner, ::observeTodoSheet)
             dismissTodoSheetObservable.observe(viewLifecycleOwner) { dismissTodoSheet() }
             todoDeletionObservable.observe(viewLifecycleOwner) { observeTodoDeletion() }
-            navigationObservable.observe(viewLifecycleOwner) { navigationPair ->
-                findNavController().navigate(navigationPair.first, navigationPair.second)
-            }
+            navigationObservable.observeNavigation(this@TodoListFragment)
         }
     }
 

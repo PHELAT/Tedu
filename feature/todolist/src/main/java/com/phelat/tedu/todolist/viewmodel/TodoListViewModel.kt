@@ -1,7 +1,6 @@
 package com.phelat.tedu.todolist.viewmodel
 
 import android.os.Bundle
-import androidx.annotation.IdRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,6 +18,8 @@ import com.phelat.tedu.todo.type.ArchivableTodos
 import com.phelat.tedu.todolist.R
 import com.phelat.tedu.todolist.view.AddTodoItem
 import com.phelat.tedu.todolist.view.TodoListItem
+import com.phelat.tedu.uiview.DirectionId
+import com.phelat.tedu.uiview.Navigate
 import com.xwray.groupie.Section
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -59,8 +60,8 @@ class TodoListViewModel(
     private val _todoDeletionObservable = SingleLiveData<Unit>()
     val todoDeletionObservable: LiveData<Unit> = _todoDeletionObservable
 
-    private val _navigationObservable = SingleLiveData<Pair<@IdRes Int, Bundle?>>()
-    val navigationObservable: LiveData<Pair<Int, Bundle?>> = _navigationObservable
+    private val _navigationObservable = SingleLiveData<Navigate>()
+    val navigationObservable: LiveData<Navigate> = _navigationObservable
 
     @Volatile
     private var deletedTodo: TodoEntity? = null
@@ -147,7 +148,10 @@ class TodoListViewModel(
     private fun onEditTodoClick(todoEntity: TodoEntity) {
         val editBundle = Bundle()
         editBundle.putSerializable(TodoConstant.TODO_FOR_EDIT, todoEntity)
-        _navigationObservable.value = R.id.navigation_addtodo to editBundle
+        _navigationObservable.value = Navigate.ToDirection(
+            DirectionId(R.id.navigation_addtodo),
+            editBundle
+        )
     }
 
     private fun onDeleteTodoClick(todoEntity: TodoEntity) {
@@ -161,7 +165,7 @@ class TodoListViewModel(
     }
 
     private fun onAddTodoClick() {
-        _navigationObservable.value = R.id.navigation_addtodo to null
+        _navigationObservable.value = Navigate.ToDirection(DirectionId(R.id.navigation_addtodo))
     }
 
     fun onTodoDeletionUndoClick() {
