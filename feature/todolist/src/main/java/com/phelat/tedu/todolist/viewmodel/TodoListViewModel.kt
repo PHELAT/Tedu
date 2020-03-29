@@ -14,6 +14,7 @@ import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.ifNotSuccessful
 import com.phelat.tedu.functional.ifSuccessful
+import com.phelat.tedu.functional.mapForEach
 import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.todo.constant.TodoConstant
@@ -99,14 +100,12 @@ class TodoListViewModel(
         val tomorrow = getTomorrowDate()
         todoDataSourceReadable.read(tomorrow)
             .onEach { delay(UPDATE_DELAY_IN_MILLIS) }
-            .map { todoEntities ->
-                todoEntities.map { todoEntity ->
-                    TodoListItem(
-                        todoEntity,
-                        onClickListener = ::onTodoClick,
-                        onLongClickListener = ::onTodoLongClick
-                    )
-                }
+            .mapForEach { todoEntity ->
+                TodoListItem(
+                    todoEntity,
+                    onClickListener = ::onTodoClick,
+                    onLongClickListener = ::onTodoLongClick
+                )
             }
             .flowOn(dispatcher.iO)
             .onEach { todoSection.update(it) }

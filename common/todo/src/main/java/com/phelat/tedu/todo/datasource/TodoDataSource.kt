@@ -8,13 +8,13 @@ import com.phelat.tedu.dependencyinjection.scope.CommonScope
 import com.phelat.tedu.functional.Failure
 import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.Success
+import com.phelat.tedu.functional.mapForEach
 import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.database.dao.TodoEntityDao
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.error.TodoErrorContext
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import java.util.Date
 import javax.inject.Inject
 
@@ -39,7 +39,7 @@ internal class TodoDataSource @Inject constructor(
 
     override fun read(input: Date): Flow<List<TodoEntity>> {
         return todoEntityDao.selectAllTodosBefore(input)
-            .map { todoDatabaseEntities -> todoDatabaseEntities.map(mapper::mapFirstToSecond) }
+            .mapForEach(mapper::mapFirstToSecond)
     }
 
     override suspend fun update(input: TodoEntity): Response<Unit, TodoErrorContext> {
