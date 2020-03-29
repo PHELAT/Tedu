@@ -11,9 +11,14 @@ import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
+import com.phelat.tedu.functional.Response
+import com.phelat.tedu.functional.ifNotSuccessful
+import com.phelat.tedu.functional.ifSuccessful
+import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.todo.constant.TodoConstant
 import com.phelat.tedu.todo.entity.TodoEntity
+import com.phelat.tedu.todo.error.TodoErrorContext
 import com.phelat.tedu.todo.type.ArchivableTodos
 import com.phelat.tedu.todolist.R
 import com.phelat.tedu.todolist.view.AddTodoItem
@@ -24,7 +29,6 @@ import com.xwray.groupie.Section
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -35,9 +39,9 @@ import java.util.Date
 
 class TodoListViewModel(
     private val dispatcher: Dispatcher,
-    private val todoDataSourceUpdatable: Updatable.Suspendable<TodoEntity>,
-    private val todoDataSourceDeletable: Deletable.Suspendable<TodoEntity>,
-    private val todoDataSourceWritable: Writable.Suspendable<TodoEntity>,
+    private val todoDataSourceUpdatable: Updatable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
+    private val todoDataSourceDeletable: Deletable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
+    private val todoDataSourceWritable: Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val todoDataSourceReadable: Readable.IO<Date, Flow<List<TodoEntity>>>,
     private val archivableTodoDataSourceReadable: Readable.Suspendable.IO<Date, ArchivableTodos>,
     private val archivableTodoDataSourceDeletable: Deletable.Suspendable.IO<ArchivableTodos, Boolean>
@@ -94,7 +98,7 @@ class TodoListViewModel(
     private suspend fun fetchTodos() {
         val tomorrow = getTomorrowDate()
         todoDataSourceReadable.read(tomorrow)
-            .debounce(UPDATE_DELAY_IN_MILLIS)
+            .onEach { delay(UPDATE_DELAY_IN_MILLIS) }
             .map { todoEntities ->
                 todoEntities.map { todoEntity ->
                     TodoListItem(
@@ -126,7 +130,9 @@ class TodoListViewModel(
         viewModelScope.launch(context = dispatcher.iO) {
             val updatedTodo = todoEntity.copy(isDone = todoEntity.isDone.not())
             delay(UPDATE_DELAY_IN_MILLIS)
-            todoDataSourceUpdatable.update(updatedTodo)
+            todoDataSourceUpdatable.update(updatedTodo).ifNotSuccessful {
+                // TODO: handle error
+            }
         }
     }
 
@@ -158,9 +164,12 @@ class TodoListViewModel(
         _dismissTodoSheetObservable.call()
         viewModelScope.launch(context = dispatcher.iO) {
             delay(UPDATE_DELAY_IN_MILLIS)
-            todoDataSourceDeletable.delete(todoEntity)
-            deletedTodo = todoEntity
-            _todoDeletionObservable.postCall()
+            todoDataSourceDeletable.delete(todoEntity).ifSuccessful {
+                deletedTodo = todoEntity
+                _todoDeletionObservable.postCall()
+            } otherwise {
+                // TODO: handle error
+            }
         }
     }
 

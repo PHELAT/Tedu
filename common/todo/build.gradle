@@ -32,5 +32,6 @@ dependencies {
     implementation project(':library:thread')
     implementation project(':library:dependencyinjection')
     implementation project(':library:androidcore')
+    implementation project(':library:functional')
 
 }

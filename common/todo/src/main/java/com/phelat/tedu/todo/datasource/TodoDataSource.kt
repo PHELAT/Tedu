@@ -5,10 +5,14 @@ import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.dependencyinjection.scope.CommonScope
+import com.phelat.tedu.functional.Failure
+import com.phelat.tedu.functional.Response
+import com.phelat.tedu.functional.Success
 import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.database.dao.TodoEntityDao
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
 import com.phelat.tedu.todo.entity.TodoEntity
+import com.phelat.tedu.todo.error.TodoErrorContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.Date
@@ -18,14 +22,19 @@ import javax.inject.Inject
 internal class TodoDataSource @Inject constructor(
     private val todoEntityDao: TodoEntityDao,
     private val mapper: Mapper<TodoDatabaseEntity, TodoEntity>
-) : Writable.Suspendable<TodoEntity>,
+) : Writable.Suspendable.IO<TodoEntity, @JvmSuppressWildcards Response<Unit, TodoErrorContext>>,
     Readable.IO<Date, Flow<@JvmSuppressWildcards List<TodoEntity>>>,
-    Updatable.Suspendable<TodoEntity>,
-    Deletable.Suspendable<TodoEntity> {
+    Updatable.Suspendable.IO<TodoEntity, @JvmSuppressWildcards Response<Unit, TodoErrorContext>>,
+    Deletable.Suspendable.IO<TodoEntity, @JvmSuppressWildcards Response<Unit, TodoErrorContext>> {
 
-    override suspend fun write(input: TodoEntity) {
+    override suspend fun write(input: TodoEntity): Response<Unit, TodoErrorContext> {
         val todoDatabaseEntity = mapper.mapSecondToFirst(input)
-        todoEntityDao.insertTodo(todoDatabaseEntity)
+        val todoId = todoEntityDao.insertTodo(todoDatabaseEntity)
+        return if (todoId >= 0) {
+            Success(Unit)
+        } else {
+            Failure(TodoErrorContext.InsertionFailed)
+        }
     }
 
     override fun read(input: Date): Flow<List<TodoEntity>> {
@@ -33,13 +42,23 @@ internal class TodoDataSource @Inject constructor(
             .map { todoDatabaseEntities -> todoDatabaseEntities.map(mapper::mapFirstToSecond) }
     }
 
-    override suspend fun update(input: TodoEntity) {
+    override suspend fun update(input: TodoEntity): Response<Unit, TodoErrorContext> {
         val todoDatabaseEntity = mapper.mapSecondToFirst(input)
-        todoEntityDao.updateTodo(todoDatabaseEntity)
+        val affectedRows = todoEntityDao.updateTodo(todoDatabaseEntity)
+        return if (affectedRows >= 0) {
+            Success(Unit)
+        } else {
+            Failure(TodoErrorContext.UpdateFailed)
+        }
     }
 
-    override suspend fun delete(input: TodoEntity) {
+    override suspend fun delete(input: TodoEntity): Response<Unit, TodoErrorContext> {
         val todoDatabaseEntity = mapper.mapSecondToFirst(input)
-        todoEntityDao.deleteTodo(todoDatabaseEntity)
+        val affectedRows = todoEntityDao.deleteTodo(todoDatabaseEntity)
+        return if (affectedRows >= 0) {
+            Success(Unit)
+        } else {
+            Failure(TodoErrorContext.DeletionFailed)
+        }
     }
 }

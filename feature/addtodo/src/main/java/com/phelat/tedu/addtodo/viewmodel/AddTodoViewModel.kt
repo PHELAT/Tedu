@@ -12,10 +12,14 @@ import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
+import com.phelat.tedu.functional.Response
+import com.phelat.tedu.functional.ifSuccessful
+import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.constant.TodoConstant
 import com.phelat.tedu.todo.entity.TodoEntity
+import com.phelat.tedu.todo.error.TodoErrorContext
 import com.phelat.tedu.uiview.Navigate
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
@@ -23,8 +27,8 @@ import java.util.Date
 
 class AddTodoViewModel(
     private val dispatcher: Dispatcher,
-    private val todoDataSourceWritable: Writable.Suspendable<TodoEntity>,
-    private val todoDataSourceUpdatable: Updatable.Suspendable<TodoEntity>,
+    private val todoDataSourceWritable: Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
+    private val todoDataSourceUpdatable: Updatable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val stringResourceProvider: ResourceProvider<StringId, StringResource>,
     private val dateToLocalDate: Mapper<Date, LocalDate>
 ) : ViewModel() {
@@ -61,7 +65,7 @@ class AddTodoViewModel(
 
     fun onSaveTodoClicked(typedTodo: String) {
         viewModelScope.launch(context = dispatcher.iO) {
-            if (todoForEdit != null) {
+            val saveResponse = if (todoForEdit != null) {
                 val editedTodo = requireNotNull(todoForEdit)
                     .copy(todo = typedTodo, date = dateToLocalDate.mapSecondToFirst(selectedDate))
                 todoDataSourceUpdatable.update(editedTodo)
@@ -72,7 +76,15 @@ class AddTodoViewModel(
                 )
                 todoDataSourceWritable.write(newTodo)
             }
-            _navigationObservable.postValue(Navigate.Up)
+            saveResponse.ifSuccessful {
+                _navigationObservable.postValue(Navigate.Up)
+            } otherwise { errorContext ->
+                when (errorContext) {
+                    is TodoErrorContext.InsertionFailed, is TodoErrorContext.UpdateFailed -> {
+                        // TODO: handle error
+                    }
+                }
+            }
         }
     }
 

@@ -6,12 +6,14 @@ import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.dependencyinjection.scope.CommonScope
+import com.phelat.tedu.functional.Response
 import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.di.module.TodoArchiveDataSourceModule
 import com.phelat.tedu.todo.di.module.TodoDataSourceModule
 import com.phelat.tedu.todo.di.module.TodoDatabaseModule
 import com.phelat.tedu.todo.di.module.TodoMapperModule
 import com.phelat.tedu.todo.entity.TodoEntity
+import com.phelat.tedu.todo.error.TodoErrorContext
 import com.phelat.tedu.todo.type.ArchivableTodos
 import dagger.Component
 import kotlinx.coroutines.flow.Flow
@@ -30,13 +32,13 @@ import java.util.Date
 )
 interface TodoComponent {
 
-    fun exposeTodoWritableDataSource(): Writable.Suspendable<TodoEntity>
+    fun exposeTodoWritableDataSource(): Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>
 
     fun exposeTodoReadableDataSource(): Readable.IO<Date, Flow<List<TodoEntity>>>
 
-    fun exposeTodoUpdatableDataSource(): Updatable.Suspendable<TodoEntity>
+    fun exposeTodoUpdatableDataSource(): Updatable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>
 
-    fun exposeTodoDeletableDataSource(): Deletable.Suspendable<TodoEntity>
+    fun exposeTodoDeletableDataSource(): Deletable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>
 
     fun exposeTodoArchiveReadableDataSource(): Readable.Suspendable.IO<Date, ArchivableTodos>
 

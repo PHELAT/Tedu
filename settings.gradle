@@ -18,6 +18,7 @@ include ':library:translation',
         ':library:androidresource',
         ':library:androidcore',
         ':library:androiddagger',
-        ':library:sdkextensions'
+        ':library:sdkextensions',
+        ':library:functional'
 
 rootProject.name = 'Tedu'

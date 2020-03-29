@@ -5,8 +5,10 @@ import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.dependencyinjection.scope.CommonScope
+import com.phelat.tedu.functional.Response
 import com.phelat.tedu.todo.datasource.TodoDataSource
 import com.phelat.tedu.todo.entity.TodoEntity
+import com.phelat.tedu.todo.error.TodoErrorContext
 import dagger.Binds
 import dagger.Module
 import kotlinx.coroutines.flow.Flow
@@ -17,17 +19,25 @@ internal interface TodoDataSourceModule {
 
     @Binds
     @CommonScope
-    fun bindTodoDataSourceToWritable(input: TodoDataSource): Writable.Suspendable<TodoEntity>
+    fun bindTodoDataSourceToWritable(
+        input: TodoDataSource
+    ): Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>
 
     @Binds
     @CommonScope
-    fun bindTodoDataSourceToReadable(input: TodoDataSource): Readable.IO<@JvmSuppressWildcards Date, Flow<List<TodoEntity>>>
+    fun bindTodoDataSourceToReadable(
+        input: TodoDataSource
+    ): Readable.IO<Date, Flow<List<TodoEntity>>>
 
     @Binds
     @CommonScope
-    fun bindTodoDataSourceToUpdatable(input: TodoDataSource): Updatable.Suspendable<TodoEntity>
+    fun bindTodoDataSourceToUpdatable(
+        input: TodoDataSource
+    ): Updatable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>
 
     @Binds
     @CommonScope
-    fun bindTodoDataSourceToDeletable(input: TodoDataSource): Deletable.Suspendable<TodoEntity>
+    fun bindTodoDataSourceToDeletable(
+        input: TodoDataSource
+    ): Deletable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>
 }
