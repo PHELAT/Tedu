@@ -59,19 +59,18 @@ class AddTodoViewModel(
         }
     }
 
-    fun onSaveTodoClicked(todo: String) {
+    fun onSaveTodoClicked(typedTodo: String) {
         viewModelScope.launch(context = dispatcher.iO) {
             if (todoForEdit != null) {
-                val updatedTodo = requireNotNull(todoForEdit)
-                    .copy(todo, dateToLocalDate.mapSecondToFirst(selectedDate))
-                todoDataSourceUpdatable.update(updatedTodo)
+                val editedTodo = requireNotNull(todoForEdit)
+                    .copy(todo = typedTodo, date = dateToLocalDate.mapSecondToFirst(selectedDate))
+                todoDataSourceUpdatable.update(editedTodo)
             } else {
-                todoDataSourceWritable.write(
-                    TodoEntity(
-                        todo = todo,
-                        date = dateToLocalDate.mapSecondToFirst(selectedDate)
-                    )
+                val newTodo = TodoEntity(
+                    todo = typedTodo,
+                    date = dateToLocalDate.mapSecondToFirst(selectedDate)
                 )
+                todoDataSourceWritable.write(newTodo)
             }
             _navigationObservable.postValue(Navigate.Up)
         }
