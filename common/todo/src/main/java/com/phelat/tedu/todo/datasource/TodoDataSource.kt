@@ -45,7 +45,7 @@ internal class TodoDataSource @Inject constructor(
     override suspend fun update(input: TodoEntity): Response<Unit, TodoErrorContext> {
         val todoDatabaseEntity = mapper.mapSecondToFirst(input)
         val affectedRows = todoEntityDao.updateTodo(todoDatabaseEntity)
-        return if (affectedRows >= 0) {
+        return if (affectedRows > 0) {
             Success(Unit)
         } else {
             Failure(TodoErrorContext.UpdateFailed)
@@ -55,7 +55,7 @@ internal class TodoDataSource @Inject constructor(
     override suspend fun delete(input: TodoEntity): Response<Unit, TodoErrorContext> {
         val todoDatabaseEntity = mapper.mapSecondToFirst(input)
         val affectedRows = todoEntityDao.deleteTodo(todoDatabaseEntity)
-        return if (affectedRows >= 0) {
+        return if (affectedRows > 0) {
             Success(Unit)
         } else {
             Failure(TodoErrorContext.DeletionFailed)
