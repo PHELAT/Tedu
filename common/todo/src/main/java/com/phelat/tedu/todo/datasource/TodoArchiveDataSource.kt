@@ -3,10 +3,14 @@ package com.phelat.tedu.todo.datasource
 import com.phelat.tedu.datasource.Deletable
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.dependencyinjection.scope.CommonScope
+import com.phelat.tedu.functional.Failure
+import com.phelat.tedu.functional.Response
+import com.phelat.tedu.functional.Success
 import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.database.dao.TodoEntityDao
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
 import com.phelat.tedu.todo.entity.TodoEntity
+import com.phelat.tedu.todo.error.TodoArchivableErrorContext
 import com.phelat.tedu.todo.type.ArchivableTodos
 import java.util.Date
 import javax.inject.Inject
@@ -16,16 +20,20 @@ internal class TodoArchiveDataSource @Inject constructor(
     private val todoEntityDao: TodoEntityDao,
     private val mapper: Mapper<TodoDatabaseEntity, TodoEntity>
 ) : Readable.Suspendable.IO<Date, @JvmSuppressWildcards ArchivableTodos>,
-    Deletable.Suspendable.IO<@JvmSuppressWildcards ArchivableTodos, Boolean> {
+    Deletable.Suspendable.IO<@JvmSuppressWildcards ArchivableTodos, @JvmSuppressWildcards Response<Unit, TodoArchivableErrorContext>> {
 
     override suspend fun read(input: Date): ArchivableTodos {
         return todoEntityDao.selectAllDoneTodosBefore(input)
             .map(mapper::mapFirstToSecond)
     }
 
-    override suspend fun delete(input: ArchivableTodos): Boolean {
+    override suspend fun delete(input: ArchivableTodos): Response<Unit, TodoArchivableErrorContext> {
         val todoDatabaseEntities = input.map(mapper::mapSecondToFirst)
-        val deletionResult = todoEntityDao.deleteTodos(todoDatabaseEntities)
-        return deletionResult == 1
+        val affectedRows = todoEntityDao.deleteTodos(todoDatabaseEntities)
+        return if (affectedRows > 0) {
+            Success(Unit)
+        } else {
+            Failure(TodoArchivableErrorContext.DeletionFailed)
+        }
     }
 }

@@ -13,6 +13,7 @@ import com.phelat.tedu.todo.di.module.TodoDataSourceModule
 import com.phelat.tedu.todo.di.module.TodoDatabaseModule
 import com.phelat.tedu.todo.di.module.TodoMapperModule
 import com.phelat.tedu.todo.entity.TodoEntity
+import com.phelat.tedu.todo.error.TodoArchivableErrorContext
 import com.phelat.tedu.todo.error.TodoErrorContext
 import com.phelat.tedu.todo.type.ArchivableTodos
 import dagger.Component
@@ -42,8 +43,7 @@ interface TodoComponent {
 
     fun exposeTodoArchiveReadableDataSource(): Readable.Suspendable.IO<Date, ArchivableTodos>
 
-    // TODO: USE RESULT TYPED CLASS INSTEAD OF BOOLEAN
-    fun exposeTodoArchiveDeletableDataSource(): Deletable.Suspendable.IO<ArchivableTodos, Boolean>
+    fun exposeTodoArchiveDeletableDataSource(): Deletable.Suspendable.IO<ArchivableTodos, Response<Unit, TodoArchivableErrorContext>>
 
     fun exposeMapperDateToLocalDate(): Mapper<Date, LocalDate>
 }
