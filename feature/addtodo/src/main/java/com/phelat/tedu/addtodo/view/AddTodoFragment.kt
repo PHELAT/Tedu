@@ -54,7 +54,7 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
             todoDateSheetObservable.observe(viewLifecycleOwner) { showCalendarSheet() }
             navigationObservable.observeNavigation(this@AddTodoFragment)
         }
-        showKeyboard()
+        showKeyboard(inputToFocus = todoInput)
     }
 
     private fun showCalendarSheet() {
