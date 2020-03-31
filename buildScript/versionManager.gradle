@@ -29,7 +29,7 @@ ext {
             constraintlayout: '1.1.3',
             annotation      : '1.1.0',
             dagger          : '2.27',
-            detekt          : '1.6.0'
+            detekt          : '1.7.2'
     ]
 
 }
