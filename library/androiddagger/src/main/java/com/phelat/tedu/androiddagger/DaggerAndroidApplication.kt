@@ -40,10 +40,9 @@ abstract class DaggerAndroidApplication : Application(), DispatcherContainer {
 
     protected inline fun <reified T : DispatcherComponent> installFeature(
         componentBuilder: ComponentBuilder<T>
-    ): T {
+    ) {
         val component = componentBuilder.getComponent()
         dispatchers += T::class to component.dispatcher()
         startupTasks += component.startUpTasks()
-        return component
     }
 }
