@@ -3,7 +3,7 @@ package com.phelat.tedu.todo.di.module
 import android.app.Application
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.phelat.tedu.dependencyinjection.common.CommonStartupTasks
-import com.phelat.tedu.dependencyinjection.scope.CommonScope
+import com.phelat.tedu.dependencyinjection.common.CommonScope
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap

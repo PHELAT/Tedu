@@ -2,7 +2,7 @@ package com.phelat.tedu.todo.di.module
 
 import com.phelat.tedu.datasource.Deletable
 import com.phelat.tedu.datasource.Readable
-import com.phelat.tedu.dependencyinjection.scope.CommonScope
+import com.phelat.tedu.dependencyinjection.common.CommonScope
 import com.phelat.tedu.functional.Response
 import com.phelat.tedu.todo.datasource.TodoArchiveDataSource
 import com.phelat.tedu.todo.error.TodoArchivableErrorContext

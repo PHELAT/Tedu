@@ -1,6 +1,6 @@
 package com.phelat.tedu.todo.mapper
 
-import com.phelat.tedu.dependencyinjection.scope.CommonScope
+import com.phelat.tedu.dependencyinjection.common.CommonScope
 import com.phelat.tedu.mapper.Mapper
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate

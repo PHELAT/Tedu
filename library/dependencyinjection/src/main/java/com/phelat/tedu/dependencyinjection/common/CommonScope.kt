@@ -1,4 +1,4 @@
-package com.phelat.tedu.dependencyinjection.scope
+package com.phelat.tedu.dependencyinjection.common
 
 import javax.inject.Scope
 

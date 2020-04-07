@@ -4,7 +4,7 @@ import com.phelat.tedu.datasource.Deletable
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
-import com.phelat.tedu.dependencyinjection.scope.CommonScope
+import com.phelat.tedu.dependencyinjection.common.CommonScope
 import com.phelat.tedu.functional.Response
 import com.phelat.tedu.todo.datasource.TodoDataSource
 import com.phelat.tedu.todo.entity.TodoEntity

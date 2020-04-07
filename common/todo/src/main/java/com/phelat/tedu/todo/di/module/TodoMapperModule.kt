@@ -1,6 +1,6 @@
 package com.phelat.tedu.todo.di.module
 
-import com.phelat.tedu.dependencyinjection.scope.CommonScope
+import com.phelat.tedu.dependencyinjection.common.CommonScope
 import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
 import com.phelat.tedu.todo.entity.TodoEntity
