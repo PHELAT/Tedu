@@ -14,11 +14,15 @@ android {
     }
     buildTypes {
         release {
+            apply plugin: 'com.google.gms.google-services'
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
+            if (file("google-services.json").exists()) {
+                apply plugin: 'com.google.gms.google-services'
+            }
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -50,6 +54,8 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$library.dagger"
 
     implementation "com.jakewharton.threetenabp:threetenabp:$library.threetenABP"
+
+    implementation "com.google.firebase:firebase-analytics:$library.firebaseAnalytics"
 
     implementation project(":feature:addtodo")
     implementation project(":feature:todolist")
