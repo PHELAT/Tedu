@@ -1,7 +1,7 @@
 package com.phelat.tedu.addtodo.di.component
 
 import com.phelat.tedu.addtodo.di.module.AddTodoBindingModule
-import com.phelat.tedu.androiddagger.DispatcherComponent
+import com.phelat.tedu.androiddagger.FeatureComponent
 import com.phelat.tedu.androiddagger.FeatureModule
 import com.phelat.tedu.androidresource.di.component.AndroidResourceComponent
 import com.phelat.tedu.coroutines.di.component.ThreadComponent
@@ -15,4 +15,4 @@ import dagger.Component
     modules = [FeatureModule::class, AddTodoBindingModule::class],
     dependencies = [TodoComponent::class, ThreadComponent::class, AndroidResourceComponent::class]
 )
-interface AddTodoComponent : DispatcherComponent, CommonStartupComponent
+interface AddTodoComponent : FeatureComponent, CommonStartupComponent

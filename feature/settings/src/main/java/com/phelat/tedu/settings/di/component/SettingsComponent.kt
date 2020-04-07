@@ -1,7 +1,7 @@
 package com.phelat.tedu.settings.di.component
 
 import com.phelat.tedu.androidcore.di.component.AndroidCoreComponent
-import com.phelat.tedu.androiddagger.DispatcherComponent
+import com.phelat.tedu.androiddagger.FeatureComponent
 import com.phelat.tedu.androiddagger.FeatureModule
 import com.phelat.tedu.dependencyinjection.feature.FeatureStartupComponent
 import com.phelat.tedu.dependencyinjection.scope.FeatureScope
@@ -22,4 +22,4 @@ import dagger.Component
     ],
     dependencies = [AndroidCoreComponent::class]
 )
-interface SettingsComponent : DispatcherComponent, FeatureStartupComponent
+interface SettingsComponent : FeatureComponent, FeatureStartupComponent

@@ -1,6 +1,6 @@
 package com.phelat.tedu.todolist.di.component
 
-import com.phelat.tedu.androiddagger.DispatcherComponent
+import com.phelat.tedu.androiddagger.FeatureComponent
 import com.phelat.tedu.androiddagger.FeatureModule
 import com.phelat.tedu.coroutines.di.component.ThreadComponent
 import com.phelat.tedu.dependencyinjection.common.CommonStartupComponent
@@ -14,4 +14,4 @@ import dagger.Component
     modules = [FeatureModule::class, TodoListBindingModule::class],
     dependencies = [TodoComponent::class, ThreadComponent::class]
 )
-interface TodoListComponent : DispatcherComponent, CommonStartupComponent
+interface TodoListComponent : FeatureComponent, CommonStartupComponent

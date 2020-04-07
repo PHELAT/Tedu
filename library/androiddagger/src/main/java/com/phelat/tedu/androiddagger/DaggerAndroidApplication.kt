@@ -40,7 +40,7 @@ abstract class DaggerAndroidApplication : Application(), DispatcherContainer {
         return mark.elapsedNow().inMilliseconds
     }
 
-    protected inline fun <reified T : DispatcherComponent> installFeature(
+    protected inline fun <reified T : FeatureComponent> installFeature(
         componentBuilder: ComponentBuilder<T>
     ) {
         val component = componentBuilder.getComponent()

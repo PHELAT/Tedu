@@ -4,7 +4,7 @@ import android.app.Activity
 import androidx.fragment.app.Fragment
 import java.util.Locale
 
-inline fun <reified Component : DispatcherComponent> Fragment.inject() {
+inline fun <reified Component : FeatureComponent> Fragment.inject() {
     var dispatcherContainer: DispatcherContainer? = null
     var parentFragment: Fragment? = this
     while (parentFragment?.parentFragment?.also { parentFragment = it } != null) {

@@ -2,7 +2,7 @@ package com.phelat.tedu.androiddagger
 
 import dagger.android.DispatchingAndroidInjector
 
-interface DispatcherComponent {
+interface FeatureComponent {
 
     fun dispatcher(): DispatchingAndroidInjector<Any>
 }
