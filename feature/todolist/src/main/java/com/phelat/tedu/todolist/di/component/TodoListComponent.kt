@@ -4,7 +4,7 @@ import com.phelat.tedu.androiddagger.FeatureComponent
 import com.phelat.tedu.androiddagger.FeatureModule
 import com.phelat.tedu.coroutines.di.component.ThreadComponent
 import com.phelat.tedu.dependencyinjection.feature.HasCommonDependency
-import com.phelat.tedu.dependencyinjection.scope.FeatureScope
+import com.phelat.tedu.dependencyinjection.feature.FeatureScope
 import com.phelat.tedu.todo.di.component.TodoComponent
 import com.phelat.tedu.todolist.di.module.TodoListBindingModule
 import dagger.Component

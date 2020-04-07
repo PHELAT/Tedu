@@ -3,7 +3,7 @@ package com.phelat.tedu.settings.datasource
 import android.content.SharedPreferences
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Writable
-import com.phelat.tedu.dependencyinjection.scope.FeatureScope
+import com.phelat.tedu.dependencyinjection.feature.FeatureScope
 import com.phelat.tedu.settings.entity.UserInterfaceMode
 import javax.inject.Inject
 

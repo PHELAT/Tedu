@@ -3,7 +3,7 @@ package com.phelat.tedu.settings.di.module
 import android.content.Context
 import android.content.SharedPreferences
 import com.phelat.tedu.androidcore.di.qualifier.ApplicationContext
-import com.phelat.tedu.dependencyinjection.scope.FeatureScope
+import com.phelat.tedu.dependencyinjection.feature.FeatureScope
 import dagger.Module
 import dagger.Provides
 

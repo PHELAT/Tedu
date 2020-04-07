@@ -6,7 +6,7 @@ import com.phelat.tedu.androiddagger.FeatureModule
 import com.phelat.tedu.androidresource.di.component.AndroidResourceComponent
 import com.phelat.tedu.coroutines.di.component.ThreadComponent
 import com.phelat.tedu.dependencyinjection.feature.HasCommonDependency
-import com.phelat.tedu.dependencyinjection.scope.FeatureScope
+import com.phelat.tedu.dependencyinjection.feature.FeatureScope
 import com.phelat.tedu.todo.di.component.TodoComponent
 import dagger.Component
 
