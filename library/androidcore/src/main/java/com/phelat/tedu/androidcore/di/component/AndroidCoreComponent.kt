@@ -19,6 +19,8 @@ interface AndroidCoreComponent {
         fun build(): AndroidCoreComponent
     }
 
+    fun exposeApplication(): Application
+
     @ApplicationContext
     fun exposeApplicationContext(): Context
 }

@@ -1,6 +1,7 @@
 package com.phelat.tedu.settings.di.module
 
 import com.phelat.tedu.datasource.Readable
+import com.phelat.tedu.dependencyinjection.feature.FeatureStartupTasks
 import com.phelat.tedu.dependencyinjection.scope.FeatureScope
 import com.phelat.tedu.settings.entity.UserInterfaceMode
 import dagger.Module
@@ -15,6 +16,7 @@ class SettingsStartUpModule {
     @FeatureScope
     @IntoMap
     @StringKey("SetUserInterfaceModeTask")
+    @FeatureStartupTasks
     fun provideUserInterfaceModeStartUpTask(readable: Readable<UserInterfaceMode>) = Runnable {
         UserInterfaceMode.currentUserInterfaceMode = readable.read()
     }

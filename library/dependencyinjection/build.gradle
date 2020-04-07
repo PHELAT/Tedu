@@ -7,6 +7,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$library.kotlin"
 
-    implementation "javax.inject:javax.inject:$library.inject"
+    implementation "com.google.dagger:dagger:$library.dagger"
 
 }

@@ -2,6 +2,8 @@ package com.phelat.tedu.androiddagger
 
 import android.app.Application
 import com.phelat.tedu.dependencyinjection.ComponentBuilder
+import com.phelat.tedu.dependencyinjection.common.CommonStartupComponent
+import com.phelat.tedu.dependencyinjection.feature.FeatureStartupComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import kotlin.reflect.KClass
@@ -12,7 +14,7 @@ abstract class DaggerAndroidApplication : Application(), DispatcherContainer {
 
     protected val dispatchers = mutableMapOf<KClass<*>, DispatchingAndroidInjector<Any>>()
 
-    protected val startupTasks = mutableMapOf<String, Runnable>()
+    protected val startupTasks = LinkedHashMap<String, Runnable>()
 
     override fun androidInjector(dispatcherComponent: KClass<*>): AndroidInjector<Any> {
         return requireNotNull(dispatchers[dispatcherComponent])
@@ -43,6 +45,11 @@ abstract class DaggerAndroidApplication : Application(), DispatcherContainer {
     ) {
         val component = componentBuilder.getComponent()
         dispatchers += T::class to component.dispatcher()
-        startupTasks += component.startUpTasks()
+        if (component is CommonStartupComponent) {
+            startupTasks += component.commonStartUpTasks()
+        }
+        if (component is FeatureStartupComponent) {
+            startupTasks += component.featureStartUpTasks()
+        }
     }
 }

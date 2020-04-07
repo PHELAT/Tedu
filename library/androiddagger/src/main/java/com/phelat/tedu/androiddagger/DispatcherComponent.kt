@@ -5,6 +5,4 @@ import dagger.android.DispatchingAndroidInjector
 interface DispatcherComponent {
 
     fun dispatcher(): DispatchingAndroidInjector<Any>
-
-    fun startUpTasks(): MutableMap<String, Runnable>
 }
