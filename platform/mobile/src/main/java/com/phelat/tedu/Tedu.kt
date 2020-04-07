@@ -1,5 +1,6 @@
 package com.phelat.tedu
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.phelat.tedu.addtodo.di.builder.AddTodoComponentBuilder
 import com.phelat.tedu.androidcore.di.builder.AndroidCoreComponentBuilder
 import com.phelat.tedu.androiddagger.DaggerAndroidApplication
@@ -15,5 +16,8 @@ class Tedu : DaggerAndroidApplication() {
         installFeature(AddTodoComponentBuilder)
         installFeature(SettingsComponentBuilder)
         runStartupTasks()
+        // TODO: Move this to startup tasks
+        FirebaseCrashlytics.getInstance()
+            .setCrashlyticsCollectionEnabled(BuildConfig.LOG_CRASHLYTICS)
     }
 }
