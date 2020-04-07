@@ -5,7 +5,7 @@ import com.phelat.tedu.androidresource.ResourceProvider
 import com.phelat.tedu.androidresource.di.module.AndroidResourceModule
 import com.phelat.tedu.androidresource.input.StringId
 import com.phelat.tedu.androidresource.resource.StringResource
-import com.phelat.tedu.dependencyinjection.scope.LibraryScope
+import com.phelat.tedu.dependencyinjection.library.LibraryScope
 import dagger.Component
 
 @LibraryScope

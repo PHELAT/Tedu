@@ -1,7 +1,7 @@
 package com.phelat.tedu.coroutines.di.module
 
 import com.phelat.tedu.coroutines.Dispatcher
-import com.phelat.tedu.dependencyinjection.scope.LibraryScope
+import com.phelat.tedu.dependencyinjection.library.LibraryScope
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.Dispatchers
