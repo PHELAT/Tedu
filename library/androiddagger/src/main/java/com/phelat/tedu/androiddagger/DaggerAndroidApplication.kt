@@ -2,8 +2,6 @@ package com.phelat.tedu.androiddagger
 
 import android.app.Application
 import com.phelat.tedu.dependencyinjection.ComponentBuilder
-import com.phelat.tedu.dependencyinjection.feature.FeatureStartupComponent
-import com.phelat.tedu.dependencyinjection.feature.HasCommonDependency
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import kotlin.reflect.KClass
@@ -40,16 +38,10 @@ abstract class DaggerAndroidApplication : Application(), DispatcherContainer {
         return mark.elapsedNow().inMilliseconds
     }
 
-    protected inline fun <reified T : FeatureComponent> installFeature(
+    protected inline fun <reified T : DispatcherComponent> installFeature(
         componentBuilder: ComponentBuilder<T>
     ) {
-        val component = componentBuilder.getComponent()
+        val component = componentBuilder.getComponent(startupTasks::putAll)
         dispatchers += T::class to component.dispatcher()
-        if (component is HasCommonDependency) {
-            startupTasks += component.commonStartUpTasks()
-        }
-        if (component is FeatureStartupComponent) {
-            startupTasks += component.featureStartUpTasks()
-        }
     }
 }

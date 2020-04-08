@@ -1,0 +1,28 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android.buildTypes {
+    release {
+        buildConfigField("boolean", "LOG_CRASHLYTICS", "true")
+    }
+    debug {
+        buildConfigField("boolean", "LOG_CRASHLYTICS", "false")
+    }
+}
+
+dependencies {
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$library.kotlin"
+
+    implementation "com.google.firebase:firebase-crashlytics:$library.firebaseCrashlytics"
+
+    implementation "com.google.dagger:dagger:$library.dagger"
+    kapt "com.google.dagger:dagger-compiler:$library.dagger"
+
+    implementation project(":library:dependencyinjection")
+    implementation project(":library:androiddagger")
+
+}

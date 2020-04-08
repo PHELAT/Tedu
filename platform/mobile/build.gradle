@@ -18,7 +18,7 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("boolean", "LOG_CRASHLYTICS", "true")
+            multiDexEnabled false
         }
         debug {
             if (file("google-services.json").exists()) {
@@ -30,7 +30,7 @@ android {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("boolean", "LOG_CRASHLYTICS", "false")
+            multiDexEnabled true
         }
     }
     compileOptions {
@@ -59,7 +59,8 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$library.dagger"
 
     implementation "com.google.firebase:firebase-analytics:$library.firebaseAnalytics"
-    implementation "com.google.firebase:firebase-crashlytics:$library.firebaseCrashlytics"
+
+    implementation "androidx.multidex:multidex:$library.multidex"
 
     implementation project(":feature:addtodo")
     implementation project(":feature:todolist")

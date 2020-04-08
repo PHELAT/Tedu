@@ -22,3 +22,4 @@ include ':library:translation',
         ':library:functional'
 
 rootProject.name = 'Tedu'
+include ':common:analytics'
