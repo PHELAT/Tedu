@@ -22,6 +22,7 @@ import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.error.TodoErrorContext
 import com.phelat.tedu.uiview.Navigate
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.threeten.bp.LocalDate
 import java.util.Date
 
@@ -44,6 +45,9 @@ class AddTodoViewModel(
 
     private val _navigationObservable = SingleLiveData<Navigate>()
     val navigationObservable: LiveData<Navigate> = _navigationObservable
+
+    private val _snackBarObservable = SingleLiveData<String>()
+    val snackBarObservable: LiveData<String> = _snackBarObservable
 
     private var todoForEdit: TodoEntity? = null
 
@@ -78,11 +82,18 @@ class AddTodoViewModel(
             }
             saveResponse.ifSuccessful {
                 _navigationObservable.postValue(Navigate.Up)
-            } otherwise { errorContext ->
-                when (errorContext) {
-                    is TodoErrorContext.InsertionFailed, is TodoErrorContext.UpdateFailed -> {
-                        // TODO: handle error
-                    }
+            } otherwise { errorContext -> handleTodoErrorContext(errorContext) }
+        }
+    }
+
+    private suspend fun handleTodoErrorContext(errorContext: TodoErrorContext) {
+        withContext(dispatcher.main) {
+            when (errorContext) {
+                is TodoErrorContext.InsertionFailed, is TodoErrorContext.UpdateFailed -> {
+                    val message = stringResourceProvider.getResource(
+                        StringId(R.string.todo_insertion_failed_message)
+                    )
+                    _snackBarObservable.value = message.resource
                 }
             }
         }

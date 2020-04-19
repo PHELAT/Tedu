@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import com.google.android.material.snackbar.Snackbar
 import com.phelat.tedu.addtodo.R
 import com.phelat.tedu.addtodo.di.component.AddTodoComponent
 import com.phelat.tedu.addtodo.view.calendar.CalendarSheet
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_addtodo.dateClick
 import kotlinx.android.synthetic.main.fragment_addtodo.saveTodo
 import kotlinx.android.synthetic.main.fragment_addtodo.todoDate
 import kotlinx.android.synthetic.main.fragment_addtodo.todoInput
+import kotlinx.android.synthetic.main.fragment_addtodo.viewRoot
 import javax.inject.Inject
 
 class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
@@ -53,8 +55,13 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
             todoDateObservable.observe(viewLifecycleOwner, todoDate::setText)
             todoDateSheetObservable.observe(viewLifecycleOwner) { showCalendarSheet() }
             navigationObservable.observeNavigation(this@AddTodoFragment)
+            snackBarObservable.observe(viewLifecycleOwner, ::showSnackBar)
         }
         showKeyboard(inputToFocus = todoInput)
+    }
+
+    private fun showSnackBar(message: String) {
+        Snackbar.make(viewRoot, message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun showCalendarSheet() {
