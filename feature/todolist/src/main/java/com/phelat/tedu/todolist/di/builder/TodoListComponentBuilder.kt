@@ -2,6 +2,7 @@ package com.phelat.tedu.todolist.di.builder
 
 import com.phelat.tedu.analytics.di.builder.AnalyticsComponentBuilder
 import com.phelat.tedu.coroutines.di.builder.ThreadComponentBuilder
+import com.phelat.tedu.date.di.builder.DateComponentBuilder
 import com.phelat.tedu.dependencyinjection.ComponentBuilder
 import com.phelat.tedu.dependencyinjection.StartupTasks
 import com.phelat.tedu.todo.di.builder.TodoComponentBuilder
@@ -15,6 +16,7 @@ object TodoListComponentBuilder : ComponentBuilder<TodoListComponent>() {
             .threadComponent(ThreadComponentBuilder.getComponent(addStartupTask))
             .todoComponent(TodoComponentBuilder.getComponent(addStartupTask))
             .analyticsComponent(AnalyticsComponentBuilder.getComponent(addStartupTask))
+            .dateComponent(DateComponentBuilder.getComponent(addStartupTask))
             .build()
     }
 }

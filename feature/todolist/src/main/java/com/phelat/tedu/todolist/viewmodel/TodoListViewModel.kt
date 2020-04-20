@@ -10,6 +10,7 @@ import com.phelat.tedu.datasource.Deletable
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
+import com.phelat.tedu.date.TeduDate
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.ifNotSuccessful
@@ -35,8 +36,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import org.threeten.bp.LocalDate
-import org.threeten.bp.ZoneId
 import java.util.Date
 
 class TodoListViewModel(
@@ -46,7 +45,8 @@ class TodoListViewModel(
     private val todoDataSourceWritable: Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val todoDataSourceReadable: Readable.IO<Date, Flow<List<TodoEntity>>>,
     private val archivableTodoDataSourceReadable: Readable.Suspendable.IO<Date, ArchivableTodos>,
-    private val archivableTodoDataSourceDeletable: Deletable.Suspendable.IO<ArchivableTodos, Response<Unit, TodoArchivableErrorContext>>
+    private val archivableTodoDataSourceDeletable: Deletable.Suspendable.IO<ArchivableTodos, Response<Unit, TodoArchivableErrorContext>>,
+    private val dateDataSourceReadable: Readable.IO<TeduDate, Date>
 ) : ViewModel() {
 
     private val headerSection = Section().apply {
@@ -80,7 +80,7 @@ class TodoListViewModel(
     }
 
     private suspend fun deleteArchivableTodos() {
-        val today = getTodayDate()
+        val today = dateDataSourceReadable.read(TeduDate.Today)
         val todosToDelete = archivableTodoDataSourceReadable.read(today)
         if (todosToDelete.isNotEmpty()) {
             archivableTodoDataSourceDeletable.delete(todosToDelete).ifNotSuccessful {
@@ -89,18 +89,8 @@ class TodoListViewModel(
         }
     }
 
-    private fun getTodayDate(): Date {
-        // TODO: move date logic to a data source class
-        val today = LocalDate.now()
-            .atStartOfDay()
-            .atZone(ZoneId.systemDefault())
-            .toInstant()
-            .toEpochMilli()
-        return Date(today)
-    }
-
     private suspend fun fetchTodos() {
-        val tomorrow = getTomorrowDate()
+        val tomorrow = dateDataSourceReadable.read(TeduDate.Tomorrow)
         todoDataSourceReadable.read(tomorrow)
             .onEach { delay(UPDATE_DELAY_IN_MILLIS) }
             .mapForEach { todoEntity ->
@@ -115,17 +105,6 @@ class TodoListViewModel(
             .map { listOf(headerSection, todoSection) }
             .flowOn(dispatcher.main)
             .collect { todos -> _todoObservable.postValue(todos) }
-    }
-
-    private fun getTomorrowDate(): Date {
-        // TODO: move date logic to a data source class
-        val today = LocalDate.now(ZoneId.systemDefault())
-            .atStartOfDay()
-        val tomorrow = today.plusDays(1)
-            .atZone(ZoneId.systemDefault())
-            .toInstant()
-            .toEpochMilli()
-        return Date(tomorrow)
     }
 
     private fun onTodoClick(todoEntity: TodoEntity) {
