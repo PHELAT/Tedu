@@ -6,7 +6,8 @@ include ':feature:todolist',
         ':feature:settings'
 // Common Modules
 include ':common:designsystem',
-        ':common:todo'
+        ':common:todo',
+        ':common:analytics'
 // Library Modules
 include ':library:translation',
         ':library:datasource',
@@ -19,7 +20,7 @@ include ':library:translation',
         ':library:androidcore',
         ':library:androiddagger',
         ':library:sdkextensions',
-        ':library:functional'
+        ':library:functional',
+        ':library:date'
 
 rootProject.name = 'Tedu'
-include ':common:analytics'
