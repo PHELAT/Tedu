@@ -4,10 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/selector_click_rectangle"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:minHeight="56dp">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/todoTitle"
