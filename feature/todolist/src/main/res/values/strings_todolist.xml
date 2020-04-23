@@ -5,6 +5,7 @@
     <string name="todolist_add_todo_text">+ Add todo…</string>
     <string name="todolist_todo_sheet_delete">Delete todo forever</string>
     <string name="todolist_todo_sheet_edit">Edit todo</string>
+    <string name="todolist_undo_deletion_action">Undo</string>
 
     <string name="todolist_todo_deletion_message">Todo deleted successfully</string>
 

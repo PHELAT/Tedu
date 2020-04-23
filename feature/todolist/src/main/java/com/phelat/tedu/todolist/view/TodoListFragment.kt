@@ -55,7 +55,7 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
 
     private fun observeTodoDeletion() {
         Snackbar.make(viewRoot, R.string.todolist_todo_deletion_message, Snackbar.LENGTH_LONG)
-            .setAction(R.string.general_undo_text) {
+            .setAction(R.string.todolist_undo_deletion_action) {
                 todoListViewModel.onTodoDeletionUndoClick()
             }
             .show()
