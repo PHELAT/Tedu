@@ -10,25 +10,23 @@ import javax.inject.Inject
 
 @LibraryScope
 class DateDataSource @Inject constructor(
-    private val now: Function0<@JvmSuppressWildcards LocalDate>,
-    private val zoneId: Function0<@JvmSuppressWildcards ZoneId>
+    private val now: Lazy<@JvmSuppressWildcards LocalDate>,
+    private val zoneId: Lazy<@JvmSuppressWildcards ZoneId>
 ) : Readable.IO<TeduDate, Date> {
 
     override fun read(input: TeduDate): Date {
         return when (input) {
             is TeduDate.Today -> {
-                val today = now.invoke()
-                    .atStartOfDay()
-                    .atZone(zoneId.invoke())
+                val today = now.value.atStartOfDay()
+                    .atZone(zoneId.value)
                     .toInstant()
                     .toEpochMilli()
                 Date(today)
             }
             is TeduDate.Tomorrow -> {
-                val tomorrow = now.invoke()
-                    .atStartOfDay()
+                val tomorrow = now.value.atStartOfDay()
                     .plusDays(1)
-                    .atZone(zoneId.invoke())
+                    .atZone(zoneId.value)
                     .toInstant()
                     .toEpochMilli()
                 Date(tomorrow)
