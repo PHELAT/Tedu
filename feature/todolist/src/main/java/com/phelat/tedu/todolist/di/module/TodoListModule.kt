@@ -1,5 +1,8 @@
 package com.phelat.tedu.todolist.di.module
 
+import com.phelat.tedu.androidresource.ResourceProvider
+import com.phelat.tedu.androidresource.input.StringId
+import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Deletable
 import com.phelat.tedu.datasource.Readable
@@ -28,7 +31,8 @@ class TodoListModule {
         todoDataSourceDeletable: Deletable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
         todoDataSourceWritable: Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
         todoDataSourceReadable: Readable.IO<Date, Flow<List<TodoEntity>>>,
-        dateDataSourceReadable: Readable.IO<TeduDate, Date>
+        dateDataSourceReadable: Readable.IO<TeduDate, Date>,
+        stringResourceProvider: ResourceProvider<StringId, StringResource>
     ) = viewModelFactory {
         TodoListViewModel(
             dispatcher,
@@ -36,7 +40,8 @@ class TodoListModule {
             todoDataSourceDeletable,
             todoDataSourceWritable,
             todoDataSourceReadable,
-            dateDataSourceReadable
+            dateDataSourceReadable,
+            stringResourceProvider
         )
     }
 }

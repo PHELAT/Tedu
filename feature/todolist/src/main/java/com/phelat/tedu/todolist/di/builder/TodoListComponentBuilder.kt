@@ -1,6 +1,7 @@
 package com.phelat.tedu.todolist.di.builder
 
 import com.phelat.tedu.analytics.di.builder.AnalyticsComponentBuilder
+import com.phelat.tedu.androidresource.di.builder.AndroidResourceComponentBuilder
 import com.phelat.tedu.coroutines.di.builder.ThreadComponentBuilder
 import com.phelat.tedu.date.di.builder.DateComponentBuilder
 import com.phelat.tedu.dependencyinjection.ComponentBuilder
@@ -17,6 +18,7 @@ object TodoListComponentBuilder : ComponentBuilder<TodoListComponent>() {
             .todoComponent(TodoComponentBuilder.getComponent(addStartupTask))
             .analyticsComponent(AnalyticsComponentBuilder.getComponent(addStartupTask))
             .dateComponent(DateComponentBuilder.getComponent(addStartupTask))
+            .androidResourceComponent(AndroidResourceComponentBuilder.getComponent(addStartupTask))
             .build()
     }
 

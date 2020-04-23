@@ -91,7 +91,7 @@ class AddTodoViewModel(
             when (errorContext) {
                 is TodoErrorContext.InsertionFailed, is TodoErrorContext.UpdateFailed -> {
                     val message = stringResourceProvider.getResource(
-                        StringId(R.string.todo_insertion_failed_message)
+                        StringId(R.string.general_failure_message)
                     )
                     _snackBarObservable.value = message.resource
                 }

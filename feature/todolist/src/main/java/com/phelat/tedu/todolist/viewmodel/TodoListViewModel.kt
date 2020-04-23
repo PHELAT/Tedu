@@ -5,6 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.phelat.tedu.androidresource.ResourceProvider
+import com.phelat.tedu.androidresource.input.StringId
+import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Deletable
 import com.phelat.tedu.datasource.Readable
@@ -34,6 +37,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Date
 
 class TodoListViewModel(
@@ -42,7 +46,8 @@ class TodoListViewModel(
     private val todoDataSourceDeletable: Deletable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val todoDataSourceWritable: Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val todoDataSourceReadable: Readable.IO<Date, Flow<List<TodoEntity>>>,
-    private val dateDataSourceReadable: Readable.IO<TeduDate, Date>
+    private val dateDataSourceReadable: Readable.IO<TeduDate, Date>,
+    private val stringResourceProvider: ResourceProvider<StringId, StringResource>
 ) : ViewModel() {
 
     private val headerSection = Section().apply {
@@ -64,6 +69,9 @@ class TodoListViewModel(
 
     private val _navigationObservable = SingleLiveData<Navigate>()
     val navigationObservable: LiveData<Navigate> = _navigationObservable
+
+    private val _snackBarObservable = SingleLiveData<String>()
+    val snackBarObservable: LiveData<String> = _snackBarObservable
 
     @Volatile
     private var deletedTodo: TodoEntity? = null
@@ -97,8 +105,17 @@ class TodoListViewModel(
             val updatedTodo = todoEntity.copy(isDone = todoEntity.isDone.not())
             delay(UPDATE_DELAY_IN_MILLIS)
             todoDataSourceUpdatable.update(updatedTodo).ifNotSuccessful {
-                // TODO: handle error
+                showGeneralFailureMessage()
             }
+        }
+    }
+
+    private suspend fun showGeneralFailureMessage() {
+        withContext(dispatcher.main) {
+            val message = stringResourceProvider.getResource(
+                StringId(R.string.general_failure_message)
+            )
+            _snackBarObservable.value = message.resource
         }
     }
 
@@ -134,7 +151,7 @@ class TodoListViewModel(
                 deletedTodo = todoEntity
                 _todoDeletionObservable.postCall()
             } otherwise {
-                // TODO: handle error
+                showGeneralFailureMessage()
             }
         }
     }

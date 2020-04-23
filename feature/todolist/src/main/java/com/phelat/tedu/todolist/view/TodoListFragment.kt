@@ -49,6 +49,7 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
             dismissTodoSheetObservable.observe(viewLifecycleOwner) { dismissTodoSheet() }
             todoDeletionObservable.observe(viewLifecycleOwner) { observeTodoDeletion() }
             navigationObservable.observeNavigation(this@TodoListFragment)
+            snackBarObservable.observe(viewLifecycleOwner, ::showSnackBar)
         }
     }
 
@@ -67,6 +68,10 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
                 todoSheet = BottomSheetView(requireContext())
                 observeTodoSheet(items)
             }
+    }
+
+    private fun showSnackBar(message: String) {
+        Snackbar.make(viewRoot, message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun dismissTodoSheet() {

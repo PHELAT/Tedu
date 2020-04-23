@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- TODO: Move this to :feature:todolist -->
     <string name="general_undo_text">Undo</string>
+
+    <string name="general_failure_message">Oops! an unexpected error happened</string>
     
 </resources>
