@@ -3,6 +3,7 @@ package com.phelat.tedu.addtodo.view
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -50,12 +51,16 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
         dateClick.setOnClickListener {
             addTodoViewModel.onSelectDateClick()
         }
+        todoInput.addTextChangedListener(onTextChanged = { text, _, _, _ ->
+            addTodoViewModel.onTodoTextChange(text)
+        })
         addTodoViewModel.apply {
             todoTextObservable.observe(viewLifecycleOwner, todoInput::setText)
             todoDateObservable.observe(viewLifecycleOwner, todoDate::setText)
             todoDateSheetObservable.observe(viewLifecycleOwner) { showCalendarSheet() }
             navigationObservable.observeNavigation(this@AddTodoFragment)
             snackBarObservable.observe(viewLifecycleOwner, ::showSnackBar)
+            viewStateObservable.observe(viewLifecycleOwner, ::handleViewState)
         }
         showKeyboard(inputToFocus = todoInput)
     }
@@ -74,6 +79,12 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
                 )
                 showCalendarSheet()
             }
+    }
+
+    private fun handleViewState(viewState: AddTodoViewState) {
+        viewState.apply {
+            saveTodo.isEnabled = isSaveTodoButtonEnabled
+        }
     }
 
     override fun onDestroyView() {

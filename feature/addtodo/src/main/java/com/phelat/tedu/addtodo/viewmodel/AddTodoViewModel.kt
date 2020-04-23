@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.phelat.tedu.addtodo.R
+import com.phelat.tedu.addtodo.view.AddTodoViewState
 import com.phelat.tedu.androidresource.ResourceProvider
 import com.phelat.tedu.androidresource.input.StringId
 import com.phelat.tedu.androidresource.resource.StringResource
@@ -26,6 +27,8 @@ import kotlinx.coroutines.withContext
 import org.threeten.bp.LocalDate
 import java.util.Date
 
+// TODO: fix this
+@Suppress("TooManyFunctions")
 class AddTodoViewModel(
     private val dispatcher: Dispatcher,
     private val todoDataSourceWritable: Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
@@ -48,6 +51,9 @@ class AddTodoViewModel(
 
     private val _snackBarObservable = SingleLiveData<String>()
     val snackBarObservable: LiveData<String> = _snackBarObservable
+
+    private val _viewStateObservable = MutableLiveData(AddTodoViewState())
+    val viewStateObservable: LiveData<AddTodoViewState> = _viewStateObservable
 
     private var todoForEdit: TodoEntity? = null
 
@@ -128,5 +134,15 @@ class AddTodoViewModel(
     fun getSelectedDate(): LocalDate {
         // TODO: refactor this
         return selectedDate
+    }
+
+    fun onTodoTextChange(text: CharSequence?) {
+        _viewStateObservable.value = if (text?.isNotEmpty() == true) {
+            requireNotNull(_viewStateObservable.value)
+                .copy(isSaveTodoButtonEnabled = true)
+        } else {
+            requireNotNull(_viewStateObservable.value)
+                .copy(isSaveTodoButtonEnabled = false)
+        }
     }
 }
