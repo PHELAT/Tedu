@@ -4,5 +4,7 @@
     <dimen name="font_size_title_1">20sp</dimen>
     <dimen name="font_size_title_2">18sp</dimen>
     <dimen name="font_size_regular">16sp</dimen>
-    
+    <dimen name="font_size_small">14sp</dimen>
+    <dimen name="font_size_tiny">12sp</dimen>
+
 </resources>
