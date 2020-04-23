@@ -27,6 +27,8 @@
     <color name="brand_divider">@color/white_divider</color>
 
     <color name="ripple_color">#39FFFFFF</color>
+    <color name="ripple_color_revert">#39000000</color>
     <color name="ripple_draw_color">#8FFFFFFF</color>
+    <color name="ripple_draw_color_revert">#8F000000</color>
 
 </resources>

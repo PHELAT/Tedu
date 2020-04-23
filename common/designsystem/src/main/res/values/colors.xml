@@ -5,6 +5,10 @@
     <color name="color_hint">@color/black_hint</color>
     <color name="color_divider">@color/black_divider</color>
 
+    <color name="color_primary_revert">@color/white_primary</color>
+    <color name="color_hint_revert">@color/white_hint</color>
+    <color name="color_divider_revert">@color/white_divider</color>
+
     <color name="surface_color_0">@color/white_primary</color>
     <color name="surface_color_1">@color/grey_50</color>
     <color name="surface_color_2">@color/grey_100</color>
@@ -49,7 +53,10 @@
     <color name="grey_900">#212121</color>
 
     <color name="transparent">#00000000</color>
+
     <color name="ripple_color">#39000000</color>
+    <color name="ripple_color_revert">#39FFFFFF</color>
     <color name="ripple_draw_color">#8F000000</color>
+    <color name="ripple_draw_color_revert">#8FFFFFFF</color>
 
 </resources>
