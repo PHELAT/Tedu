@@ -20,9 +20,7 @@ import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.todo.constant.TodoConstant
 import com.phelat.tedu.todo.entity.TodoEntity
-import com.phelat.tedu.todo.error.TodoArchivableErrorContext
 import com.phelat.tedu.todo.error.TodoErrorContext
-import com.phelat.tedu.todo.type.ArchivableTodos
 import com.phelat.tedu.todolist.R
 import com.phelat.tedu.todolist.view.AddTodoItem
 import com.phelat.tedu.todolist.view.TodoListItem
@@ -44,8 +42,6 @@ class TodoListViewModel(
     private val todoDataSourceDeletable: Deletable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val todoDataSourceWritable: Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val todoDataSourceReadable: Readable.IO<Date, Flow<List<TodoEntity>>>,
-    private val archivableTodoDataSourceReadable: Readable.Suspendable.IO<Date, ArchivableTodos>,
-    private val archivableTodoDataSourceDeletable: Deletable.Suspendable.IO<ArchivableTodos, Response<Unit, TodoArchivableErrorContext>>,
     private val dateDataSourceReadable: Readable.IO<TeduDate, Date>
 ) : ViewModel() {
 
@@ -73,19 +69,8 @@ class TodoListViewModel(
     private var deletedTodo: TodoEntity? = null
 
     init {
-        viewModelScope.launch(context = dispatcher.iO) {
-            deleteArchivableTodos()
+        viewModelScope.launch {
             fetchTodos()
-        }
-    }
-
-    private suspend fun deleteArchivableTodos() {
-        val today = dateDataSourceReadable.read(TeduDate.Today)
-        val todosToDelete = archivableTodoDataSourceReadable.read(today)
-        if (todosToDelete.isNotEmpty()) {
-            archivableTodoDataSourceDeletable.delete(todosToDelete).ifNotSuccessful {
-                // TODO: handle error
-            }
         }
     }
 

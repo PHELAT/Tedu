@@ -1,5 +1,6 @@
 package com.phelat.tedu.date.di.module
 
+import com.phelat.tedu.date.cachedValue
 import com.phelat.tedu.dependencyinjection.library.LibraryScope
 import dagger.Module
 import dagger.Provides
@@ -11,13 +12,13 @@ class DateModule {
 
     @Provides
     @LibraryScope
-    fun provideZoneId(): ZoneId {
-        return ZoneId.systemDefault()
+    fun provideZoneId(): () -> ZoneId = cachedValue {
+        ZoneId.systemDefault()
     }
 
     @Provides
     @LibraryScope
-    fun provideNowLocalDate(): LocalDate {
-        return LocalDate.now()
+    fun provideNowLocalDate(): () -> LocalDate = cachedValue {
+        LocalDate.now()
     }
 }
