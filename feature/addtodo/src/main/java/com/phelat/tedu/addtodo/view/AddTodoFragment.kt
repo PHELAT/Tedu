@@ -14,6 +14,7 @@ import com.phelat.tedu.addtodo.di.component.AddTodoComponent
 import com.phelat.tedu.addtodo.view.calendar.CalendarSheet
 import com.phelat.tedu.addtodo.viewmodel.AddTodoViewModel
 import com.phelat.tedu.androiddagger.inject
+import com.phelat.tedu.sdkextensions.hideKeyboard
 import com.phelat.tedu.sdkextensions.showKeyboard
 import com.phelat.tedu.uiview.observeNavigation
 import kotlinx.android.synthetic.main.fragment_addtodo.dateClick
@@ -91,6 +92,7 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
         if (calendarSheet?.isShowing == true) {
             calendarSheet?.dismiss()
         }
+        hideKeyboard()
         super.onDestroyView()
     }
 }

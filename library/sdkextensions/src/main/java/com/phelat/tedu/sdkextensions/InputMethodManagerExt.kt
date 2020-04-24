@@ -17,3 +17,8 @@ fun Fragment.showKeyboard(inputToFocus: EditText) {
         inputToFocus.requestFocus()
     }
 }
+
+fun Fragment.hideKeyboard() {
+    (requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+        .toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+}
