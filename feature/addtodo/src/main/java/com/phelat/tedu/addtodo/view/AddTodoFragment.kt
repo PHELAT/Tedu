@@ -63,6 +63,10 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
             snackBarObservable.observe(viewLifecycleOwner, ::showSnackBar)
             viewStateObservable.observe(viewLifecycleOwner, ::handleViewState)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
         showKeyboard(inputToFocus = todoInput)
     }
 
@@ -88,11 +92,15 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        hideKeyboard(todoInput.windowToken)
+    }
+
     override fun onDestroyView() {
         if (calendarSheet?.isShowing == true) {
             calendarSheet?.dismiss()
         }
-        hideKeyboard()
         super.onDestroyView()
     }
 }
