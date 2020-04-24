@@ -69,8 +69,8 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:text="@string/addtodo_date_text"
-            android:textSize="@dimen/font_size_title_1"
-            app:fontFamily="@font/robotoslab_black"
+            android:textColor="@color/text_primary_color"
+            android:textSize="@dimen/font_size_regular"
             app:layout_constraintEnd_toStartOf="@+id/todoDate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/todoInput" />
@@ -84,7 +84,8 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:text="@string/addtodo_date_today_text"
-            android:textSize="@dimen/font_size_title_2"
+            android:textColor="@color/text_secondary_color"
+            android:textSize="@dimen/font_size_regular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/todoDateTitle"
             app:layout_constraintTop_toBottomOf="@id/todoInput" />
