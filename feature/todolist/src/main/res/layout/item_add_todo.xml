@@ -14,6 +14,7 @@
         android:id="@+id/addTodoButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/ic_chevron_right_icon_secondary_24dp"
         android:padding="16dp"
         android:text="@string/todolist_add_todo_text"
         android:textColor="@color/text_secondary_color"
