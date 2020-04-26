@@ -13,6 +13,7 @@ import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
+import com.phelat.tedu.date.di.qualifier.NowDate
 import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.ifSuccessful
 import com.phelat.tedu.functional.otherwise
@@ -34,7 +35,8 @@ class AddTodoViewModel(
     private val todoDataSourceWritable: Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val todoDataSourceUpdatable: Updatable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val stringResourceProvider: ResourceProvider<StringId, StringResource>,
-    private val dateToLocalDate: Mapper<Date, LocalDate>
+    private val dateToLocalDate: Mapper<Date, LocalDate>,
+    @NowDate private val nowDate: Lazy<LocalDate>
 ) : ViewModel() {
 
     private val _todoTextObservable = SingleLiveData<String>()
@@ -57,8 +59,7 @@ class AddTodoViewModel(
 
     private var todoForEdit: TodoEntity? = null
 
-    // TODO: inject now date
-    private var selectedDate: LocalDate = LocalDate.now()
+    private var selectedDate: LocalDate = nowDate.value
 
     fun onBundleReceive(bundle: Bundle?) {
         val todoForEdit = bundle?.getSerializable(TodoConstant.TODO_FOR_EDIT)

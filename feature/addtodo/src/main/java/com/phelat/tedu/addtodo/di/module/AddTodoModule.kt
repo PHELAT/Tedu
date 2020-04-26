@@ -8,6 +8,7 @@ import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
+import com.phelat.tedu.date.di.qualifier.NowDate
 import com.phelat.tedu.functional.Response
 import com.phelat.tedu.lifecycle.viewModelFactory
 import com.phelat.tedu.mapper.Mapper
@@ -28,14 +29,16 @@ class AddTodoModule {
         todoDataSourceWritable: Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
         todoDataSourceUpdatable: Updatable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
         stringResourceProvider: ResourceProvider<StringId, StringResource>,
-        dateToLocalDate: Mapper<Date, LocalDate>
+        dateToLocalDate: Mapper<Date, LocalDate>,
+        @NowDate nowDate: Lazy<LocalDate>
     ) = viewModelFactory {
         AddTodoViewModel(
             dispatcher,
             todoDataSourceWritable,
             todoDataSourceUpdatable,
             stringResourceProvider,
-            dateToLocalDate
+            dateToLocalDate,
+            nowDate
         )
     }
 }
