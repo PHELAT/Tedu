@@ -51,7 +51,7 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:$library.appcompat"
 
-    implementation "androidx.vectordrawable:vectordrawable:1.1.0"
+    implementation "androidx.vectordrawable:vectordrawable:$library.vectordrawable"
 
     implementation "androidx.navigation:navigation-fragment-ktx:$library.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$library.navigation"

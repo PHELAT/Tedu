@@ -34,7 +34,8 @@ ext {
             firebaseAnalytics  : '17.3.0',
             crashlyticsPlugin  : '2.0.0-beta03',
             firebaseCrashlytics: '17.0.0-beta03',
-            multidex           : '2.0.1'
+            multidex           : '2.0.1',
+            vectordrawable     : '1.1.0'
     ]
 
 }
