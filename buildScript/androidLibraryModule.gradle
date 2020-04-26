@@ -10,6 +10,7 @@ subprojects {
                     versionCode app.versionCode
                     versionName app.versionName
                     consumerProguardFiles 'consumer-rules.pro'
+                    vectorDrawables.useSupportLibrary true
                 }
                 buildTypes {
                     release {

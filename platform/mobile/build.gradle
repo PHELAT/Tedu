@@ -11,6 +11,7 @@ android {
         targetSdkVersion build.targetSdkVersion
         versionCode app.versionCode
         versionName app.versionName
+        vectorDrawables.useSupportLibrary true
     }
     buildTypes {
         release {
@@ -49,6 +50,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$library.kotlin"
 
     implementation "androidx.appcompat:appcompat:$library.appcompat"
+
+    implementation "androidx.vectordrawable:vectordrawable:1.1.0"
 
     implementation "androidx.navigation:navigation-fragment-ktx:$library.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$library.navigation"

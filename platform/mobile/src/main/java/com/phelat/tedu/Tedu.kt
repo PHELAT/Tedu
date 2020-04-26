@@ -1,6 +1,7 @@
 package com.phelat.tedu
 
 import android.content.Context
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import com.phelat.tedu.addtodo.di.builder.AddTodoComponentBuilder
 import com.phelat.tedu.androidcore.di.builder.AndroidCoreComponentBuilder
@@ -17,6 +18,7 @@ class Tedu : DaggerAndroidApplication() {
         installFeature(AddTodoComponentBuilder)
         installFeature(SettingsComponentBuilder)
         runStartupTasks()
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
     }
 
     override fun attachBaseContext(base: Context?) {
