@@ -13,10 +13,16 @@ internal class BottomSheetViewHolder(view: View) : RecyclerView.ViewHolder(view)
     private val itemIcon: AppCompatImageView = view.itemIcon
     private val itemTitle: AppCompatTextView = view.itemTitle
 
-    fun bind(item: BottomSheetItemEntity) {
-        itemIcon.setImageResource(item.itemIconResource)
+    fun bind(item: BottomSheetItemEntity, onClick: () -> Unit) {
+        if (item.itemIconResource != null) {
+            itemIcon.setImageResource(item.itemIconResource)
+            itemIcon.visibility = View.VISIBLE
+        } else {
+            itemIcon.visibility = View.GONE
+        }
         itemTitle.setText(item.itemTitleResource)
         itemView.setOnClickListener {
+            onClick.invoke()
             item.itemOnClickListener.invoke()
         }
     }

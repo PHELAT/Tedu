@@ -2,6 +2,9 @@
 <resources>
 
     <string name="settings_feature_title_name">Settings</string>
-    <string name="settings_dark_mode_title">Enable dark mode</string>
+    <string name="settings_ui_mode_title">User interface mode</string>
+    <string name="settings_ui_mode_automatic">Automatic</string>
+    <string name="settings_ui_mode_dark">Dark</string>
+    <string name="settings_ui_mode_light">Light</string>
 
 </resources>

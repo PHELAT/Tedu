@@ -1,27 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/viewRoot"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/settingsTitleText"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="@string/settings_feature_title_name"
         android:textColor="@color/text_secondary_color"
         android:textSize="@dimen/font_size_title_1"
-        app:fontFamily="@font/robotoslab_black" />
+        app:fontFamily="@font/robotoslab_black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/darkModeSwitch"
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/userInterfaceModeTitle"
+        android:layout_width="0dp"
         android:layout_height="56dp"
+        android:gravity="center_vertical"
         android:padding="16dp"
-        android:text="@string/settings_dark_mode_title" />
+        android:text="@string/settings_ui_mode_title"
+        android:textColor="@color/text_primary_color"
+        android:textSize="@dimen/font_size_regular"
+        app:layout_constraintEnd_toStartOf="@id/userInterfaceMode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/settingsTitleText" />
 
-</LinearLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/userInterfaceMode"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:gravity="end|center_vertical"
+        android:padding="16dp"
+        android:text="@string/settings_ui_mode_automatic"
+        android:textColor="@color/text_secondary_color"
+        android:textSize="@dimen/font_size_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/userInterfaceModeTitle"
+        app:layout_constraintTop_toBottomOf="@id/settingsTitleText" />
+
+    <View
+        android:id="@+id/userInterfaceModeClick"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@drawable/selector_click_rectangle"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/settingsTitleText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,8 @@ import com.phelat.tedu.designsystem.R
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 
 class BottomSheetView(
-    context: Context
+    context: Context,
+    private val dismissOnClick: Boolean = true
 ) : BottomSheetDialog(context, R.style.AppBottomSheetDialogTheme) {
 
     private val bottomSheetRecycler: RecyclerView
@@ -23,7 +24,11 @@ class BottomSheetView(
     }
 
     fun setItems(items: List<BottomSheetItemEntity>): BottomSheetDialog {
-        val adapter = BottomSheetAdapter(items)
+        val adapter = BottomSheetAdapter(items) {
+            if (dismissOnClick) {
+                dismiss()
+            }
+        }
         bottomSheetRecycler.adapter = adapter
         return this
     }

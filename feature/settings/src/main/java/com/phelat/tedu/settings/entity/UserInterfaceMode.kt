@@ -6,7 +6,6 @@ sealed class UserInterfaceMode {
 
     object LightMode : UserInterfaceMode()
 
-    // TODO: Implement automatic mode
     object Automatic : UserInterfaceMode()
 
     companion object {

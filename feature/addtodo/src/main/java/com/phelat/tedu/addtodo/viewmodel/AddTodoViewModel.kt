@@ -57,6 +57,7 @@ class AddTodoViewModel(
 
     private var todoForEdit: TodoEntity? = null
 
+    // TODO: inject now date
     private var selectedDate: LocalDate = LocalDate.now()
 
     fun onBundleReceive(bundle: Bundle?) {

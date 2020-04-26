@@ -7,7 +7,8 @@ import com.phelat.tedu.designsystem.R
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 
 internal class BottomSheetAdapter(
-    private val items: List<BottomSheetItemEntity>
+    private val items: List<BottomSheetItemEntity>,
+    private val onClick: () -> Unit
 ) : RecyclerView.Adapter<BottomSheetViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BottomSheetViewHolder {
@@ -21,6 +22,6 @@ internal class BottomSheetAdapter(
     }
 
     override fun onBindViewHolder(holder: BottomSheetViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(items[position], onClick)
     }
 }
