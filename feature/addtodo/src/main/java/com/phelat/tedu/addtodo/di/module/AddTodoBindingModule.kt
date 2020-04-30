@@ -9,6 +9,11 @@ import dagger.android.ContributesAndroidInjector
 interface AddTodoBindingModule {
 
     @AddTodoScope
-    @ContributesAndroidInjector(modules = [AddTodoModule::class])
+    @ContributesAndroidInjector(
+        modules = [
+            AddTodoViewModelModule::class,
+            SelectedDateDataSourceModule::class
+        ]
+    )
     fun bindAddTodoFragment(): AddTodoFragment
 }

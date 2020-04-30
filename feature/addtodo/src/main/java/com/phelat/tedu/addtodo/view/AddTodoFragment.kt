@@ -6,14 +6,15 @@ import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
 import com.phelat.tedu.addtodo.R
 import com.phelat.tedu.addtodo.di.component.AddTodoComponent
 import com.phelat.tedu.addtodo.view.calendar.CalendarSheet
 import com.phelat.tedu.addtodo.viewmodel.AddTodoViewModel
+import com.phelat.tedu.addtodo.viewmodel.DateViewModel
 import com.phelat.tedu.androiddagger.inject
+import com.phelat.tedu.lifecycle.ViewModelFactory
 import com.phelat.tedu.sdkextensions.hideKeyboard
 import com.phelat.tedu.sdkextensions.showKeyboard
 import com.phelat.tedu.uiview.observeNavigation
@@ -27,9 +28,11 @@ import javax.inject.Inject
 class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
 
     @Inject
-    lateinit var addTodoViewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: ViewModelFactory
 
-    private val addTodoViewModel: AddTodoViewModel by viewModels { addTodoViewModelFactory }
+    private val addTodoViewModel: AddTodoViewModel by viewModels { viewModelFactory }
+
+    private val dateViewModel: DateViewModel by viewModels { viewModelFactory }
 
     private var calendarSheet: CalendarSheet? = null
 
@@ -41,6 +44,7 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addTodoViewModel.onBundleReceive(arguments)
+        dateViewModel.onBundleReceive(arguments)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,18 +54,20 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
             addTodoViewModel.onSaveTodoClicked(todo)
         }
         dateClick.setOnClickListener {
-            addTodoViewModel.onSelectDateClick()
+            dateViewModel.onSelectDateClick()
         }
         todoInput.addTextChangedListener(onTextChanged = { text, _, _, _ ->
             addTodoViewModel.onTodoTextChange(text)
         })
         addTodoViewModel.apply {
             todoTextObservable.observe(viewLifecycleOwner, todoInput::setText)
-            todoDateObservable.observe(viewLifecycleOwner, todoDate::setText)
-            todoDateSheetObservable.observe(viewLifecycleOwner) { showCalendarSheet() }
             navigationObservable.observeNavigation(this@AddTodoFragment)
             snackBarObservable.observe(viewLifecycleOwner, ::showSnackBar)
             viewStateObservable.observe(viewLifecycleOwner, ::handleViewState)
+        }
+        dateViewModel.apply {
+            todoDateObservable.observe(viewLifecycleOwner, todoDate::setText)
+            todoDateSheetObservable.observe(viewLifecycleOwner) { showCalendarSheet() }
         }
     }
 
@@ -79,8 +85,8 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
             ?: run {
                 calendarSheet = CalendarSheet(
                     requireContext(),
-                    addTodoViewModel::onDateSelect,
-                    addTodoViewModel::getSelectedDate
+                    dateViewModel::onDateSelect,
+                    dateViewModel::getSelectedDate
                 )
                 showCalendarSheet()
             }
