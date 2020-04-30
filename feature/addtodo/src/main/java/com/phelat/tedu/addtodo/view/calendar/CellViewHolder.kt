@@ -1,5 +1,6 @@
 package com.phelat.tedu.addtodo.view.calendar
 
+import android.graphics.Paint
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
@@ -34,40 +35,32 @@ class CellViewHolder(view: View, private val selectedDate: () -> LocalDate) : Vi
     private fun bindRegardingToDateInformation(day: CalendarDay, today: LocalDate) {
         when {
             day.date == selectedDate() -> {
-                cellText.setBackgroundResource(R.drawable.shape_calendar_selected_date)
-                cellText.setTextColor(
-                    ContextCompat.getColor(
-                        cellText.context,
-                        R.color.text_primary_revert_color
-                    )
-                )
+                with(cellText) {
+                    setBackgroundResource(R.drawable.shape_calendar_selected_date)
+                    setTextColor(ContextCompat.getColor(context, R.color.text_primary_revert_color))
+                    paintFlags = paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                }
             }
             day.date == today -> {
-                cellText.setBackgroundResource(R.drawable.selector_calendar_today)
-                cellText.setTextColor(
-                    ContextCompat.getColor(
-                        cellText.context,
-                        R.color.text_secondary_color
-                    )
-                )
+                with(cellText) {
+                    setBackgroundResource(R.drawable.selector_calendar_today)
+                    setTextColor(ContextCompat.getColor(context, R.color.text_secondary_color))
+                    paintFlags = paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                }
             }
             day.date.isBefore(today) -> {
-                cellText.background = null
-                cellText.setTextColor(
-                    ContextCompat.getColor(
-                        cellText.context,
-                        R.color.text_hint_color
-                    )
-                )
+                with(cellText) {
+                    background = null
+                    setTextColor(ContextCompat.getColor(context, R.color.text_hint_color))
+                    paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                }
             }
             else -> {
-                cellText.setBackgroundResource(R.drawable.selector_click_oval)
-                cellText.setTextColor(
-                    ContextCompat.getColor(
-                        cellText.context,
-                        R.color.text_secondary_color
-                    )
-                )
+                with(cellText) {
+                    setBackgroundResource(R.drawable.selector_click_oval)
+                    setTextColor(ContextCompat.getColor(context, R.color.text_secondary_color))
+                    paintFlags = paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                }
             }
         }
     }
