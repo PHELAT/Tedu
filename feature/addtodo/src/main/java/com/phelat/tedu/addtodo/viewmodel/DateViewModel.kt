@@ -58,9 +58,7 @@ class DateViewModel @Inject constructor(
     }
 
     private fun isSelectedDateTomorrow(today: LocalDate, selectedDate: LocalDate): Boolean {
-        return (today.year == selectedDate.year)
-            .and(today.monthValue == selectedDate.monthValue)
-            .and(selectedDate.dayOfMonth - today.dayOfMonth == 1)
+        return selectedDate.minusDays(1).dayOfYear == today.dayOfYear
     }
 
     fun onSelectDateClick() {
