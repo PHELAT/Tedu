@@ -13,7 +13,8 @@ import java.util.Locale
 class CalendarSheet(
     context: Context,
     onDateSelect: (LocalDate) -> Unit,
-    selectedDate: () -> LocalDate
+    selectedDate: () -> LocalDate,
+    nowDate: LocalDate
 ) : BottomSheetDialog(context, R.style.AppBottomSheetDialogTheme) {
 
     init {
@@ -30,7 +31,7 @@ class CalendarSheet(
             },
             selectedDate = selectedDate
         )
-        calendarView.monthHeaderBinder = HeaderViewBinder()
+        calendarView.monthHeaderBinder = HeaderViewBinder(nowDate)
         val currentMonth = YearMonth.now()
         val lastMonth = currentMonth.plusMonths(MONTHS_IN_A_YEAR - 1)
         val firstDayOfWeek = WeekFields.of(Locale.ENGLISH).firstDayOfWeek
