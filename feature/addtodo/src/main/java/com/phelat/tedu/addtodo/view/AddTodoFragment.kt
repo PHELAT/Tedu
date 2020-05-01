@@ -16,6 +16,7 @@ import com.phelat.tedu.addtodo.viewmodel.DateViewModel
 import com.phelat.tedu.androiddagger.inject
 import com.phelat.tedu.date.di.qualifier.NowDate
 import com.phelat.tedu.lifecycle.ViewModelFactory
+import com.phelat.tedu.sdkextensions.Visibility
 import com.phelat.tedu.sdkextensions.hideKeyboard
 import com.phelat.tedu.sdkextensions.showKeyboard
 import com.phelat.tedu.uiview.observeNavigation
@@ -72,7 +73,7 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
         }
         dateViewModel.apply {
             todoDateObservable.observe(viewLifecycleOwner, todoDate::setText)
-            todoDateSheetObservable.observe(viewLifecycleOwner) { showCalendarSheet() }
+            todoDateSheetObservable.observe(viewLifecycleOwner, ::handleCalendarSheetVisibility)
         }
     }
 
@@ -85,17 +86,24 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
         Snackbar.make(viewRoot, message, Snackbar.LENGTH_LONG).show()
     }
 
-    private fun showCalendarSheet() {
-        calendarSheet?.show()
-            ?: run {
-                calendarSheet = CalendarSheet(
-                    requireContext(),
-                    dateViewModel::onDateSelect,
-                    dateViewModel::getSelectedDate,
-                    nowDate.value
-                )
-                showCalendarSheet()
+    private fun handleCalendarSheetVisibility(visibility: Visibility) {
+        when (visibility) {
+            is Visibility.Visible -> {
+                calendarSheet?.show()
+                    ?: run {
+                        calendarSheet = CalendarSheet(
+                            requireContext(),
+                            nowDate.value,
+                            dateViewModel,
+                            viewLifecycleOwner
+                        )
+                        handleCalendarSheetVisibility(Visibility.Visible)
+                    }
             }
+            is Visibility.InVisible -> {
+                calendarSheet?.dismiss()
+            }
+        }
     }
 
     private fun handleViewState(viewState: AddTodoViewState) {
