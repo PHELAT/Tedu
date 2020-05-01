@@ -8,8 +8,8 @@ ext {
     ]
 
     app = [
-            versionCode: 4,
-            versionName: "1.0.0-dev04"
+            versionCode: 5,
+            versionName: "1.0.0-dev05"
     ]
 
     library = [
