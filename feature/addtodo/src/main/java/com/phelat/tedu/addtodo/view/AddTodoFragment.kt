@@ -118,9 +118,7 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
     }
 
     override fun onDestroyView() {
-        if (calendarSheet?.isShowing == true) {
-            calendarSheet?.dismiss()
-        }
+        handleCalendarSheetVisibility(Visibility.InVisible)
         super.onDestroyView()
     }
 }
