@@ -2,10 +2,9 @@ package com.phelat.tedu.lifecycle
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
-class ViewModelFactory @Inject constructor(
+class ViewModelFactory(
     private val viewModelProviders: ViewModelProviders
 ) : ViewModelProvider.Factory {
 
