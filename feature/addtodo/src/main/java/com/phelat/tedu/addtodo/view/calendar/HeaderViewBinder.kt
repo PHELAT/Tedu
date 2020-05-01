@@ -3,14 +3,14 @@ package com.phelat.tedu.addtodo.view.calendar
 import android.view.View
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
-import org.threeten.bp.LocalDate
+import com.phelat.tedu.addtodo.viewmodel.DateViewModel
 
 class HeaderViewBinder(
-    private val nowDate: LocalDate
+    private val dateViewModel: DateViewModel
 ) : MonthHeaderFooterBinder<HeaderViewHolder> {
 
     override fun create(view: View): HeaderViewHolder {
-        return HeaderViewHolder(view, nowDate)
+        return HeaderViewHolder(view, dateViewModel)
     }
 
     override fun bind(container: HeaderViewHolder, month: CalendarMonth) {

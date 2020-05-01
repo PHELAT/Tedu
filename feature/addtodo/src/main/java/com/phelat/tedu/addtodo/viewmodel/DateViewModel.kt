@@ -5,11 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kizitonwose.calendarview.model.CalendarDay
+import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
 import com.phelat.tedu.addtodo.R
 import com.phelat.tedu.addtodo.entity.SelectedDate
 import com.phelat.tedu.addtodo.view.TextStyle
 import com.phelat.tedu.addtodo.view.calendar.CalendarCellViewState
+import com.phelat.tedu.addtodo.view.calendar.CalendarHeaderViewState
 import com.phelat.tedu.androidresource.ResourceProvider
 import com.phelat.tedu.androidresource.input.StringId
 import com.phelat.tedu.androidresource.resource.StringResource
@@ -22,7 +24,9 @@ import com.phelat.tedu.sdkextensions.Visibility
 import com.phelat.tedu.todo.constant.TodoConstant
 import com.phelat.tedu.todo.entity.TodoEntity
 import org.threeten.bp.LocalDate
+import org.threeten.bp.format.TextStyle.FULL
 import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 class DateViewModel @Inject constructor(
@@ -127,6 +131,21 @@ class DateViewModel @Inject constructor(
             }
         } else {
             CalendarCellViewState(isCellTextVisible = false)
+        }
+    }
+
+    fun onBindCalendarHeader(month: CalendarMonth): CalendarHeaderViewState {
+        return if (nowDate.value.year != month.year) {
+            CalendarHeaderViewState(
+                headerMonthText = month.yearMonth.month.getDisplayName(FULL, Locale.ENGLISH),
+                isHeaderYearTextVisible = true,
+                headerYearText = month.year.toString()
+            )
+        } else {
+            CalendarHeaderViewState(
+                headerMonthText = month.yearMonth.month.getDisplayName(FULL, Locale.ENGLISH),
+                isHeaderYearTextVisible = false
+            )
         }
     }
 }

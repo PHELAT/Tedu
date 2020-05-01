@@ -14,7 +14,6 @@ import com.phelat.tedu.addtodo.view.calendar.CalendarSheet
 import com.phelat.tedu.addtodo.viewmodel.AddTodoViewModel
 import com.phelat.tedu.addtodo.viewmodel.DateViewModel
 import com.phelat.tedu.androiddagger.inject
-import com.phelat.tedu.date.di.qualifier.NowDate
 import com.phelat.tedu.lifecycle.ViewModelFactory
 import com.phelat.tedu.sdkextensions.Visibility
 import com.phelat.tedu.sdkextensions.hideKeyboard
@@ -25,16 +24,12 @@ import kotlinx.android.synthetic.main.fragment_addtodo.saveTodo
 import kotlinx.android.synthetic.main.fragment_addtodo.todoDate
 import kotlinx.android.synthetic.main.fragment_addtodo.todoInput
 import kotlinx.android.synthetic.main.fragment_addtodo.viewRoot
-import org.threeten.bp.LocalDate
 import javax.inject.Inject
 
 class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-
-    @field:[Inject NowDate]
-    lateinit var nowDate: Lazy<LocalDate>
 
     private val addTodoViewModel: AddTodoViewModel by viewModels { viewModelFactory }
 
@@ -93,7 +88,6 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
                     ?: run {
                         calendarSheet = CalendarSheet(
                             requireContext(),
-                            nowDate.value,
                             dateViewModel,
                             viewLifecycleOwner
                         )

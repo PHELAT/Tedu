@@ -8,14 +8,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.kizitonwose.calendarview.CalendarView
 import com.phelat.tedu.addtodo.R
 import com.phelat.tedu.addtodo.viewmodel.DateViewModel
-import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
 import org.threeten.bp.temporal.WeekFields
 import java.util.Locale
 
 class CalendarSheet(
     context: Context,
-    nowDate: LocalDate,
     dateViewModel: DateViewModel,
     lifecycleOwner: LifecycleOwner
 ) : BottomSheetDialog(context, R.style.AppBottomSheetDialogTheme) {
@@ -25,8 +23,7 @@ class CalendarSheet(
             .inflate(R.layout.view_bottom_sheet_calendar, null, false)
         val calendarView: CalendarView = view.findViewById(R.id.calendarView)
         calendarView.dayBinder = CellViewBinder(dateViewModel)
-        // TODO: refactor this
-        calendarView.monthHeaderBinder = HeaderViewBinder(nowDate)
+        calendarView.monthHeaderBinder = HeaderViewBinder(dateViewModel)
         val currentMonth = YearMonth.now()
         val lastMonth = currentMonth.plusMonths(MONTHS_IN_A_YEAR - 1)
         val firstDayOfWeek = WeekFields.of(Locale.ENGLISH).firstDayOfWeek
