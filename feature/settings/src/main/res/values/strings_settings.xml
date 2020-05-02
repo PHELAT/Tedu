@@ -6,5 +6,7 @@
     <string name="settings_ui_mode_automatic">Automatic</string>
     <string name="settings_ui_mode_dark">Dark</string>
     <string name="settings_ui_mode_light">Light</string>
+    <string name="settings_backup_title">Backup</string>
+    <string name="settings_backup_status_syncing">Syncing…</string>
 
 </resources>

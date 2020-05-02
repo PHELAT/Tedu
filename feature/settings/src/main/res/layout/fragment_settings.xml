@@ -56,4 +56,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/settingsTitleText" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/backupTitle"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:text="@string/settings_backup_title"
+        android:textColor="@color/text_primary_color"
+        android:textSize="@dimen/font_size_regular"
+        app:layout_constraintEnd_toStartOf="@id/userInterfaceMode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userInterfaceModeTitle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/backupStatus"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:gravity="end|center_vertical"
+        android:padding="16dp"
+        android:text="@string/settings_backup_status_syncing"
+        android:textColor="@color/text_secondary_color"
+        android:textSize="@dimen/font_size_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/userInterfaceModeTitle"
+        app:layout_constraintTop_toBottomOf="@id/userInterfaceMode" />
+
+    <View
+        android:id="@+id/backupClick"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@drawable/selector_click_rectangle"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userInterfaceMode" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
