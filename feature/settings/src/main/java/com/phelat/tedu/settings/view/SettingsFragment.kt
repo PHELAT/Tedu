@@ -14,6 +14,7 @@ import com.phelat.tedu.settings.R
 import com.phelat.tedu.settings.di.component.SettingsComponent
 import com.phelat.tedu.settings.viewmodel.SettingsViewModel
 import com.phelat.tedu.uiview.observeNavigation
+import kotlinx.android.synthetic.main.fragment_settings.backupClick
 import kotlinx.android.synthetic.main.fragment_settings.userInterfaceMode
 import kotlinx.android.synthetic.main.fragment_settings.userInterfaceModeClick
 import javax.inject.Inject
@@ -26,6 +27,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private val settingsViewModel: SettingsViewModel by viewModels { settingsViewModelFactory }
 
     private var userInterfaceModeSheet: BottomSheetView? = null
+    private var backupMethodSheet: BottomSheetView? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -37,11 +39,18 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         userInterfaceModeClick.setOnClickListener {
             settingsViewModel.onChangeUserInterfaceModeClick()
         }
+        backupClick.setOnClickListener {
+            settingsViewModel.onBackUpClick()
+        }
         settingsViewModel.apply {
             navigationObservable.observeNavigation(this@SettingsFragment)
             userInterfaceSheetObservable.observe(
                 viewLifecycleOwner,
                 ::observeUserInterfaceModeSheet
+            )
+            backupMethodSheetObservable.observe(
+                viewLifecycleOwner,
+                ::observeBackupMethodSheet
             )
             userInterfaceTitleObservable.observe(viewLifecycleOwner, userInterfaceMode::setText)
         }
@@ -56,9 +65,21 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             }
     }
 
+    private fun observeBackupMethodSheet(items: List<BottomSheetItemEntity>) {
+        backupMethodSheet?.setItems(items)
+            ?.show()
+            ?: run {
+                backupMethodSheet = BottomSheetView(requireContext())
+                observeBackupMethodSheet(items)
+            }
+    }
+
     override fun onDestroyView() {
         if (userInterfaceModeSheet?.isShowing == true) {
             userInterfaceModeSheet?.dismiss()
+        }
+        if (backupMethodSheet?.isShowing == true) {
+            backupMethodSheet?.dismiss()
         }
         super.onDestroyView()
     }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="backup_method_webdav_title">WebDAV</string>
+    <string name="backup_method_drive_title">Google Drive</string>
+
+</resources>

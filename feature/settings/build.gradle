@@ -28,6 +28,7 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$library.dagger"
 
     implementation project(":common:designsystem")
+    implementation project(":common:backup")
     implementation project(":library:datasource")
     implementation project(":library:androiddagger")
     implementation project(":library:dependencyinjection")

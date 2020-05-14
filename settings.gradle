@@ -3,12 +3,12 @@ include ':platform:mobile'
 // Feature Modules
 include ':feature:todolist',
         ':feature:addtodo',
-        ':feature:settings',
-        ':feature:backup'
+        ':feature:settings'
 // Common Modules
 include ':common:designsystem',
         ':common:todo',
-        ':common:analytics'
+        ':common:analytics',
+        ':common:backup'
 // Library Modules
 include ':library:translation',
         ':library:datasource',

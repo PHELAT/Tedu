@@ -33,6 +33,9 @@ class SettingsViewModel(
     private val _userInterfaceSheetObservable = SingleLiveData<List<BottomSheetItemEntity>>()
     val userInterfaceSheetObservable: LiveData<List<BottomSheetItemEntity>> = _userInterfaceSheetObservable
 
+    private val _backupMethodSheetObservable = SingleLiveData<List<BottomSheetItemEntity>>()
+    val backupMethodSheetObservable: LiveData<List<BottomSheetItemEntity>> = _backupMethodSheetObservable
+
     init {
         _userInterfaceTitleObservable.value = getUserInterfaceModeTitle()
     }
@@ -90,6 +93,21 @@ class SettingsViewModel(
             is UserInterfaceMode.LightMode -> R.string.settings_ui_mode_light
         }
         return stringResourceProvider.getResource(StringId(titleId)).resource
+    }
+
+    fun onBackUpClick() {
+        _backupMethodSheetObservable.value = listOf(
+            BottomSheetItemEntity(
+                itemIconResource = R.drawable.ic_backup_icon_secondary_24dp,
+                itemTitleResource = R.string.backup_method_webdav_title,
+                itemOnClickListener = {}
+            ),
+            BottomSheetItemEntity(
+                itemIconResource = R.drawable.ic_google_drive_icon_secondary_24dp,
+                itemTitleResource = R.string.backup_method_drive_title,
+                itemOnClickListener = {}
+            )
+        )
     }
 
     companion object {
