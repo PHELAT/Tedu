@@ -2,10 +2,13 @@
 <resources>
 
     <string name="settings_feature_title_name">Settings</string>
-    <string name="settings_ui_mode_title">User interface mode</string>
+
+    <string name="settings_ui_mode_title">User Interface</string>
+    <string name="settings_ui_mode_sheet_title">Select User Interface</string>
     <string name="settings_ui_mode_automatic">Automatic</string>
     <string name="settings_ui_mode_dark">Dark</string>
     <string name="settings_ui_mode_light">Light</string>
+
     <string name="settings_backup_title">Backup</string>
     <string name="settings_backup_status_syncing">Syncing…</string>
 

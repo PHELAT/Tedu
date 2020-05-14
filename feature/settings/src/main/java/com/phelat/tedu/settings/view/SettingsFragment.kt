@@ -57,21 +57,27 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun observeUserInterfaceModeSheet(items: List<BottomSheetItemEntity>) {
-        userInterfaceModeSheet?.setItems(items)
-            ?.show()
-            ?: run {
-                userInterfaceModeSheet = BottomSheetView(requireContext())
-                observeUserInterfaceModeSheet(items)
+        userInterfaceModeSheet?.apply {
+            sheetItems = items
+            show()
+        } ?: run {
+            userInterfaceModeSheet = BottomSheetView(requireContext()).apply {
+                sheetTitle = R.string.settings_ui_mode_sheet_title
             }
+            observeUserInterfaceModeSheet(items)
+        }
     }
 
     private fun observeBackupMethodSheet(items: List<BottomSheetItemEntity>) {
-        backupMethodSheet?.setItems(items)
-            ?.show()
-            ?: run {
-                backupMethodSheet = BottomSheetView(requireContext())
-                observeBackupMethodSheet(items)
+        backupMethodSheet?.apply {
+            sheetItems = items
+            show()
+        } ?: run {
+            backupMethodSheet = BottomSheetView(requireContext()).apply {
+                sheetTitle = R.string.backup_method_title
             }
+            observeBackupMethodSheet(items)
+        }
     }
 
     override fun onDestroyView() {

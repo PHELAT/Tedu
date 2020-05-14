@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/viewRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,6 +13,18 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
         android:background="@drawable/shape_bottom_sheet_pill" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/sheetTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="@color/text_primary_color"
+        android:textSize="@dimen/font_size_regular"
+        android:visibility="gone"
+        app:fontFamily="@font/robotoslab_medium" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bottomSheetRecycler"

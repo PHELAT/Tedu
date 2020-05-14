@@ -62,12 +62,13 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
     }
 
     private fun observeTodoSheet(items: List<BottomSheetItemEntity>) {
-        todoSheet?.setItems(items)
-            ?.show()
-            ?: run {
-                todoSheet = BottomSheetView(requireContext())
-                observeTodoSheet(items)
-            }
+        todoSheet?.apply {
+            sheetItems = items
+            show()
+        } ?: run {
+            todoSheet = BottomSheetView(requireContext())
+            observeTodoSheet(items)
+        }
     }
 
     private fun showSnackBar(message: String) {
