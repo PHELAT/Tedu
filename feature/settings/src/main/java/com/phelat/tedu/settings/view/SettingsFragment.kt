@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.phelat.tedu.androiddagger.inject
 import com.phelat.tedu.designsystem.component.view.BottomSheetView
-import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
+import com.phelat.tedu.designsystem.entity.BottomSheetEntity
 import com.phelat.tedu.settings.R
 import com.phelat.tedu.settings.di.component.SettingsComponent
 import com.phelat.tedu.settings.viewmodel.SettingsViewModel
@@ -56,27 +56,25 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
     }
 
-    private fun observeUserInterfaceModeSheet(items: List<BottomSheetItemEntity>) {
+    private fun observeUserInterfaceModeSheet(entity: BottomSheetEntity) {
         userInterfaceModeSheet?.apply {
-            sheetItems = items
+            sheetItems = entity.items
+            sheetTitle = entity.sheetTitle
             show()
         } ?: run {
-            userInterfaceModeSheet = BottomSheetView(requireContext()).apply {
-                sheetTitle = R.string.settings_ui_mode_sheet_title
-            }
-            observeUserInterfaceModeSheet(items)
+            userInterfaceModeSheet = BottomSheetView(requireContext())
+            observeUserInterfaceModeSheet(entity)
         }
     }
 
-    private fun observeBackupMethodSheet(items: List<BottomSheetItemEntity>) {
+    private fun observeBackupMethodSheet(entity: BottomSheetEntity) {
         backupMethodSheet?.apply {
-            sheetItems = items
+            sheetItems = entity.items
+            sheetTitle = entity.sheetTitle
             show()
         } ?: run {
-            backupMethodSheet = BottomSheetView(requireContext()).apply {
-                sheetTitle = R.string.backup_method_title
-            }
-            observeBackupMethodSheet(items)
+            backupMethodSheet = BottomSheetView(requireContext())
+            observeBackupMethodSheet(entity)
         }
     }
 

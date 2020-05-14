@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.phelat.tedu.androiddagger.inject
 import com.phelat.tedu.designsystem.component.view.BottomSheetView
-import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
+import com.phelat.tedu.designsystem.entity.BottomSheetEntity
 import com.phelat.tedu.todolist.R
 import com.phelat.tedu.todolist.di.component.TodoListComponent
 import com.phelat.tedu.todolist.viewmodel.TodoListViewModel
@@ -61,13 +61,14 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
             .show()
     }
 
-    private fun observeTodoSheet(items: List<BottomSheetItemEntity>) {
+    private fun observeTodoSheet(entity: BottomSheetEntity) {
         todoSheet?.apply {
-            sheetItems = items
+            sheetItems = entity.items
+            sheetTitle = entity.sheetTitle
             show()
         } ?: run {
             todoSheet = BottomSheetView(requireContext())
-            observeTodoSheet(items)
+            observeTodoSheet(entity)
         }
     }
 

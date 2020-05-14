@@ -3,7 +3,6 @@ package com.phelat.tedu.designsystem.component.view
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,10 +20,12 @@ class BottomSheetView(
 
     var dismissOnClick: Boolean = true
 
-    var sheetTitle: Int = -1
-        set(@StringRes value) {
-            bottomSheetTitle.visibility = View.VISIBLE
-            bottomSheetTitle.setText(value)
+    var sheetTitle: String = ""
+        set(value) {
+            if (value.isNotEmpty()) {
+                bottomSheetTitle.visibility = View.VISIBLE
+                bottomSheetTitle.text = value
+            }
             field = value
         }
 

@@ -10,6 +10,7 @@ import com.phelat.tedu.androidresource.input.StringId
 import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Writable
+import com.phelat.tedu.designsystem.entity.BottomSheetEntity
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.settings.R
@@ -30,11 +31,11 @@ class SettingsViewModel(
     private val _navigationObservable = SingleLiveData<Navigate>()
     val navigationObservable: LiveData<Navigate> = _navigationObservable
 
-    private val _userInterfaceSheetObservable = SingleLiveData<List<BottomSheetItemEntity>>()
-    val userInterfaceSheetObservable: LiveData<List<BottomSheetItemEntity>> = _userInterfaceSheetObservable
+    private val _userInterfaceSheetObservable = SingleLiveData<BottomSheetEntity>()
+    val userInterfaceSheetObservable: LiveData<BottomSheetEntity> = _userInterfaceSheetObservable
 
-    private val _backupMethodSheetObservable = SingleLiveData<List<BottomSheetItemEntity>>()
-    val backupMethodSheetObservable: LiveData<List<BottomSheetItemEntity>> = _backupMethodSheetObservable
+    private val _backupMethodSheetObservable = SingleLiveData<BottomSheetEntity>()
+    val backupMethodSheetObservable: LiveData<BottomSheetEntity> = _backupMethodSheetObservable
 
     init {
         _userInterfaceTitleObservable.value = getUserInterfaceModeTitle()
@@ -55,7 +56,7 @@ class SettingsViewModel(
                 changeUserInterfaceMode(UserInterfaceMode.LightMode)
             }
         )
-        _userInterfaceSheetObservable.value = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val sheetItems = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             listOf(
                 BottomSheetItemEntity(
                     itemIconResource = null,
@@ -70,6 +71,11 @@ class SettingsViewModel(
         } else {
             listOf(darkItem, lightItem)
         }
+        val sheetTitleId = StringId(R.string.settings_ui_mode_sheet_title)
+        _userInterfaceSheetObservable.value = BottomSheetEntity(
+            items = sheetItems,
+            sheetTitle = stringResourceProvider.getResource(sheetTitleId).resource
+        )
     }
 
     private fun changeUserInterfaceMode(userInterfaceMode: UserInterfaceMode) {
@@ -96,7 +102,7 @@ class SettingsViewModel(
     }
 
     fun onBackUpClick() {
-        _backupMethodSheetObservable.value = listOf(
+        val sheetItems = listOf(
             BottomSheetItemEntity(
                 itemIconResource = R.drawable.ic_backup_icon_secondary_24dp,
                 itemTitleResource = R.string.backup_method_webdav_title,
@@ -107,6 +113,11 @@ class SettingsViewModel(
                 itemTitleResource = R.string.backup_method_drive_title,
                 itemOnClickListener = {}
             )
+        )
+        val sheetTitleId = StringId(R.string.backup_method_title)
+        _backupMethodSheetObservable.value = BottomSheetEntity(
+            items = sheetItems,
+            sheetTitle = stringResourceProvider.getResource(sheetTitleId).resource
         )
     }
 

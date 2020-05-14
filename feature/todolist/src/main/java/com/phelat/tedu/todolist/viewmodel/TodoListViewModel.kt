@@ -14,6 +14,7 @@ import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.date.TeduDate
+import com.phelat.tedu.designsystem.entity.BottomSheetEntity
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.ifNotSuccessful
@@ -58,8 +59,8 @@ class TodoListViewModel(
     private val _todoObservable = MutableLiveData<List<Section>>()
     val todoObservable: LiveData<List<Section>> = _todoObservable
 
-    private val _todoSheetObservable = SingleLiveData<List<BottomSheetItemEntity>>()
-    val todoSheetObservable: LiveData<List<BottomSheetItemEntity>> = _todoSheetObservable
+    private val _todoSheetObservable = SingleLiveData<BottomSheetEntity>()
+    val todoSheetObservable: LiveData<BottomSheetEntity> = _todoSheetObservable
 
     private val _dismissTodoSheetObservable = SingleLiveData<Unit>()
     val dismissTodoSheetObservable: LiveData<Unit> = _dismissTodoSheetObservable
@@ -120,17 +121,20 @@ class TodoListViewModel(
     }
 
     private fun onTodoLongClick(todoEntity: TodoEntity) {
-        _todoSheetObservable.value = listOf(
-            BottomSheetItemEntity(
-                itemIconResource = R.drawable.ic_edit_icon_secondary_24dp,
-                itemTitleResource = R.string.todolist_todo_sheet_edit,
-                itemOnClickListener = { onEditTodoClick(todoEntity) }
+        _todoSheetObservable.value = BottomSheetEntity(
+            items = listOf(
+                BottomSheetItemEntity(
+                    itemIconResource = R.drawable.ic_edit_icon_secondary_24dp,
+                    itemTitleResource = R.string.todolist_todo_sheet_edit,
+                    itemOnClickListener = { onEditTodoClick(todoEntity) }
+                ),
+                BottomSheetItemEntity(
+                    itemIconResource = R.drawable.ic_delete_forever_icon_secondary_24dp,
+                    itemTitleResource = R.string.todolist_todo_sheet_delete,
+                    itemOnClickListener = { onDeleteTodoClick(todoEntity) }
+                )
             ),
-            BottomSheetItemEntity(
-                itemIconResource = R.drawable.ic_delete_forever_icon_secondary_24dp,
-                itemTitleResource = R.string.todolist_todo_sheet_delete,
-                itemOnClickListener = { onDeleteTodoClick(todoEntity) }
-            )
+            sheetTitle = todoEntity.todo
         )
     }
 
