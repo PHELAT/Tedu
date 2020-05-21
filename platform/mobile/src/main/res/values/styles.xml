@@ -6,8 +6,17 @@
         <item name="colorAccent">@color/brand_primary</item>
         <item name="android:windowBackground">@color/surface_color_0</item>
         <item name="fontFamily">@font/robotoslab_regular</item>
+        <item name="textInputStyle">@style/Widget.Input.OutlinedBox</item>
     </style>
 
     <style name="AppTheme" parent="AppThemeBase" />
+
+    <style name="ThemeOverlay.Input.OutlinedBox" parent="ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox">
+        <item name="colorControlActivated">@color/brand_primary</item>
+    </style>
+
+    <style name="Widget.Input.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Input.OutlinedBox</item>
+    </style>
 
 </resources>

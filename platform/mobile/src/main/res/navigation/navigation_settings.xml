@@ -7,6 +7,8 @@
     app:startDestination="@id/settings_fragment"
     tools:ignore="UnusedNavigation">
 
+    <include app:graph="@navigation/navigation_backup" />
+
     <fragment
         android:id="@+id/settings_fragment"
         android:name="com.phelat.tedu.settings.view.SettingsFragment" />

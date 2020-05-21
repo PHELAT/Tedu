@@ -68,6 +68,7 @@ dependencies {
     implementation project(":feature:addtodo")
     implementation project(":feature:todolist")
     implementation project(":feature:settings")
+    implementation project(":common:backup")
     implementation project(':library:navigation')
     implementation project(":library:translation")
     implementation project(":library:dependencyinjection")

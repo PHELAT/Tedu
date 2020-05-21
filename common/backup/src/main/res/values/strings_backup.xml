@@ -3,6 +3,12 @@
 
     <string name="backup_method_title">Select Backup Method</string>
     <string name="backup_method_webdav_title">WebDAV</string>
-    <string name="backup_method_drive_title">Google Drive</string>
+    <string name="backup_method_webdav_setup_title">Setup WebDAV</string>
+    <string name="backup_method_webdav_setup_save_config">Save</string>
+    <string name="backup_method_drive_title">Google Drive(Coming Soon)</string>
+
+    <string name="backup_method_webdav_username">Username</string>
+    <string name="backup_method_webdav_password">Password</string>
+    <string name="backup_method_webdav_url">URL</string>
 
 </resources>

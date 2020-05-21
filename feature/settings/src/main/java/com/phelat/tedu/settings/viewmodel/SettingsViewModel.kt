@@ -106,7 +106,7 @@ class SettingsViewModel(
             BottomSheetItemEntity(
                 itemIconResource = R.drawable.ic_backup_icon_secondary_24dp,
                 itemTitleResource = R.string.backup_method_webdav_title,
-                itemOnClickListener = {}
+                itemOnClickListener = ::onWebDavBackupMethodClick
             ),
             BottomSheetItemEntity(
                 itemIconResource = R.drawable.ic_google_drive_icon_secondary_24dp,
@@ -121,7 +121,18 @@ class SettingsViewModel(
         )
     }
 
+    private fun onWebDavBackupMethodClick() {
+        viewModelScope.launch {
+            delay(DELAY_FOR_NAVIGATING)
+            val setupWebDavDeepLink = StringId(R.string.deeplink_webdav_setup)
+                .let { stringResourceProvider.getResource(it) }
+                .resource
+            _navigationObservable.value = Navigate.ToDeepLink(setupWebDavDeepLink)
+        }
+    }
+
     companion object {
+        private const val DELAY_FOR_NAVIGATING = 200L
         private const val DELAY_FOR_RECREATION_IN_MILLIS = 200L
     }
 }
