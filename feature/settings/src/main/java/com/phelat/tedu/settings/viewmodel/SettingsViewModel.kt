@@ -15,11 +15,13 @@ import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.settings.R
 import com.phelat.tedu.settings.entity.UserInterfaceMode
+import com.phelat.tedu.uiview.DirectionId
 import com.phelat.tedu.uiview.Navigate
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SettingsViewModel(
+class SettingsViewModel @Inject constructor(
     private val uiModeDataSourceReadable: Readable<UserInterfaceMode>,
     private val uiModeDataSourceWritable: Writable<UserInterfaceMode>,
     private val stringResourceProvider: ResourceProvider<StringId, StringResource>
@@ -124,10 +126,8 @@ class SettingsViewModel(
     private fun onWebDavBackupMethodClick() {
         viewModelScope.launch {
             delay(DELAY_FOR_NAVIGATING)
-            val setupWebDavDeepLink = StringId(R.string.deeplink_webdav_setup)
-                .let { stringResourceProvider.getResource(it) }
-                .resource
-            _navigationObservable.value = Navigate.ToDeepLink(setupWebDavDeepLink)
+            val directionId = DirectionId(R.id.settings_to_webdav_setup)
+            _navigationObservable.value = Navigate.ToDirection(directionId)
         }
     }
 

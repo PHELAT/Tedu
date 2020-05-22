@@ -5,7 +5,7 @@ import com.phelat.tedu.androiddagger.DispatcherComponent
 import com.phelat.tedu.androidresource.di.component.AndroidResourceComponent
 import com.phelat.tedu.dependencyinjection.StartupTasks
 import com.phelat.tedu.dependencyinjection.feature.FeatureScope
-import com.phelat.tedu.settings.di.module.SettingsBindingModule
+import com.phelat.tedu.settings.di.module.SettingsFragmentModule
 import com.phelat.tedu.settings.di.module.SettingsModule
 import com.phelat.tedu.settings.di.module.SettingsStartUpModule
 import com.phelat.tedu.settings.di.module.UserInterfaceModeModule
@@ -18,7 +18,7 @@ import dagger.android.AndroidInjectionModule
     modules = [
         AndroidInjectionModule::class,
         SettingsStartUpModule::class,
-        SettingsBindingModule::class,
+        SettingsFragmentModule::class,
         UserInterfaceModeModule::class,
         SettingsModule::class
     ],

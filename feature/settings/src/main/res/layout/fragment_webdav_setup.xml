@@ -14,12 +14,12 @@
         android:textColor="@color/text_secondary_color"
         android:textSize="@dimen/font_size_title_1"
         app:fontFamily="@font/robotoslab_black"
-        app:layout_constraintEnd_toStartOf="@id/saveTodo"
+        app:layout_constraintEnd_toStartOf="@id/saveSettings"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/saveTodo"
+        android:id="@+id/saveSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/webDavUrlInput"
+                android:id="@+id/webDavUrlLayout"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:layout_marginStart="16dp"
@@ -67,6 +67,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/webDavUrlInput"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textUri|text"
@@ -76,7 +77,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/webDavUsernameInput"
+                android:id="@+id/webDavUsernameLayout"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:layout_marginStart="16dp"
@@ -87,9 +88,10 @@
                 app:hintTextColor="@color/text_hint_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/webDavUrlInput">
+                app:layout_constraintTop_toBottomOf="@id/webDavUrlLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/webDavUsernameInput"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="text"
@@ -99,7 +101,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/webDavPasswordInput"
+                android:id="@+id/webDavPasswordLayout"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:layout_marginStart="16dp"
@@ -110,10 +112,11 @@
                 app:hintTextColor="@color/text_hint_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/webDavUsernameInput"
+                app:layout_constraintTop_toBottomOf="@id/webDavUsernameLayout"
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/webDavPasswordInput"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPassword"

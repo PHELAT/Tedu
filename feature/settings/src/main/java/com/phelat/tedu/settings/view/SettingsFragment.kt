@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.phelat.tedu.androiddagger.inject
 import com.phelat.tedu.designsystem.component.view.BottomSheetView
 import com.phelat.tedu.designsystem.entity.BottomSheetEntity
+import com.phelat.tedu.lifecycle.ViewModelFactory
 import com.phelat.tedu.settings.R
 import com.phelat.tedu.settings.di.component.SettingsComponent
 import com.phelat.tedu.settings.viewmodel.SettingsViewModel
@@ -22,9 +22,9 @@ import javax.inject.Inject
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     @Inject
-    lateinit var settingsViewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: ViewModelFactory
 
-    private val settingsViewModel: SettingsViewModel by viewModels { settingsViewModelFactory }
+    private val settingsViewModel: SettingsViewModel by viewModels { viewModelFactory }
 
     private var userInterfaceModeSheet: BottomSheetView? = null
     private var backupMethodSheet: BottomSheetView? = null
