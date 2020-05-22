@@ -1,12 +1,16 @@
 package com.phelat.tedu.settings.state
 
-import com.phelat.tedu.sdkextensions.CounterBoolean
-
-private const val NUMBER_OF_INPUT_FIELDS = 3
+import com.phelat.tedu.sdkextensions.CircuitBoolean
+import com.phelat.tedu.settings.viewmodel.WebDavViewModel.Companion.PASSWORD_FIELD_SWITCH
+import com.phelat.tedu.settings.viewmodel.WebDavViewModel.Companion.URL_FIELD_SWITCH
+import com.phelat.tedu.settings.viewmodel.WebDavViewModel.Companion.USERNAME_FIELD_SWITCH
 
 data class WebDavViewState(
-    val isSaveButtonEnabled: CounterBoolean = CounterBoolean(
-        requiredCountToBeTrue = NUMBER_OF_INPUT_FIELDS,
-        counter = 0
+    val isSaveButtonEnabled: CircuitBoolean = CircuitBoolean(
+        switches = mapOf(
+            URL_FIELD_SWITCH to false,
+            USERNAME_FIELD_SWITCH to false,
+            PASSWORD_FIELD_SWITCH to false
+        )
     )
 )

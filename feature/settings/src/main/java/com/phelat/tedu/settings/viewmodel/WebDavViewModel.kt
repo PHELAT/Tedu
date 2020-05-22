@@ -16,9 +16,9 @@ class WebDavViewModel @Inject constructor() : ViewModel() {
         _viewStateObservable.update {
             copy(
                 isSaveButtonEnabled = if (url.isEmpty()) {
-                    isSaveButtonEnabled.decrement()
+                    isSaveButtonEnabled.switchOff(URL_FIELD_SWITCH)
                 } else {
-                    isSaveButtonEnabled.increment()
+                    isSaveButtonEnabled.switchOn(URL_FIELD_SWITCH)
                 }
             )
         }
@@ -28,9 +28,9 @@ class WebDavViewModel @Inject constructor() : ViewModel() {
         _viewStateObservable.update {
             copy(
                 isSaveButtonEnabled = if (username.isEmpty()) {
-                    isSaveButtonEnabled.decrement()
+                    isSaveButtonEnabled.switchOff(USERNAME_FIELD_SWITCH)
                 } else {
-                    isSaveButtonEnabled.increment()
+                    isSaveButtonEnabled.switchOn(USERNAME_FIELD_SWITCH)
                 }
             )
         }
@@ -40,11 +40,17 @@ class WebDavViewModel @Inject constructor() : ViewModel() {
         _viewStateObservable.update {
             copy(
                 isSaveButtonEnabled = if (password.isEmpty()) {
-                    isSaveButtonEnabled.decrement()
+                    isSaveButtonEnabled.switchOff(PASSWORD_FIELD_SWITCH)
                 } else {
-                    isSaveButtonEnabled.increment()
+                    isSaveButtonEnabled.switchOn(PASSWORD_FIELD_SWITCH)
                 }
             )
         }
+    }
+
+    companion object {
+        const val URL_FIELD_SWITCH = "url_field_switch"
+        const val USERNAME_FIELD_SWITCH = "username_field_switch"
+        const val PASSWORD_FIELD_SWITCH = "password_field_switch"
     }
 }
