@@ -6,19 +6,27 @@ class CircuitBoolean(private val switches: Map<String, Boolean>) {
 
     fun switchOn(switch: String): CircuitBoolean {
         synchronized(LOCK) {
-            val newSwitches = switches.toMutableMap().apply {
-                put(switch, true)
+            return if (switches[switch] == false) {
+                val newSwitches = switches.toMutableMap().apply {
+                    put(switch, true)
+                }
+                CircuitBoolean(newSwitches)
+            } else {
+                this
             }
-            return CircuitBoolean(newSwitches)
         }
     }
 
     fun switchOff(switch: String): CircuitBoolean {
         synchronized(LOCK) {
-            val newSwitches = switches.toMutableMap().apply {
-                put(switch, false)
+            return if (switches[switch] == true) {
+                val newSwitches = switches.toMutableMap().apply {
+                    put(switch, false)
+                }
+                CircuitBoolean(newSwitches)
+            } else {
+                this
             }
-            return CircuitBoolean(newSwitches)
         }
     }
 
