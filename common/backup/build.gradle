@@ -24,11 +24,13 @@ dependencies {
     implementation "com.thegrizzlylabs.sardine-android:sardine-android:$library.sardine"
 
     implementation project(":common:designsystem")
+    implementation project(":common:todo")
     implementation project(":library:lifecycle")
     implementation project(":library:androiddagger")
     implementation project(":library:dependencyinjection")
     implementation project(":library:datasource")
     implementation project(":library:functional")
     implementation project(":library:androidcore")
+    implementation project(":library:thread")
 
 }

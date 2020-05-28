@@ -19,9 +19,11 @@ import javax.inject.Inject
 @CommonScope
 internal class WebDavDataSource @Inject constructor(
     private val sardine: Sardine
-) : Readable.IO<WebDavCredentials, @JvmSuppressWildcards Response<BackupTodoEntity, WebDavErrorContext>> {
+) : Readable.IO<WebDavCredentials, @JvmSuppressWildcards Response<List<BackupTodoEntity>, WebDavErrorContext>> {
 
-    override fun read(input: WebDavCredentials): Response<BackupTodoEntity, WebDavErrorContext> {
+    override fun read(
+        input: WebDavCredentials
+    ): Response<List<BackupTodoEntity>, WebDavErrorContext> {
         sardine.setCredentials(input.username, input.password)
         return try {
             val url = getNormalizedUrl(input.url) + TEDU_BACKUP_FILE
@@ -57,11 +59,16 @@ internal class WebDavDataSource @Inject constructor(
         return JSONObject(builder.toString())
     }
 
-    private fun backupContentToBackupEntity(content: JSONObject): BackupTodoEntity {
-        return BackupTodoEntity(
-            backupVersion = content.getInt(TEDU_BACKUP_VERSION),
-            todos = content.getJSONObject(TEDU_BACKUP_TODOS)
-        )
+    private fun backupContentToBackupEntity(content: JSONObject): List<BackupTodoEntity> {
+        val doneActions = mutableListOf<BackupTodoEntity>()
+        val actions = content.getJSONArray("actions")
+        val data = content.getJSONArray("data")
+        for (i in 0 until actions.length()) {
+            val action = actions.getString(i)
+            val actionData = data.getJSONObject(i)
+            doneActions += BackupTodoEntity(action, actionData)
+        }
+        return doneActions
     }
 
     companion object {
