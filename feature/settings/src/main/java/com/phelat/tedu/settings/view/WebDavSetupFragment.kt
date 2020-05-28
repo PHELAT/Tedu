@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import com.phelat.tedu.androiddagger.inject
+import com.phelat.tedu.backup.entity.WebDavCredentials
 import com.phelat.tedu.lifecycle.ViewModelFactory
 import com.phelat.tedu.settings.R
 import com.phelat.tedu.settings.di.component.SettingsComponent
@@ -42,12 +43,26 @@ class WebDavSetupFragment : Fragment(R.layout.fragment_webdav_setup) {
         webDavPasswordInput.addTextChangedListener(afterTextChanged = { editable ->
             webDavViewModel.onPasswordTextChange(editable.toString())
         })
+        saveSettings.setOnClickListener {
+            webDavViewModel.onSaveCredentialsClick(
+                webDavUrlInput.text.toString(),
+                webDavUsernameInput.text.toString(),
+                webDavPasswordInput.text.toString()
+            )
+        }
         webDavViewModel.apply {
             viewStateObservable.observe(viewLifecycleOwner, ::updateState)
+            credentialsObservable.observe(viewLifecycleOwner, ::updateCredentials)
         }
     }
 
     private fun updateState(state: WebDavViewState) {
         saveSettings.isEnabled = state.isSaveButtonEnabled.value
+    }
+
+    private fun updateCredentials(credentials: WebDavCredentials) {
+        webDavUrlInput.setText(credentials.url)
+        webDavUsernameInput.setText(credentials.username)
+        webDavPasswordInput.setText(credentials.password)
     }
 }

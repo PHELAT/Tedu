@@ -3,14 +3,28 @@ package com.phelat.tedu.settings.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.phelat.tedu.backup.entity.WebDavCredentials
+import com.phelat.tedu.datasource.Readable
+import com.phelat.tedu.datasource.Writable
+import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.lifecycle.update
 import com.phelat.tedu.settings.state.WebDavViewState
 import javax.inject.Inject
 
-class WebDavViewModel @Inject constructor() : ViewModel() {
+class WebDavViewModel @Inject constructor(
+    credentialsReadable: Readable<WebDavCredentials>,
+    private val credentialsWritable: Writable<WebDavCredentials>
+) : ViewModel() {
 
     private val _viewStateObservable = MutableLiveData(WebDavViewState())
     val viewStateObservable: LiveData<WebDavViewState> = _viewStateObservable
+
+    private val _credentialsObservable = SingleLiveData<WebDavCredentials>()
+    val credentialsObservable: LiveData<WebDavCredentials> = _credentialsObservable
+
+    init {
+        _credentialsObservable.value = credentialsReadable.read()
+    }
 
     fun onUrlTextChange(url: String) {
         _viewStateObservable.update {
@@ -46,6 +60,11 @@ class WebDavViewModel @Inject constructor() : ViewModel() {
                 }
             )
         }
+    }
+
+    fun onSaveCredentialsClick(url: String, username: String, password: String) {
+        val credentials = WebDavCredentials(url, username, password)
+        credentialsWritable.write(credentials)
     }
 
     companion object {

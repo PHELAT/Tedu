@@ -29,6 +29,7 @@ dependencies {
 
     implementation project(":common:designsystem")
     implementation project(":common:backup")
+    implementation project(":common:todo")
     implementation project(":library:datasource")
     implementation project(":library:androiddagger")
     implementation project(":library:dependencyinjection")
@@ -37,5 +38,7 @@ dependencies {
     implementation project(":library:navigation")
     implementation project(":library:androidresource")
     implementation project(":library:sdkextensions")
+    implementation project(":library:functional")
+    implementation project(":library:thread")
 
 }

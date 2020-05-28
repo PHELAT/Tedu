@@ -2,6 +2,8 @@ package com.phelat.tedu.settings.di.builder
 
 import com.phelat.tedu.androidcore.di.builder.AndroidCoreComponentBuilder
 import com.phelat.tedu.androidresource.di.builder.AndroidResourceComponentBuilder
+import com.phelat.tedu.backup.di.builder.BackupComponentBuilder
+import com.phelat.tedu.coroutines.di.builder.ThreadComponentBuilder
 import com.phelat.tedu.dependencyinjection.ComponentBuilder
 import com.phelat.tedu.dependencyinjection.StartupTasks
 import com.phelat.tedu.settings.di.component.DaggerSettingsComponent
@@ -13,6 +15,8 @@ object SettingsComponentBuilder : ComponentBuilder<SettingsComponent>() {
         return DaggerSettingsComponent.builder()
             .androidCoreComponent(AndroidCoreComponentBuilder.getComponent(addStartupTask))
             .androidResourceComponent(AndroidResourceComponentBuilder.getComponent(addStartupTask))
+            .backupComponent(BackupComponentBuilder.getComponent(addStartupTask))
+            .threadComponent(ThreadComponentBuilder.getComponent(addStartupTask))
             .build()
     }
 
