@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_backup"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/webdav_setup_fragment"
+        android:name="com.phelat.tedu.backup.view.WebDavSetupFragment"
+        tools:layout="@layout/fragment_webdav_setup">
+
+        <deepLink app:uri="tedu://webdav_setup" />
+
+    </fragment>
+
+</navigation>

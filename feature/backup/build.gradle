@@ -9,35 +9,30 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$library.kotlin"
 
-    implementation "androidx.fragment:fragment-ktx:$library.fragment"
-
-    implementation "androidx.constraintlayout:constraintlayout:$library.constraintlayout"
+    implementation "com.google.android.material:material:$library.material"
 
     implementation "androidx.navigation:navigation-fragment-ktx:$library.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$library.navigation"
 
-    implementation "com.google.android.material:material:$library.material"
-
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$library.lifecycle"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$library.lifecycle"
-    implementation "androidx.lifecycle:lifecycle-common-java8:$library.lifecycle"
+    implementation "androidx.constraintlayout:constraintlayout:$library.constraintlayout"
 
     implementation "com.google.dagger:dagger:$library.dagger"
     kapt "com.google.dagger:dagger-compiler:$library.dagger"
     implementation "com.google.dagger:dagger-android-support:$library.dagger"
     kapt "com.google.dagger:dagger-android-processor:$library.dagger"
 
+    implementation "com.thegrizzlylabs.sardine-android:sardine-android:$library.sardine"
+
     implementation project(":common:designsystem")
     implementation project(":common:todo")
-    implementation project(":library:datasource")
+    implementation project(":library:lifecycle")
     implementation project(":library:androiddagger")
     implementation project(":library:dependencyinjection")
-    implementation project(":library:lifecycle")
-    implementation project(":library:androidcore")
-    implementation project(":library:navigation")
-    implementation project(":library:androidresource")
-    implementation project(":library:sdkextensions")
+    implementation project(":library:datasource")
     implementation project(":library:functional")
+    implementation project(":library:androidcore")
     implementation project(":library:thread")
+    implementation project(":library:mapper")
+    implementation project(":library:sdkextensions")
 
 }

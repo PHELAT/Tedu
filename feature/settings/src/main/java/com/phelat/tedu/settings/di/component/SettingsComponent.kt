@@ -3,7 +3,6 @@ package com.phelat.tedu.settings.di.component
 import com.phelat.tedu.androidcore.di.component.AndroidCoreComponent
 import com.phelat.tedu.androiddagger.DispatcherComponent
 import com.phelat.tedu.androidresource.di.component.AndroidResourceComponent
-import com.phelat.tedu.backup.di.component.BackupComponent
 import com.phelat.tedu.coroutines.di.component.ThreadComponent
 import com.phelat.tedu.dependencyinjection.StartupTasks
 import com.phelat.tedu.dependencyinjection.feature.FeatureScope
@@ -27,7 +26,6 @@ import dagger.android.AndroidInjectionModule
     dependencies = [
         AndroidCoreComponent::class,
         AndroidResourceComponent::class,
-        BackupComponent::class,
         ThreadComponent::class
     ]
 )

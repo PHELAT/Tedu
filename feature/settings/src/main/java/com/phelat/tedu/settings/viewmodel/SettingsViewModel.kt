@@ -15,7 +15,6 @@ import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.settings.R
 import com.phelat.tedu.settings.entity.UserInterfaceMode
-import com.phelat.tedu.uiview.DirectionId
 import com.phelat.tedu.uiview.Navigate
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -126,8 +125,7 @@ class SettingsViewModel @Inject constructor(
     private fun onWebDavBackupMethodClick() {
         viewModelScope.launch {
             delay(DELAY_FOR_NAVIGATING)
-            val directionId = DirectionId(R.id.settings_to_webdav_setup)
-            _navigationObservable.value = Navigate.ToDirection(directionId)
+            _navigationObservable.value = Navigate.ToDeepLink("tedu://webdav_setup")
         }
     }
 
