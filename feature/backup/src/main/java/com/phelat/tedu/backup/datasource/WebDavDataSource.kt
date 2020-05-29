@@ -73,7 +73,5 @@ internal class WebDavDataSource @Inject constructor(
 
     companion object {
         private const val TEDU_BACKUP_FILE = "tedu.backup"
-        private const val TEDU_BACKUP_VERSION = "version"
-        private const val TEDU_BACKUP_TODOS = "todos"
     }
 }
