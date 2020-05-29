@@ -62,11 +62,11 @@ internal class WebDavDataSource @Inject constructor(
     private fun backupContentToBackupEntity(content: JSONObject): List<BackupTodoEntity> {
         val doneActions = mutableListOf<BackupTodoEntity>()
         val actions = content.getJSONArray("actions")
-        val data = content.getJSONArray("data")
         for (i in 0 until actions.length()) {
-            val action = actions.getString(i)
-            val actionData = data.getJSONObject(i)
-            doneActions += BackupTodoEntity(action, actionData)
+            val currentAction = actions.getJSONObject(i)
+            val actionType = currentAction.getString("action")
+            val actionData = currentAction.getJSONObject("data")
+            doneActions += BackupTodoEntity(actionType, actionData)
         }
         return doneActions
     }
