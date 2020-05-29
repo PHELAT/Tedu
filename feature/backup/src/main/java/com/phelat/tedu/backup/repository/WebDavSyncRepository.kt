@@ -23,8 +23,7 @@ import javax.inject.Inject
 
 @FeatureScope
 internal class WebDavSyncRepository @Inject constructor(
-    // TODO: add error context for the case were it's empty
-    private val credentialsReadable: Readable<WebDavCredentials>,
+    private val credentialsReadable: Readable<Response<WebDavCredentials, WebDavErrorContext>>,
     private val webDavReadable: Readable.IO<WebDavCredentials, Response<List<BackupTodoEntity>, WebDavErrorContext>>,
     private val todoWritable: Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val todoDeletable: Deletable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
@@ -37,10 +36,14 @@ internal class WebDavSyncRepository @Inject constructor(
     override fun sync() {
         scope.launch(context = dispatcher.iO) {
             credentialsReadable.read()
-                .let(webDavReadable::read)
-                .ifSuccessful { response -> handleSuccessfulCase(response) }
-                .otherwise(::handleErrorCase)
+                .ifSuccessful { credentials -> readWebDav(credentials) }
         }
+    }
+
+    private suspend fun readWebDav(credentials: WebDavCredentials) {
+        webDavReadable.read(credentials)
+            .ifSuccessful { response -> handleSuccessfulCase(response) }
+            .otherwise(::handleErrorCase)
     }
 
     private suspend fun handleSuccessfulCase(response: List<BackupTodoEntity>) {

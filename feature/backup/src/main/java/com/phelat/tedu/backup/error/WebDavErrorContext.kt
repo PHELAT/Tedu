@@ -7,4 +7,6 @@ sealed class WebDavErrorContext {
     object CorruptedFile : WebDavErrorContext()
 
     object FileNotFound : WebDavErrorContext()
+
+    object CredentialsEmpty : WebDavErrorContext()
 }

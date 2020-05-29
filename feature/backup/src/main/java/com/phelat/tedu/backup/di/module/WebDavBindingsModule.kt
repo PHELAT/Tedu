@@ -27,7 +27,7 @@ internal interface WebDavBindingsModule {
     @FeatureScope
     fun bindReadableWebDavCredentialsDataSource(
         input: WebDavCredentialsDataSource
-    ): Readable<WebDavCredentials>
+    ): Readable<Response<WebDavCredentials, WebDavErrorContext>>
 
     @Binds
     @FeatureScope

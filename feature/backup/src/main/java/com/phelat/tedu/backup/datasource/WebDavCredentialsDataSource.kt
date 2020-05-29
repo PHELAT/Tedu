@@ -2,15 +2,20 @@ package com.phelat.tedu.backup.datasource
 
 import android.content.SharedPreferences
 import com.phelat.tedu.backup.entity.WebDavCredentials
+import com.phelat.tedu.backup.error.WebDavErrorContext
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.dependencyinjection.feature.FeatureScope
+import com.phelat.tedu.functional.Failure
+import com.phelat.tedu.functional.Response
+import com.phelat.tedu.functional.Success
 import javax.inject.Inject
 
 @FeatureScope
 class WebDavCredentialsDataSource @Inject constructor(
     private val sharedPreferences: SharedPreferences
-) : Writable<WebDavCredentials>, Readable<WebDavCredentials> {
+) : Writable<WebDavCredentials>,
+    Readable<@JvmSuppressWildcards Response<WebDavCredentials, WebDavErrorContext>> {
 
     override fun write(input: WebDavCredentials) {
         sharedPreferences.edit()
@@ -20,13 +25,15 @@ class WebDavCredentialsDataSource @Inject constructor(
             .apply()
     }
 
-    override fun read(): WebDavCredentials {
-        return sharedPreferences.run {
-            WebDavCredentials(
-                url = getString(WEB_DAV_URL, "") ?: "",
-                username = getString(WEB_DAV_USERNAME, "") ?: "",
-                password = getString(WEB_DAV_PASSWORD, "") ?: ""
-            )
+    override fun read(): Response<WebDavCredentials, WebDavErrorContext> {
+        val url = sharedPreferences.getString(WEB_DAV_URL, null)
+        val username = sharedPreferences.getString(WEB_DAV_USERNAME, null)
+        val password = sharedPreferences.getString(WEB_DAV_PASSWORD, null)
+        return if (url.isNullOrEmpty() || username.isNullOrEmpty() || password.isNullOrEmpty()) {
+            Failure(WebDavErrorContext.CredentialsEmpty)
+        } else {
+            val credentials = WebDavCredentials(url, username, password)
+            Success(credentials)
         }
     }
 
