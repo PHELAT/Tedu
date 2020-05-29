@@ -65,9 +65,11 @@ internal class WebDavDataSource @Inject constructor(
         for (i in 0 until actions.length()) {
             val currentAction = actions.getJSONObject(i)
             val actionType = currentAction.getString("action")
+            val actionTimestamp = currentAction.getLong("timestamp")
             val actionData = currentAction.getJSONObject("data")
-            doneActions += BackupTodoEntity(actionType, actionData)
+            doneActions += BackupTodoEntity(actionType, actionTimestamp, actionData)
         }
+        doneActions.sort()
         return doneActions
     }
 
