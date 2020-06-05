@@ -2,7 +2,7 @@ package com.phelat.tedu.backup.datasource
 
 import com.phelat.tedu.backup.entity.BackupTodoEntity
 import com.phelat.tedu.backup.entity.WebDavCredentials
-import com.phelat.tedu.backup.error.WebDavErrorContext
+import com.phelat.tedu.backup.error.BackupErrorContext
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.dependencyinjection.feature.FeatureScope
 import com.phelat.tedu.functional.Failure
@@ -19,11 +19,11 @@ import javax.inject.Inject
 @FeatureScope
 internal class WebDavDataSource @Inject constructor(
     private val sardine: Sardine
-) : Readable.IO<WebDavCredentials, @JvmSuppressWildcards Response<List<BackupTodoEntity>, WebDavErrorContext>> {
+) : Readable.IO<WebDavCredentials, @JvmSuppressWildcards Response<List<BackupTodoEntity>, BackupErrorContext>> {
 
     override fun read(
         input: WebDavCredentials
-    ): Response<List<BackupTodoEntity>, WebDavErrorContext> {
+    ): Response<List<BackupTodoEntity>, BackupErrorContext> {
         sardine.setCredentials(input.username, input.password)
         return try {
             val url = getNormalizedUrl(input.url) + TEDU_BACKUP_FILE
@@ -33,12 +33,12 @@ internal class WebDavDataSource @Inject constructor(
                     .let(::backupContentToBackupEntity)
                     .let(::Success)
             } else {
-                Failure(WebDavErrorContext.FileNotFound)
+                Failure(BackupErrorContext.FileNotFound)
             }
         } catch (ignore: IOException) {
-            Failure(WebDavErrorContext.GetFileFailed)
+            Failure(BackupErrorContext.GetFileFailed)
         } catch (ignore: JSONException) {
-            Failure(WebDavErrorContext.CorruptedFile)
+            Failure(BackupErrorContext.CorruptedFile)
         }
     }
 

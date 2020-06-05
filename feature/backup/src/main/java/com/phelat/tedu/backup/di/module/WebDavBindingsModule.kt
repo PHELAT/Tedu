@@ -5,7 +5,7 @@ import com.phelat.tedu.backup.datasource.WebDavCredentialsDataSource
 import com.phelat.tedu.backup.datasource.WebDavDataSource
 import com.phelat.tedu.backup.entity.BackupTodoEntity
 import com.phelat.tedu.backup.entity.WebDavCredentials
-import com.phelat.tedu.backup.error.WebDavErrorContext
+import com.phelat.tedu.backup.error.BackupErrorContext
 import com.phelat.tedu.backup.repository.WebDavSyncRepository
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Writable
@@ -27,13 +27,13 @@ internal interface WebDavBindingsModule {
     @FeatureScope
     fun bindReadableWebDavCredentialsDataSource(
         input: WebDavCredentialsDataSource
-    ): Readable<Response<WebDavCredentials, WebDavErrorContext>>
+    ): Readable<Response<WebDavCredentials, BackupErrorContext>>
 
     @Binds
     @FeatureScope
     fun bindReadableWebDavDataSource(
         input: WebDavDataSource
-    ): Readable.IO<WebDavCredentials, Response<List<BackupTodoEntity>, WebDavErrorContext>>
+    ): Readable.IO<WebDavCredentials, Response<List<BackupTodoEntity>, BackupErrorContext>>
 
     @Binds
     @FeatureScope

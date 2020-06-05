@@ -1,7 +1,7 @@
 package com.phelat.tedu.backup.di.module
 
-import com.phelat.tedu.backup.BackupSyncRepository
 import com.phelat.tedu.backup.di.qualifier.BackupStartupTasks
+import com.phelat.tedu.backup.usecase.BackupUseCase
 import com.phelat.tedu.dependencyinjection.feature.FeatureScope
 import dagger.Module
 import dagger.Provides
@@ -16,7 +16,7 @@ class BackupStartupTasksModule {
     @IntoMap
     @StringKey("WebDavSyncTask")
     @BackupStartupTasks
-    fun provideWebDavSyncTask(repository: BackupSyncRepository) = Runnable {
-        repository.sync()
+    fun provideWebDavSyncTask(usecase: BackupUseCase) = Runnable {
+        usecase.command()
     }
 }
