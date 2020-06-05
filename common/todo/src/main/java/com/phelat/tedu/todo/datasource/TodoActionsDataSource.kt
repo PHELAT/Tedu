@@ -21,7 +21,7 @@ class TodoActionsDataSource @Inject constructor(
     override suspend fun write(input: ActionEntity): Response<Unit, TodoErrorContext> {
         return mapper.mapFirstToSecond(input)
             .let { entity -> actionsDao.insertAction(entity) }
-            .takeIf { actionId -> actionId > 0 }
+            .takeIf { actionId -> actionId >= 0 }
             ?.let { Success(Unit) }
             ?: Failure(TodoErrorContext.ActionInsertionFailed)
     }
