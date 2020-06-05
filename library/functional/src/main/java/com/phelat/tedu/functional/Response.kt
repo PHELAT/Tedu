@@ -57,3 +57,19 @@ inline fun <V, E> Response<V, E>.ifNotSuccessful(failure: (E) -> Unit) {
         failure.invoke(this.error)
     }
 }
+
+fun <V, E> Response<V, E>.getSuccessResponse(): Success<V> {
+    if (this is Success) {
+        return this
+    } else {
+        throw IllegalStateException("The selected response is a failure.")
+    }
+}
+
+fun <V, E> Response<V, E>.getFailureResponse(): Failure<E> {
+    if (this is Failure) {
+        return this
+    } else {
+        throw IllegalStateException("The selected response is a success.")
+    }
+}
