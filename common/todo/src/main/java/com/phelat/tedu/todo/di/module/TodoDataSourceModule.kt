@@ -54,5 +54,11 @@ internal interface TodoDataSourceModule {
 
     @Binds
     @CommonScope
+    fun bindTodoActionsDataSourceReadable(
+        input: TodoActionsDataSource
+    ): Readable<Flow<List<ActionEntity>>>
+
+    @Binds
+    @CommonScope
     fun bindTodoSyncRepository(input: TodoSyncRepository): TodoRepository
 }

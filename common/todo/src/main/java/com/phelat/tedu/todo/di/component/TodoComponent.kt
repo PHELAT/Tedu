@@ -13,10 +13,12 @@ import com.phelat.tedu.todo.di.module.TodoDatabaseModule
 import com.phelat.tedu.todo.di.module.TodoMapperModule
 import com.phelat.tedu.todo.di.module.TodoStartupTasksModule
 import com.phelat.tedu.todo.di.qualifier.TodoStartupTasks
+import com.phelat.tedu.todo.entity.ActionEntity
 import com.phelat.tedu.todo.error.TodoArchivableErrorContext
 import com.phelat.tedu.todo.repository.TodoRepository
 import com.phelat.tedu.todo.type.ArchivableTodos
 import dagger.Component
+import kotlinx.coroutines.flow.Flow
 import org.threeten.bp.LocalDate
 import java.util.Date
 
@@ -40,6 +42,8 @@ interface TodoComponent {
     fun exposeMapperDateToLocalDate(): Mapper<Date, LocalDate>
 
     fun exposeTodoSyncRepository(): TodoRepository
+
+    fun exposeTodoActionsReadable(): Readable<Flow<List<ActionEntity>>>
 
     @TodoStartupTasks
     fun getTodoStartupTasks(): StartupTasks

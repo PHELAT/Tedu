@@ -1,6 +1,5 @@
 package com.phelat.tedu.backup.datasource
 
-import com.phelat.tedu.backup.entity.BackupTodoEntity
 import com.phelat.tedu.backup.entity.WebDavCredentials
 import com.phelat.tedu.backup.error.BackupErrorContext
 import com.phelat.tedu.datasource.Readable
@@ -8,22 +7,26 @@ import com.phelat.tedu.dependencyinjection.feature.FeatureScope
 import com.phelat.tedu.functional.Failure
 import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.Success
+import com.phelat.tedu.todo.entity.Action
+import com.phelat.tedu.todo.entity.ActionEntity
+import com.phelat.tedu.todo.entity.TodoEntity
 import com.thegrizzlylabs.sardineandroid.Sardine
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 import java.io.InputStream
+import java.util.Date
 import java.util.Scanner
 import javax.inject.Inject
 
 @FeatureScope
 internal class WebDavDataSource @Inject constructor(
     private val sardine: Sardine
-) : Readable.IO<WebDavCredentials, @JvmSuppressWildcards Response<List<BackupTodoEntity>, BackupErrorContext>> {
+) : Readable.IO<WebDavCredentials, @JvmSuppressWildcards Response<List<ActionEntity>, BackupErrorContext>> {
 
     override fun read(
         input: WebDavCredentials
-    ): Response<List<BackupTodoEntity>, BackupErrorContext> {
+    ): Response<List<ActionEntity>, BackupErrorContext> {
         sardine.setCredentials(input.username, input.password)
         return try {
             val url = getNormalizedUrl(input.url) + TEDU_BACKUP_FILE
@@ -59,18 +62,36 @@ internal class WebDavDataSource @Inject constructor(
         return JSONObject(builder.toString())
     }
 
-    private fun backupContentToBackupEntity(content: JSONObject): List<BackupTodoEntity> {
-        val doneActions = mutableListOf<BackupTodoEntity>()
+    private fun backupContentToBackupEntity(content: JSONObject): List<ActionEntity> {
+        val doneActions = mutableListOf<ActionEntity>()
         val actions = content.getJSONArray("actions")
         for (i in 0 until actions.length()) {
             val currentAction = actions.getJSONObject(i)
-            val actionType = currentAction.getString("action")
+            val actionType = getActionType(currentAction.getString("action"))
             val actionTimestamp = currentAction.getLong("timestamp")
-            val actionData = currentAction.getJSONObject("data")
-            doneActions += BackupTodoEntity(actionType, actionTimestamp, actionData)
+            val actionData = convertRawDataToTodoEntity(currentAction.getJSONObject("data"))
+            doneActions += ActionEntity(actionType, actionTimestamp, actionData)
         }
         doneActions.sort()
         return doneActions
+    }
+
+    private fun getActionType(action: String): Action {
+        return when (action) {
+            Action.Add.actionName -> Action.Add
+            Action.Update.actionName -> Action.Update
+            Action.Delete.actionName -> Action.Delete
+            else -> Action.Undefined
+        }
+    }
+
+    private fun convertRawDataToTodoEntity(raw: JSONObject): TodoEntity {
+        return TodoEntity(
+            todo = raw.getString("todo"),
+            todoId = raw.getInt("todoId"),
+            isDone = raw.getBoolean("isDone"),
+            date = Date(raw.getLong("date"))
+        )
     }
 
     companion object {
