@@ -7,4 +7,6 @@ sealed class TodoErrorContext {
     object UpdateFailed : TodoErrorContext()
 
     object DeletionFailed : TodoErrorContext()
+
+    object ActionInsertionFailed : TodoErrorContext()
 }

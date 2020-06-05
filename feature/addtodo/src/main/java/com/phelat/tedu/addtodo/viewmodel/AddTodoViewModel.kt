@@ -13,9 +13,6 @@ import com.phelat.tedu.androidresource.input.StringId
 import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Readable
-import com.phelat.tedu.datasource.Updatable
-import com.phelat.tedu.datasource.Writable
-import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.ifSuccessful
 import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
@@ -23,6 +20,7 @@ import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.constant.TodoConstant
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.error.TodoErrorContext
+import com.phelat.tedu.todo.repository.TodoRepository
 import com.phelat.tedu.uiview.Navigate
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -32,8 +30,7 @@ import javax.inject.Inject
 
 class AddTodoViewModel @Inject constructor(
     private val dispatcher: Dispatcher,
-    private val todoDataSourceWritable: Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
-    private val todoDataSourceUpdatable: Updatable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
+    private val todoRepository: TodoRepository,
     private val stringResourceProvider: ResourceProvider<StringId, StringResource>,
     private val dateToLocalDate: Mapper<Date, LocalDate>,
     private val selectedDateReadable: Readable<SelectedDate>
@@ -69,13 +66,13 @@ class AddTodoViewModel @Inject constructor(
             val saveResponse = if (todoForEdit != null) {
                 val editedTodo = requireNotNull(todoForEdit)
                     .copy(todo = typedTodo, date = dateToLocalDate.mapSecondToFirst(selectedDate))
-                todoDataSourceUpdatable.update(editedTodo)
+                todoRepository.updateTodo(editedTodo)
             } else {
                 val newTodo = TodoEntity(
                     todo = typedTodo,
                     date = dateToLocalDate.mapSecondToFirst(selectedDate)
                 )
-                todoDataSourceWritable.write(newTodo)
+                todoRepository.addTodo(newTodo)
             }
             saveResponse.ifSuccessful {
                 _navigationObservable.postValue(Navigate.Up)

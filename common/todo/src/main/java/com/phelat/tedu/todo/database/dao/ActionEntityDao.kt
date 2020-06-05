@@ -9,5 +9,5 @@ import com.phelat.tedu.todo.database.entity.ActionDatabaseEntity
 interface ActionEntityDao {
 
     @Insert(entity = ActionDatabaseEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    fun insertAction(action: ActionDatabaseEntity)
+    suspend fun insertAction(action: ActionDatabaseEntity): Long
 }

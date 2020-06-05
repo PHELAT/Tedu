@@ -9,14 +9,10 @@ import com.phelat.tedu.androidresource.ResourceProvider
 import com.phelat.tedu.androidresource.input.StringId
 import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.coroutines.Dispatcher
-import com.phelat.tedu.datasource.Deletable
 import com.phelat.tedu.datasource.Readable
-import com.phelat.tedu.datasource.Updatable
-import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.date.TeduDate
 import com.phelat.tedu.designsystem.entity.BottomSheetEntity
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
-import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.ifNotSuccessful
 import com.phelat.tedu.functional.ifSuccessful
 import com.phelat.tedu.functional.mapForEach
@@ -24,7 +20,7 @@ import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.todo.constant.TodoConstant
 import com.phelat.tedu.todo.entity.TodoEntity
-import com.phelat.tedu.todo.error.TodoErrorContext
+import com.phelat.tedu.todo.repository.TodoRepository
 import com.phelat.tedu.todolist.R
 import com.phelat.tedu.todolist.view.AddTodoItem
 import com.phelat.tedu.todolist.view.TodoListItem
@@ -32,7 +28,6 @@ import com.phelat.tedu.uiview.DirectionId
 import com.phelat.tedu.uiview.Navigate
 import com.xwray.groupie.Section
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -43,10 +38,7 @@ import java.util.Date
 
 class TodoListViewModel(
     private val dispatcher: Dispatcher,
-    private val todoDataSourceUpdatable: Updatable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
-    private val todoDataSourceDeletable: Deletable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
-    private val todoDataSourceWritable: Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
-    private val todoDataSourceReadable: Readable.IO<Date, Flow<List<TodoEntity>>>,
+    private val todoRepository: TodoRepository,
     private val dateDataSourceReadable: Readable.IO<TeduDate, Date>,
     private val stringResourceProvider: ResourceProvider<StringId, StringResource>
 ) : ViewModel() {
@@ -85,7 +77,7 @@ class TodoListViewModel(
 
     private suspend fun fetchTodos() {
         val tomorrow = dateDataSourceReadable.read(TeduDate.Tomorrow)
-        todoDataSourceReadable.read(tomorrow)
+        todoRepository.getTodos(tomorrow)
             .onEach { delay(UPDATE_DELAY_IN_MILLIS) }
             .mapForEach { todoEntity ->
                 TodoListItem(
@@ -105,7 +97,7 @@ class TodoListViewModel(
         viewModelScope.launch(context = dispatcher.iO) {
             val updatedTodo = todoEntity.copy(isDone = todoEntity.isDone.not())
             delay(UPDATE_DELAY_IN_MILLIS)
-            todoDataSourceUpdatable.update(updatedTodo).ifNotSuccessful {
+            todoRepository.updateTodo(updatedTodo).ifNotSuccessful {
                 showGeneralFailureMessage()
             }
         }
@@ -151,7 +143,7 @@ class TodoListViewModel(
         _dismissTodoSheetObservable.call()
         viewModelScope.launch(context = dispatcher.iO) {
             delay(UPDATE_DELAY_IN_MILLIS)
-            todoDataSourceDeletable.delete(todoEntity).ifSuccessful {
+            todoRepository.deleteTodo(todoEntity).ifSuccessful {
                 deletedTodo = todoEntity
                 _todoDeletionObservable.postCall()
             } otherwise {
@@ -167,7 +159,7 @@ class TodoListViewModel(
     fun onTodoDeletionUndoClick() {
         viewModelScope.launch(context = dispatcher.iO) {
             delay(UPDATE_DELAY_IN_MILLIS)
-            todoDataSourceWritable.write(requireNotNull(deletedTodo))
+            todoRepository.addTodo(requireNotNull(deletedTodo))
             deletedTodo = null
         }
     }
