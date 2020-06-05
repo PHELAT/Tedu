@@ -6,11 +6,13 @@ import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.dependencyinjection.common.CommonScope
 import com.phelat.tedu.functional.Response
+import com.phelat.tedu.functional.getFailureResponse
 import com.phelat.tedu.functional.ifSuccessful
 import com.phelat.tedu.todo.entity.Action
 import com.phelat.tedu.todo.entity.ActionEntity
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.error.TodoErrorContext
+import com.phelat.tedu.todo.response.WriteResponse
 import kotlinx.coroutines.flow.Flow
 import java.util.Date
 import javax.inject.Inject
@@ -18,7 +20,7 @@ import javax.inject.Inject
 @CommonScope
 class TodoSyncRepository @Inject constructor(
     private val todoReadable: Readable.IO<Date, Flow<List<TodoEntity>>>,
-    private val todoWritable: Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
+    private val todoWritable: Writable.Suspendable.IO<TodoEntity, Response<WriteResponse, TodoErrorContext>>,
     private val todoUpdatable: Updatable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val todoDeletable: Deletable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val actionsWritable: Writable.Suspendable.IO<ActionEntity, Response<Unit, TodoErrorContext>>
@@ -26,10 +28,10 @@ class TodoSyncRepository @Inject constructor(
 
     override suspend fun addTodo(todoEntity: TodoEntity): Response<Unit, TodoErrorContext> {
         val todoWriteResult = todoWritable.write(todoEntity)
-        todoWriteResult.ifSuccessful {
-            return insertAction(Action.Add, todoEntity)
+        todoWriteResult.ifSuccessful { response ->
+            return insertAction(Action.Add, todoEntity.copy(todoId = response.id.toInt()))
         }
-        return todoWriteResult
+        return todoWriteResult.getFailureResponse()
     }
 
     override suspend fun updateTodo(todoEntity: TodoEntity): Response<Unit, TodoErrorContext> {

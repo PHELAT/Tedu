@@ -14,6 +14,7 @@ import com.phelat.tedu.todo.database.dao.TodoEntityDao
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.error.TodoErrorContext
+import com.phelat.tedu.todo.response.WriteResponse
 import kotlinx.coroutines.flow.Flow
 import java.util.Date
 import javax.inject.Inject
@@ -22,16 +23,16 @@ import javax.inject.Inject
 internal class TodoDataSource @Inject constructor(
     private val todoEntityDao: TodoEntityDao,
     private val mapper: Mapper<TodoDatabaseEntity, TodoEntity>
-) : Writable.Suspendable.IO<TodoEntity, @JvmSuppressWildcards Response<Unit, TodoErrorContext>>,
+) : Writable.Suspendable.IO<TodoEntity, @JvmSuppressWildcards Response<WriteResponse, TodoErrorContext>>,
     Readable.IO<Date, Flow<@JvmSuppressWildcards List<TodoEntity>>>,
     Updatable.Suspendable.IO<TodoEntity, @JvmSuppressWildcards Response<Unit, TodoErrorContext>>,
     Deletable.Suspendable.IO<TodoEntity, @JvmSuppressWildcards Response<Unit, TodoErrorContext>> {
 
-    override suspend fun write(input: TodoEntity): Response<Unit, TodoErrorContext> {
+    override suspend fun write(input: TodoEntity): Response<WriteResponse, TodoErrorContext> {
         val todoDatabaseEntity = mapper.mapSecondToFirst(input)
         val todoId = todoEntityDao.insertTodo(todoDatabaseEntity)
         return if (todoId >= 0) {
-            Success(Unit)
+            Success(WriteResponse(todoId))
         } else {
             Failure(TodoErrorContext.InsertionFailed)
         }

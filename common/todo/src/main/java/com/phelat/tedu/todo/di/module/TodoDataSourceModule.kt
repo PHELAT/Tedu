@@ -13,6 +13,7 @@ import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.error.TodoErrorContext
 import com.phelat.tedu.todo.repository.TodoRepository
 import com.phelat.tedu.todo.repository.TodoSyncRepository
+import com.phelat.tedu.todo.response.WriteResponse
 import dagger.Binds
 import dagger.Module
 import kotlinx.coroutines.flow.Flow
@@ -25,7 +26,7 @@ internal interface TodoDataSourceModule {
     @CommonScope
     fun bindTodoDataSourceToWritable(
         input: TodoDataSource
-    ): Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>
+    ): Writable.Suspendable.IO<TodoEntity, Response<WriteResponse, TodoErrorContext>>
 
     @Binds
     @CommonScope
