@@ -70,7 +70,8 @@ class AddTodoViewModel @Inject constructor(
             } else {
                 val newTodo = TodoEntity(
                     todo = typedTodo,
-                    date = dateToLocalDate.mapSecondToFirst(selectedDate)
+                    date = dateToLocalDate.mapSecondToFirst(selectedDate),
+                    todoId = System.currentTimeMillis()
                 )
                 todoRepository.addTodo(newTodo)
             }

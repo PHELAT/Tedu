@@ -29,7 +29,7 @@ internal class TodoDataSource @Inject constructor(
     Deletable.Suspendable.IO<TodoEntity, @JvmSuppressWildcards Response<Unit, TodoErrorContext>> {
 
     override suspend fun write(input: TodoEntity): Response<WriteResponse, TodoErrorContext> {
-        val todoDatabaseEntity = mapper.mapSecondToFirst(getTodoEntityWithId(input))
+        val todoDatabaseEntity = mapper.mapSecondToFirst(input)
         val todoId = todoEntityDao.insertTodo(todoDatabaseEntity)
         return if (todoId >= 0) {
             Success(WriteResponse(todoId))
@@ -60,14 +60,6 @@ internal class TodoDataSource @Inject constructor(
             Success(Unit)
         } else {
             Failure(TodoErrorContext.DeletionFailed)
-        }
-    }
-
-    private fun getTodoEntityWithId(todoEntity: TodoEntity): TodoEntity {
-        return if (todoEntity.todoId > -1) {
-            todoEntity
-        } else {
-            todoEntity.copy(todoId = System.currentTimeMillis())
         }
     }
 }

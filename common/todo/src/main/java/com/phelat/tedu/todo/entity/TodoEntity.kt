@@ -6,6 +6,6 @@ import java.util.Date
 data class TodoEntity(
     val todo: String,
     val date: Date,
-    val isDone: Boolean = false,
-    val todoId: Long = -1
+    val todoId: Long,
+    val isDone: Boolean = false
 ) : Serializable
