@@ -19,6 +19,8 @@ import com.phelat.tedu.functional.mapForEach
 import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.todo.constant.TodoConstant
+import com.phelat.tedu.todo.entity.Action
+import com.phelat.tedu.todo.entity.ActionEntity
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.repository.TodoRepository
 import com.phelat.tedu.todolist.R
@@ -97,7 +99,13 @@ class TodoListViewModel(
         viewModelScope.launch(context = dispatcher.iO) {
             val updatedTodo = todoEntity.copy(isDone = todoEntity.isDone.not())
             delay(UPDATE_DELAY_IN_MILLIS)
-            todoRepository.updateTodo(updatedTodo).ifNotSuccessful {
+            val updateAction = ActionEntity(
+                action = Action.Update,
+                timestamp = System.currentTimeMillis(),
+                data = updatedTodo
+            )
+            todoRepository.processAction(updateAction).ifNotSuccessful {
+                // TODO: log error
                 showGeneralFailureMessage()
             }
         }
@@ -143,10 +151,16 @@ class TodoListViewModel(
         _dismissTodoSheetObservable.call()
         viewModelScope.launch(context = dispatcher.iO) {
             delay(UPDATE_DELAY_IN_MILLIS)
-            todoRepository.deleteTodo(todoEntity).ifSuccessful {
+            val deleteAction = ActionEntity(
+                action = Action.Delete,
+                timestamp = System.currentTimeMillis(),
+                data = todoEntity
+            )
+            todoRepository.processAction(deleteAction).ifSuccessful {
                 deletedTodo = todoEntity
                 _todoDeletionObservable.postCall()
             } otherwise {
+                // TODO: log error
                 showGeneralFailureMessage()
             }
         }
@@ -159,7 +173,12 @@ class TodoListViewModel(
     fun onTodoDeletionUndoClick() {
         viewModelScope.launch(context = dispatcher.iO) {
             delay(UPDATE_DELAY_IN_MILLIS)
-            todoRepository.addTodo(requireNotNull(deletedTodo))
+            val addAction = ActionEntity(
+                action = Action.Add,
+                timestamp = System.currentTimeMillis(),
+                data = requireNotNull(deletedTodo)
+            )
+            todoRepository.processAction(addAction)
             deletedTodo = null
         }
     }

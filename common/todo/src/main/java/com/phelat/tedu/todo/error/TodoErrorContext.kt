@@ -9,4 +9,6 @@ sealed class TodoErrorContext : Throwable() {
     object DeletionFailed : TodoErrorContext()
 
     object ActionInsertionFailed : TodoErrorContext()
+
+    object UndefinedAction : TodoErrorContext()
 }

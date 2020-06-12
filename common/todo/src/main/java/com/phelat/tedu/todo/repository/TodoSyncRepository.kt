@@ -5,6 +5,7 @@ import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Updatable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.dependencyinjection.common.CommonScope
+import com.phelat.tedu.functional.Failure
 import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.getFailureResponse
 import com.phelat.tedu.functional.ifSuccessful
@@ -20,49 +21,47 @@ import javax.inject.Inject
 @CommonScope
 class TodoSyncRepository @Inject constructor(
     private val todoReadable: Readable.IO<Date, Flow<List<TodoEntity>>>,
+    // TODO: remove write response
     private val todoWritable: Writable.Suspendable.IO<TodoEntity, Response<WriteResponse, TodoErrorContext>>,
     private val todoUpdatable: Updatable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val todoDeletable: Deletable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val actionsWritable: Writable.Suspendable.IO<ActionEntity, Response<Unit, TodoErrorContext>>
 ) : TodoRepository {
 
-    override suspend fun addTodo(todoEntity: TodoEntity): Response<Unit, TodoErrorContext> {
-        val todoWriteResult = todoWritable.write(todoEntity)
-        todoWriteResult.ifSuccessful { response ->
-            return insertAction(Action.Add, todoEntity.copy(todoId = response.id))
+    override suspend fun processAction(entity: ActionEntity): Response<Unit, TodoErrorContext> {
+        return when (entity.action) {
+            is Action.Add -> addTodo(entity)
+            is Action.Update -> updateTodo(entity)
+            is Action.Delete -> deleteTodo(entity)
+            else -> Failure(TodoErrorContext.UndefinedAction)
+        }
+    }
+
+    private suspend fun addTodo(entity: ActionEntity): Response<Unit, TodoErrorContext> {
+        val todoWriteResult = todoWritable.write(entity.data)
+        todoWriteResult.ifSuccessful {
+            return actionsWritable.write(entity)
         }
         return todoWriteResult.getFailureResponse()
     }
 
-    override suspend fun updateTodo(todoEntity: TodoEntity): Response<Unit, TodoErrorContext> {
-        val todoUpdateResult = todoUpdatable.update(todoEntity)
+    private suspend fun updateTodo(entity: ActionEntity): Response<Unit, TodoErrorContext> {
+        val todoUpdateResult = todoUpdatable.update(entity.data)
         todoUpdateResult.ifSuccessful {
-            return insertAction(Action.Update, todoEntity)
+            return actionsWritable.write(entity)
         }
         return todoUpdateResult
     }
 
-    override suspend fun deleteTodo(todoEntity: TodoEntity): Response<Unit, TodoErrorContext> {
-        val todoDeleteResult = todoDeletable.delete(todoEntity)
+    private suspend fun deleteTodo(entity: ActionEntity): Response<Unit, TodoErrorContext> {
+        val todoDeleteResult = todoDeletable.delete(entity.data)
         todoDeleteResult.ifSuccessful {
-            return insertAction(Action.Delete, todoEntity)
+            return actionsWritable.write(entity)
         }
         return todoDeleteResult
     }
 
     override fun getTodos(date: Date): Flow<List<TodoEntity>> {
         return todoReadable.read(date)
-    }
-
-    private suspend fun insertAction(
-        occurredAction: Action,
-        entity: TodoEntity
-    ): Response<Unit, TodoErrorContext> {
-        val actionEntity = ActionEntity(
-            action = occurredAction,
-            timestamp = System.currentTimeMillis(),
-            data = entity
-        )
-        return actionsWritable.write(actionEntity)
     }
 }

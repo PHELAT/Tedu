@@ -18,6 +18,8 @@ import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.constant.TodoConstant
+import com.phelat.tedu.todo.entity.Action
+import com.phelat.tedu.todo.entity.ActionEntity
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.error.TodoErrorContext
 import com.phelat.tedu.todo.repository.TodoRepository
@@ -63,21 +65,37 @@ class AddTodoViewModel @Inject constructor(
     fun onSaveTodoClicked(typedTodo: String) {
         viewModelScope.launch(context = dispatcher.iO) {
             val selectedDate = selectedDateReadable.read().date
-            val saveResponse = if (todoForEdit != null) {
-                val editedTodo = requireNotNull(todoForEdit)
-                    .copy(todo = typedTodo, date = dateToLocalDate.mapSecondToFirst(selectedDate))
-                todoRepository.updateTodo(editedTodo)
-            } else {
-                val newTodo = TodoEntity(
-                    todo = typedTodo,
-                    date = dateToLocalDate.mapSecondToFirst(selectedDate),
-                    todoId = System.currentTimeMillis()
-                )
-                todoRepository.addTodo(newTodo)
-            }
-            saveResponse.ifSuccessful {
-                _navigationObservable.postValue(Navigate.Up)
-            } otherwise { errorContext -> handleTodoErrorContext(errorContext) }
+            val action = getSaveAction(typedTodo, selectedDate)
+            todoRepository.processAction(action)
+                .ifSuccessful {
+                    _navigationObservable.postValue(Navigate.Up)
+                }
+                .otherwise { errorContext ->
+                    handleTodoErrorContext(errorContext)
+                }
+        }
+    }
+
+    private fun getSaveAction(typedTodo: String, selectedDate: LocalDate): ActionEntity {
+        return if (todoForEdit != null) {
+            val editedTodo = requireNotNull(todoForEdit)
+                .copy(todo = typedTodo, date = dateToLocalDate.mapSecondToFirst(selectedDate))
+            ActionEntity(
+                action = Action.Update,
+                timestamp = System.currentTimeMillis(),
+                data = editedTodo
+            )
+        } else {
+            val newTodo = TodoEntity(
+                todo = typedTodo,
+                date = dateToLocalDate.mapSecondToFirst(selectedDate),
+                todoId = System.currentTimeMillis()
+            )
+            ActionEntity(
+                action = Action.Add,
+                timestamp = System.currentTimeMillis(),
+                data = newTodo
+            )
         }
     }
 
