@@ -8,10 +8,11 @@ import com.phelat.tedu.dependencyinjection.feature.FeatureScope
 import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.Success
 import com.phelat.tedu.functional.getFailureResponse
-import com.phelat.tedu.functional.ifSuccessful
+import com.phelat.tedu.functional.getSuccessResponse
+import com.phelat.tedu.functional.isSuccessful
 import com.phelat.tedu.todo.entity.ActionEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.single
+import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
 @FeatureScope
@@ -22,22 +23,34 @@ internal class WebDavSyncRepository @Inject constructor(
 ) : BackupSyncRepository {
 
     override suspend fun sync(): Response<List<ActionEntity>, BackupErrorContext> {
-        val credentialsResponse = credentialsReadable.read()
-        credentialsResponse.ifSuccessful { credentials ->
-            webDavReadable.read(credentials).ifSuccessful { remoteActions ->
-                return Success(getUnSavedActions(remoteActions))
+        return credentialsReadable.read().run {
+            if (isSuccessful()) {
+                readWebDav(getSuccessResponse().value)
+            } else {
+                getFailureResponse()
             }
         }
-        return credentialsResponse.getFailureResponse()
+    }
+
+    private suspend fun readWebDav(
+        credentials: WebDavCredentials
+    ): Response<List<ActionEntity>, BackupErrorContext> {
+        return webDavReadable.read(credentials).run {
+            if (isSuccessful()) {
+                Success(getUnSavedActions(getSuccessResponse().value))
+            } else {
+                getFailureResponse()
+            }
+        }
     }
 
     private suspend fun getUnSavedActions(remoteActions: List<ActionEntity>): List<ActionEntity> {
         val unSavedActions = mutableListOf<ActionEntity>()
         val savedActions = HashMap<Long, ActionEntity>()
         actionsReadable.read()
-            .single()
-            .sorted()
-            .forEach { action -> savedActions += action.timestamp to action }
+            .firstOrNull()
+            ?.sorted()
+            ?.forEach { action -> savedActions += action.timestamp to action }
         remoteActions.forEach { remoteAction ->
             if (savedActions.containsKey(remoteAction.timestamp).not()) {
                 unSavedActions.add(remoteAction)

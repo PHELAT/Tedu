@@ -6,6 +6,8 @@ import com.phelat.tedu.backup.datasource.WebDavDataSource
 import com.phelat.tedu.backup.entity.WebDavCredentials
 import com.phelat.tedu.backup.error.BackupErrorContext
 import com.phelat.tedu.backup.repository.WebDavSyncRepository
+import com.phelat.tedu.backup.usecase.BackupUseCase
+import com.phelat.tedu.backup.usecase.WebDavBackupUseCase
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.dependencyinjection.feature.FeatureScope
@@ -40,4 +42,8 @@ internal interface WebDavBindingsModule {
     fun bindWebDavRepository(
         input: WebDavSyncRepository
     ): BackupSyncRepository
+
+    @Binds
+    @FeatureScope
+    fun bindWebDavBackupUseCase(input: WebDavBackupUseCase): BackupUseCase
 }
