@@ -1,6 +1,6 @@
 package com.phelat.tedu.todo.error
 
-sealed class TodoErrorContext {
+sealed class TodoErrorContext : Throwable() {
 
     object InsertionFailed : TodoErrorContext()
 

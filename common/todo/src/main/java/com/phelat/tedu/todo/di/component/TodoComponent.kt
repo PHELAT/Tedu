@@ -3,6 +3,7 @@ package com.phelat.tedu.todo.di.component
 import com.phelat.tedu.androidcore.di.component.AndroidCoreComponent
 import com.phelat.tedu.datasource.Deletable
 import com.phelat.tedu.datasource.Readable
+import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.dependencyinjection.StartupTasks
 import com.phelat.tedu.dependencyinjection.common.CommonScope
 import com.phelat.tedu.functional.Response
@@ -15,6 +16,7 @@ import com.phelat.tedu.todo.di.module.TodoStartupTasksModule
 import com.phelat.tedu.todo.di.qualifier.TodoStartupTasks
 import com.phelat.tedu.todo.entity.ActionEntity
 import com.phelat.tedu.todo.error.TodoArchivableErrorContext
+import com.phelat.tedu.todo.error.TodoErrorContext
 import com.phelat.tedu.todo.repository.TodoRepository
 import com.phelat.tedu.todo.type.ArchivableTodos
 import dagger.Component
@@ -44,6 +46,8 @@ interface TodoComponent {
     fun exposeTodoSyncRepository(): TodoRepository
 
     fun exposeTodoActionsReadable(): Readable<Flow<List<ActionEntity>>>
+
+    fun exposeTodoActionsWritable(): Writable.Suspendable.IO<ActionEntity, Response<Unit, TodoErrorContext>>
 
     @TodoStartupTasks
     fun getTodoStartupTasks(): StartupTasks
