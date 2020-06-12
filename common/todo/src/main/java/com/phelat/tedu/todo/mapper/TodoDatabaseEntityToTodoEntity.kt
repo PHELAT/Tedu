@@ -21,7 +21,7 @@ internal class TodoDatabaseEntityToTodoEntity @Inject constructor() :
 
     override fun mapSecondToFirst(second: TodoEntity): TodoDatabaseEntity {
         return TodoDatabaseEntity(
-            todoId = second.todoId.takeIf { it > -1 },
+            todoId = second.todoId,
             todo = second.todo,
             isDone = second.isDone,
             date = second.date

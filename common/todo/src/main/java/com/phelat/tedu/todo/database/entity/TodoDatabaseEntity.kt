@@ -6,8 +6,8 @@ import java.util.Date
 
 @Entity(tableName = "todo_table")
 internal data class TodoDatabaseEntity(
-    @PrimaryKey(autoGenerate = true)
-    val todoId: Int?,
+    @PrimaryKey(autoGenerate = false)
+    val todoId: Long,
     val todo: String,
     val isDone: Boolean,
     val date: Date

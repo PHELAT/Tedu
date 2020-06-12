@@ -29,7 +29,7 @@ class TodoSyncRepository @Inject constructor(
     override suspend fun addTodo(todoEntity: TodoEntity): Response<Unit, TodoErrorContext> {
         val todoWriteResult = todoWritable.write(todoEntity)
         todoWriteResult.ifSuccessful { response ->
-            return insertAction(Action.Add, todoEntity.copy(todoId = response.id.toInt()))
+            return insertAction(Action.Add, todoEntity.copy(todoId = response.id))
         }
         return todoWriteResult.getFailureResponse()
     }

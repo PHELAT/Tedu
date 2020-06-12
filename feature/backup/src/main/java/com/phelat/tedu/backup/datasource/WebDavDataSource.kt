@@ -88,7 +88,7 @@ internal class WebDavDataSource @Inject constructor(
     private fun convertRawDataToTodoEntity(raw: JSONObject): TodoEntity {
         return TodoEntity(
             todo = raw.getString("todo"),
-            todoId = raw.getInt("todoId"),
+            todoId = raw.getLong("todoId"),
             isDone = raw.getBoolean("isDone"),
             date = Date(raw.getLong("date"))
         )

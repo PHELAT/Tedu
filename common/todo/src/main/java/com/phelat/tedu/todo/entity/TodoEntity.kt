@@ -7,5 +7,5 @@ data class TodoEntity(
     val todo: String,
     val date: Date,
     val isDone: Boolean = false,
-    val todoId: Int = -1
+    val todoId: Long = -1
 ) : Serializable

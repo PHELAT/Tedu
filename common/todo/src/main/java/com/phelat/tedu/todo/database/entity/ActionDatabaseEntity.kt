@@ -10,5 +10,5 @@ data class ActionDatabaseEntity(
     val actionId: Int?,
     val action: Action,
     val timestamp: Long,
-    val todoId: Int
+    val todoId: Long
 )
