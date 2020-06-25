@@ -18,15 +18,11 @@ abstract class DaggerAndroidApplication : Application(), DispatcherContainer {
         return requireNotNull(dispatchers[dispatcherComponent])
     }
 
-    protected fun runStartupTasks() {
+    protected fun runStartupTasks(logger: (String) -> Unit = {}) {
         startupTasks.forEach { entry ->
-            if (BuildConfig.DEBUG) {
-                println("Running startup task: ${entry.key}")
-            }
+            logger.invoke("Running startup task: ${entry.key}")
             val duration = measureDuration(entry.value)
-            if (BuildConfig.DEBUG) {
-                println("Finished startup task: ${entry.key} in: ${duration}ms")
-            }
+            logger.invoke("Finished startup task: ${entry.key} in: ${duration}ms")
         }
     }
 

@@ -18,7 +18,13 @@ class Tedu : DaggerAndroidApplication() {
         installFeature(AddTodoComponentBuilder)
         installFeature(SettingsComponentBuilder)
         installFeature(BackupComponentBuilder)
-        runStartupTasks()
+        runStartupTasks(::printMeasures)
+    }
+
+    private fun printMeasures(measure: String) {
+        if (BuildConfig.DEBUG) {
+            println(measure)
+        }
     }
 
     override fun attachBaseContext(base: Context?) {
