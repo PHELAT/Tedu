@@ -40,12 +40,12 @@ internal class WebDavDataSource @Inject constructor(
                     .let(::backupContentToBackupEntity)
                     .let(::Success)
             } else {
-                Failure(BackupErrorContext.FileNotFound)
+                Failure(BackupErrorContext.FileNotFound())
             }
         } catch (ignore: IOException) {
-            Failure(BackupErrorContext.GetFileFailed)
+            Failure(BackupErrorContext.GetFileFailed())
         } catch (ignore: JSONException) {
-            Failure(BackupErrorContext.CorruptedFile)
+            Failure(BackupErrorContext.CorruptedFile())
         }
     }
 
@@ -58,7 +58,7 @@ internal class WebDavDataSource @Inject constructor(
             Success(Unit)
         } catch (ignore: IOException) {
             ignore.printStackTrace()
-            Failure(BackupErrorContext.UpdateFileFailed)
+            Failure(BackupErrorContext.UpdateFileFailed())
         }
     }
 

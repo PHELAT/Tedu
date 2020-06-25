@@ -37,7 +37,7 @@ class WebDavBackupUseCase @Inject constructor(
             if (action.isLocallySaved.not()) {
                 todoRepository.processAction(action.data)
                     .ifNotSuccessful {
-                        return Failure(BackupErrorContext.LocalUpdateFailed)
+                        return Failure(BackupErrorContext.LocalUpdateFailed())
                     }
             }
         }

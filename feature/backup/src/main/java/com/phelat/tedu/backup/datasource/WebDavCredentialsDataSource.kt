@@ -30,7 +30,7 @@ class WebDavCredentialsDataSource @Inject constructor(
         val username = sharedPreferences.getString(WEB_DAV_USERNAME, null)
         val password = sharedPreferences.getString(WEB_DAV_PASSWORD, null)
         return if (url.isNullOrEmpty() || username.isNullOrEmpty() || password.isNullOrEmpty()) {
-            Failure(BackupErrorContext.CredentialsEmpty)
+            Failure(BackupErrorContext.CredentialsEmpty())
         } else {
             val credentials = WebDavCredentials(url, username, password)
             Success(credentials)

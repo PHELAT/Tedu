@@ -2,15 +2,15 @@ package com.phelat.tedu.backup.error
 
 sealed class BackupErrorContext : Throwable() {
 
-    object GetFileFailed : BackupErrorContext()
+    class GetFileFailed : BackupErrorContext()
 
-    object UpdateFileFailed : BackupErrorContext()
+    class UpdateFileFailed : BackupErrorContext()
 
-    object CorruptedFile : BackupErrorContext()
+    class CorruptedFile : BackupErrorContext()
 
-    object FileNotFound : BackupErrorContext()
+    class FileNotFound : BackupErrorContext()
 
-    object CredentialsEmpty : BackupErrorContext()
+    class CredentialsEmpty : BackupErrorContext()
 
-    object LocalUpdateFailed : BackupErrorContext()
+    class LocalUpdateFailed : BackupErrorContext()
 }
