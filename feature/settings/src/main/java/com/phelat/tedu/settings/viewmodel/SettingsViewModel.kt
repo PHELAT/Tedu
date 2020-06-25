@@ -106,16 +106,16 @@ class SettingsViewModel @Inject constructor(
         val sheetItems = listOf(
             BottomSheetItemEntity(
                 itemIconResource = R.drawable.ic_backup_icon_secondary_24dp,
-                itemTitleResource = R.string.backup_method_webdav_title,
+                itemTitleResource = R.string.settings_backup_method_webdav_title,
                 itemOnClickListener = ::onWebDavBackupMethodClick
             ),
             BottomSheetItemEntity(
                 itemIconResource = R.drawable.ic_google_drive_icon_secondary_24dp,
-                itemTitleResource = R.string.backup_method_drive_title,
+                itemTitleResource = R.string.settings_backup_method_drive_title,
                 itemOnClickListener = {}
             )
         )
-        val sheetTitleId = StringId(R.string.backup_method_title)
+        val sheetTitleId = StringId(R.string.settings_backup_method_title)
         _backupMethodSheetObservable.value = BottomSheetEntity(
             items = sheetItems,
             sheetTitle = stringResourceProvider.getResource(sheetTitleId).resource
