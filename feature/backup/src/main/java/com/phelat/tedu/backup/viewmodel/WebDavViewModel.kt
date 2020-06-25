@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.phelat.tedu.analytics.ExceptionLogger
 import com.phelat.tedu.analytics.di.qualifier.Development
+import com.phelat.tedu.backup.di.scope.BackupScope
 import com.phelat.tedu.backup.entity.WebDavCredentials
 import com.phelat.tedu.backup.error.BackupErrorContext
 import com.phelat.tedu.backup.state.WebDavViewState
@@ -17,6 +18,7 @@ import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.lifecycle.update
 import javax.inject.Inject
 
+@BackupScope
 class WebDavViewModel @Inject constructor(
     credentialsReadable: Readable<Response<WebDavCredentials, BackupErrorContext>>,
     private val credentialsWritable: Writable<WebDavCredentials>,

@@ -17,6 +17,7 @@ interface BackupViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(WebDavViewModel::class)
+    @BackupScope
     fun bindWebDavViewModel(input: WebDavViewModel): ViewModel
 
     companion object {
