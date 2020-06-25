@@ -11,4 +11,6 @@ sealed class BackupErrorContext : Throwable() {
     object FileNotFound : BackupErrorContext()
 
     object CredentialsEmpty : BackupErrorContext()
+
+    object LocalUpdateFailed : BackupErrorContext()
 }

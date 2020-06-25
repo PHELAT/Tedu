@@ -3,12 +3,15 @@ package com.phelat.tedu.backup.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.phelat.tedu.analytics.ExceptionLogger
 import com.phelat.tedu.analytics.di.qualifier.Development
 import com.phelat.tedu.backup.di.scope.BackupScope
 import com.phelat.tedu.backup.entity.WebDavCredentials
 import com.phelat.tedu.backup.error.BackupErrorContext
 import com.phelat.tedu.backup.state.WebDavViewState
+import com.phelat.tedu.backup.usecase.BackupUseCase
+import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.functional.Response
@@ -16,13 +19,16 @@ import com.phelat.tedu.functional.ifSuccessful
 import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.lifecycle.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @BackupScope
 class WebDavViewModel @Inject constructor(
     credentialsReadable: Readable<Response<WebDavCredentials, BackupErrorContext>>,
     private val credentialsWritable: Writable<WebDavCredentials>,
-    @Development private val logger: ExceptionLogger
+    @Development private val logger: ExceptionLogger,
+    private val webDavBackupUseCase: BackupUseCase,
+    private val dispatcher: Dispatcher
 ) : ViewModel() {
 
     private val _viewStateObservable = MutableLiveData(WebDavViewState())
@@ -76,6 +82,13 @@ class WebDavViewModel @Inject constructor(
     fun onSaveCredentialsClick(url: String, username: String, password: String) {
         val credentials = WebDavCredentials(url, username, password)
         credentialsWritable.write(credentials)
+        viewModelScope.launch(context = dispatcher.iO) {
+            webDavBackupUseCase.sync()
+                .ifSuccessful {
+                    // TODO: handle success
+                }
+                .otherwise(logger::log)
+        }
     }
 
     companion object {
