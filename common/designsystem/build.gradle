@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 dependencies {
 
@@ -11,5 +12,13 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$library.recyclerview"
 
     implementation "com.google.android.material:material:$library.material"
+
+    implementation "com.google.dagger:dagger:$library.dagger"
+    kapt "com.google.dagger:dagger-compiler:$library.dagger"
+    implementation "com.google.dagger:dagger-android-support:$library.dagger"
+    kapt "com.google.dagger:dagger-android-processor:$library.dagger"
+
+    implementation project(":library:dependencyinjection")
+    implementation project(":library:androiddagger")
 
 }
