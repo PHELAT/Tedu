@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.phelat.tedu.androiddagger.inject
 import com.phelat.tedu.designsystem.component.view.BottomSheetView
 import com.phelat.tedu.designsystem.entity.BottomSheetEntity
+import com.phelat.tedu.lifecycle.ViewModelFactory
 import com.phelat.tedu.todolist.R
 import com.phelat.tedu.todolist.di.component.TodoListComponent
 import com.phelat.tedu.todolist.viewmodel.TodoListViewModel
@@ -25,9 +25,9 @@ import javax.inject.Inject
 class TodoListFragment : Fragment(R.layout.fragment_todolist) {
 
     @Inject
-    lateinit var todoListViewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: ViewModelFactory
 
-    private val todoListViewModel: TodoListViewModel by viewModels { todoListViewModelFactory }
+    private val todoListViewModel: TodoListViewModel by viewModels { viewModelFactory }
 
     private var todoSheet: BottomSheetView? = null
 

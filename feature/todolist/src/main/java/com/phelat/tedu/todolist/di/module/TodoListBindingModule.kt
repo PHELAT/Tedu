@@ -9,6 +9,6 @@ import dagger.android.ContributesAndroidInjector
 interface TodoListBindingModule {
 
     @TodoListScope
-    @ContributesAndroidInjector(modules = [TodoListModule::class])
+    @ContributesAndroidInjector(modules = [TodoListViewModelModule::class])
     fun bindTodoListFragment(): TodoListFragment
 }

@@ -26,6 +26,7 @@ import com.phelat.tedu.todo.entity.ActionEntity
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.repository.TodoRepository
 import com.phelat.tedu.todolist.R
+import com.phelat.tedu.todolist.di.scope.TodoListScope
 import com.phelat.tedu.todolist.view.AddTodoItem
 import com.phelat.tedu.todolist.view.TodoListItem
 import com.phelat.tedu.uiview.DirectionId
@@ -39,8 +40,10 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Date
+import javax.inject.Inject
 
-class TodoListViewModel(
+@TodoListScope
+class TodoListViewModel @Inject constructor(
     private val dispatcher: Dispatcher,
     private val todoRepository: TodoRepository,
     private val dateDataSourceReadable: Readable.IO<TeduDate, Date>,
