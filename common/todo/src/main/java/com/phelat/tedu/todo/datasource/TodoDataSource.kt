@@ -33,7 +33,7 @@ internal class TodoDataSource @Inject constructor(
         return if (todoId >= 0) {
             Success(Unit)
         } else {
-            Failure(TodoErrorContext.InsertionFailed)
+            Failure(TodoErrorContext.InsertionFailed())
         }
     }
 
@@ -48,7 +48,7 @@ internal class TodoDataSource @Inject constructor(
         return if (affectedRows > 0) {
             Success(Unit)
         } else {
-            Failure(TodoErrorContext.UpdateFailed)
+            Failure(TodoErrorContext.UpdateFailed())
         }
     }
 
@@ -58,7 +58,7 @@ internal class TodoDataSource @Inject constructor(
         return if (affectedRows > 0) {
             Success(Unit)
         } else {
-            Failure(TodoErrorContext.DeletionFailed)
+            Failure(TodoErrorContext.DeletionFailed())
         }
     }
 }

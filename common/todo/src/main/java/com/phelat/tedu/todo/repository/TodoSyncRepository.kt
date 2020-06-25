@@ -31,7 +31,7 @@ class TodoSyncRepository @Inject constructor(
             is Action.Add -> addTodo(entity)
             is Action.Update -> updateTodo(entity)
             is Action.Delete -> deleteTodo(entity)
-            else -> Failure(TodoErrorContext.UndefinedAction)
+            else -> Failure(TodoErrorContext.UndefinedAction())
         }
     }
 

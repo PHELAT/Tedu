@@ -27,7 +27,7 @@ internal class TodoActionsDataSource @Inject constructor(
             .let { entity -> actionsDao.insertAction(entity) }
             .takeIf { actionId -> actionId >= 0 }
             ?.let { Success(Unit) }
-            ?: Failure(TodoErrorContext.ActionInsertionFailed)
+            ?: Failure(TodoErrorContext.ActionInsertionFailed())
     }
 
     override fun read(): Flow<List<ActionEntity>> {

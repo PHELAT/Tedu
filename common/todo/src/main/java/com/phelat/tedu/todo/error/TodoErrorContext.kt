@@ -2,13 +2,13 @@ package com.phelat.tedu.todo.error
 
 sealed class TodoErrorContext : Throwable() {
 
-    object InsertionFailed : TodoErrorContext()
+    class InsertionFailed : TodoErrorContext()
 
-    object UpdateFailed : TodoErrorContext()
+    class UpdateFailed : TodoErrorContext()
 
-    object DeletionFailed : TodoErrorContext()
+    class DeletionFailed : TodoErrorContext()
 
-    object ActionInsertionFailed : TodoErrorContext()
+    class ActionInsertionFailed : TodoErrorContext()
 
-    object UndefinedAction : TodoErrorContext()
+    class UndefinedAction : TodoErrorContext()
 }
