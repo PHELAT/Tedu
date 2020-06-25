@@ -5,7 +5,6 @@ import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.database.entity.ActionDatabaseEntity
 import com.phelat.tedu.todo.entity.ActionEntity
 import com.phelat.tedu.todo.entity.TodoEntity
-import java.util.Date
 import javax.inject.Inject
 
 @CommonScope
@@ -17,7 +16,10 @@ class ActionEntityToActionDatabaseEntity @Inject constructor() :
             actionId = null,
             action = first.action,
             timestamp = first.timestamp,
-            todoId = first.data.todoId
+            todoId = first.data.todoId,
+            todo = first.data.todo,
+            isDone = first.data.isDone,
+            date = first.data.date
         )
     }
 
@@ -25,7 +27,12 @@ class ActionEntityToActionDatabaseEntity @Inject constructor() :
         return ActionEntity(
             action = second.action,
             timestamp = second.timestamp,
-            data = TodoEntity(todo = "", date = Date(), isDone = false, todoId = second.todoId)
+            data = TodoEntity(
+                todo = second.todo,
+                date = second.date,
+                isDone = second.isDone,
+                todoId = second.todoId
+            )
         )
     }
 }

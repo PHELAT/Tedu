@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @CommonScope
-class TodoActionsDataSource @Inject constructor(
+internal class TodoActionsDataSource @Inject constructor(
     private val actionsDao: ActionEntityDao,
     private val mapper: Mapper<ActionEntity, ActionDatabaseEntity>
 ) : Writable.Suspendable.IO<ActionEntity, @JvmSuppressWildcards Response<Unit, TodoErrorContext>>,

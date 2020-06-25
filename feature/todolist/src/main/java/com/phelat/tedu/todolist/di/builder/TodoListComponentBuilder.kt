@@ -21,8 +21,4 @@ object TodoListComponentBuilder : ComponentBuilder<TodoListComponent>() {
             .androidResourceComponent(AndroidResourceComponentBuilder.getComponent(addStartupTask))
             .build()
     }
-
-    override fun getStartupTasks(component: TodoListComponent): StartupTasks? {
-        return component.todoListStartupTasks()
-    }
 }

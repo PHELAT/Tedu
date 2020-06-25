@@ -8,7 +8,7 @@ import com.phelat.tedu.todo.database.entity.ActionDatabaseEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface ActionEntityDao {
+internal interface ActionEntityDao {
 
     @Insert(entity = ActionDatabaseEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAction(action: ActionDatabaseEntity): Long
