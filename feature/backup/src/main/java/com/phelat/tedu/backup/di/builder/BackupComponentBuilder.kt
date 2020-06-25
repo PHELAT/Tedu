@@ -1,5 +1,6 @@
 package com.phelat.tedu.backup.di.builder
 
+import com.phelat.tedu.analytics.di.builder.AnalyticsComponentBuilder
 import com.phelat.tedu.androidcore.di.builder.AndroidCoreComponentBuilder
 import com.phelat.tedu.backup.di.component.BackupComponent
 import com.phelat.tedu.backup.di.component.DaggerBackupComponent
@@ -15,6 +16,7 @@ object BackupComponentBuilder : ComponentBuilder<BackupComponent>() {
             .androidCoreComponent(AndroidCoreComponentBuilder.getComponent(addStartupTask))
             .threadComponent(ThreadComponentBuilder.getComponent(addStartupTask))
             .todoComponent(TodoComponentBuilder.getComponent(addStartupTask))
+            .analyticsComponent(AnalyticsComponentBuilder.getComponent(addStartupTask))
             .build()
     }
 

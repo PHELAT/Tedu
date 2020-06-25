@@ -1,5 +1,6 @@
 package com.phelat.tedu.backup.di.component
 
+import com.phelat.tedu.analytics.di.component.AnalyticsComponent
 import com.phelat.tedu.androidcore.di.component.AndroidCoreComponent
 import com.phelat.tedu.androiddagger.DispatcherComponent
 import com.phelat.tedu.backup.di.module.BackupFragmentModule
@@ -23,7 +24,12 @@ import dagger.android.AndroidInjectionModule
         BackupStartupTasksModule::class,
         BackupFragmentModule::class
     ],
-    dependencies = [AndroidCoreComponent::class, ThreadComponent::class, TodoComponent::class]
+    dependencies = [
+        AndroidCoreComponent::class,
+        ThreadComponent::class,
+        TodoComponent::class,
+        AnalyticsComponent::class
+    ]
 )
 interface BackupComponent : DispatcherComponent {
 

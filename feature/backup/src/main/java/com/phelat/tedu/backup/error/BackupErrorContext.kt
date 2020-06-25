@@ -1,6 +1,6 @@
 package com.phelat.tedu.backup.error
 
-sealed class BackupErrorContext {
+sealed class BackupErrorContext : Throwable() {
 
     object GetFileFailed : BackupErrorContext()
 
