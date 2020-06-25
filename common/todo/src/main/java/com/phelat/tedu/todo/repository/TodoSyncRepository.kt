@@ -13,7 +13,6 @@ import com.phelat.tedu.todo.entity.Action
 import com.phelat.tedu.todo.entity.ActionEntity
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.error.TodoErrorContext
-import com.phelat.tedu.todo.response.WriteResponse
 import kotlinx.coroutines.flow.Flow
 import java.util.Date
 import javax.inject.Inject
@@ -21,8 +20,7 @@ import javax.inject.Inject
 @CommonScope
 class TodoSyncRepository @Inject constructor(
     private val todoReadable: Readable.IO<Date, Flow<List<TodoEntity>>>,
-    // TODO: remove write response
-    private val todoWritable: Writable.Suspendable.IO<TodoEntity, Response<WriteResponse, TodoErrorContext>>,
+    private val todoWritable: Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val todoUpdatable: Updatable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val todoDeletable: Deletable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
     private val actionsWritable: Writable.Suspendable.IO<ActionEntity, Response<Unit, TodoErrorContext>>
