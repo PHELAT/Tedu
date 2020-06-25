@@ -33,7 +33,7 @@ internal class TodoArchiveDataSource @Inject constructor(
         return if (affectedRows > 0) {
             Success(Unit)
         } else {
-            Failure(TodoArchivableErrorContext.DeletionFailed)
+            Failure(TodoArchivableErrorContext.DeletionFailed())
         }
     }
 }
