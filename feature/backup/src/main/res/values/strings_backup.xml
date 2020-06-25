@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="backup_method_webdav_setup_title">Setup WebDAV</string>
+    <string name="backup_method_webdav_setup_save_config">Save</string>
+
+    <string name="backup_method_webdav_username">Username</string>
+    <string name="backup_method_webdav_password">Password</string>
+    <string name="backup_method_webdav_url">URL</string>
+
+</resources>
