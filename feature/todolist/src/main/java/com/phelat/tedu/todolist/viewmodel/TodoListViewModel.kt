@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.phelat.tedu.analytics.ExceptionLogger
+import com.phelat.tedu.analytics.di.qualifier.NonFatal
 import com.phelat.tedu.androidresource.ResourceProvider
 import com.phelat.tedu.androidresource.input.StringId
 import com.phelat.tedu.androidresource.resource.StringResource
@@ -42,7 +44,8 @@ class TodoListViewModel(
     private val dispatcher: Dispatcher,
     private val todoRepository: TodoRepository,
     private val dateDataSourceReadable: Readable.IO<TeduDate, Date>,
-    private val stringResourceProvider: ResourceProvider<StringId, StringResource>
+    private val stringResourceProvider: ResourceProvider<StringId, StringResource>,
+    @NonFatal private val nonFatalLogger: ExceptionLogger
 ) : ViewModel() {
 
     private val headerSection = Section().apply {
@@ -104,8 +107,8 @@ class TodoListViewModel(
                 timestamp = System.currentTimeMillis(),
                 data = updatedTodo
             )
-            todoRepository.processAction(updateAction).ifNotSuccessful {
-                // TODO: log error
+            todoRepository.processAction(updateAction).ifNotSuccessful { error ->
+                nonFatalLogger.log(error)
                 showGeneralFailureMessage()
             }
         }
@@ -159,8 +162,8 @@ class TodoListViewModel(
             todoRepository.processAction(deleteAction).ifSuccessful {
                 deletedTodo = todoEntity
                 _todoDeletionObservable.postCall()
-            } otherwise {
-                // TODO: log error
+            } otherwise { error ->
+                nonFatalLogger.log(error)
                 showGeneralFailureMessage()
             }
         }
