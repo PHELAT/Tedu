@@ -18,9 +18,11 @@ import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.ifSuccessful
 import com.phelat.tedu.functional.otherwise
+import com.phelat.tedu.functional.unBox
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.lifecycle.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @BackupScope
@@ -84,14 +86,19 @@ class WebDavViewModel @Inject constructor(
     }
 
     fun onSaveCredentialsClick(url: String, username: String, password: String) {
-        val credentials = WebDavCredentials(url, username, password)
-        credentialsWritable.write(credentials)
-        viewModelScope.launch(context = dispatcher.iO) {
-            webDavBackupUseCase.sync()
-                .ifSuccessful {
-                    // TODO: handle success
+        viewModelScope.launch {
+            _viewStateObservable.update {
+                copy(isSaveProgressVisible = true, isSaveButtonVisible = false)
+            }
+            val credentials = WebDavCredentials(url, username, password)
+            credentialsWritable.write(credentials)
+            withContext(dispatcher.iO) { webDavBackupUseCase.sync() }
+                .unBox {
+                    _viewStateObservable.update {
+                        copy(isSaveProgressVisible = false, isSaveButtonVisible = true)
+                    }
+                    failure(logger::log)
                 }
-                .otherwise(logger::log)
         }
     }
 

@@ -3,6 +3,8 @@ package com.phelat.tedu.backup.view
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,6 +17,7 @@ import com.phelat.tedu.backup.state.WebDavViewState
 import com.phelat.tedu.backup.viewmodel.WebDavViewModel
 import com.phelat.tedu.lifecycle.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_webdav_setup.saveSettings
+import kotlinx.android.synthetic.main.fragment_webdav_setup.saveSettingsProgress
 import kotlinx.android.synthetic.main.fragment_webdav_setup.webDavPasswordInput
 import kotlinx.android.synthetic.main.fragment_webdav_setup.webDavUrlInput
 import kotlinx.android.synthetic.main.fragment_webdav_setup.webDavUsernameInput
@@ -57,7 +60,11 @@ class WebDavSetupFragment : Fragment(R.layout.fragment_webdav_setup) {
     }
 
     private fun updateState(state: WebDavViewState) {
-        saveSettings.isEnabled = state.isSaveButtonEnabled.value
+        saveSettings.apply {
+            isEnabled = state.isSaveButtonEnabled.value
+            isInvisible = state.isSaveButtonVisible.not()
+        }
+        saveSettingsProgress.isVisible = state.isSaveProgressVisible
     }
 
     private fun updateCredentials(credentials: WebDavCredentials) {

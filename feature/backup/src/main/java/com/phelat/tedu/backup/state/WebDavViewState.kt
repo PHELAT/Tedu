@@ -12,5 +12,7 @@ data class WebDavViewState(
             USERNAME_FIELD_SWITCH to false,
             PASSWORD_FIELD_SWITCH to false
         )
-    )
+    ),
+    val isSaveButtonVisible: Boolean = true,
+    val isSaveProgressVisible: Boolean = false
 )
