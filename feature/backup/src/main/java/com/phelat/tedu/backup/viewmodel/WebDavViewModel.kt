@@ -7,6 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.phelat.tedu.analytics.ExceptionLogger
 import com.phelat.tedu.analytics.di.qualifier.Development
+import com.phelat.tedu.androidresource.ResourceProvider
+import com.phelat.tedu.androidresource.input.StringId
+import com.phelat.tedu.androidresource.resource.StringResource
+import com.phelat.tedu.backup.R
 import com.phelat.tedu.backup.di.scope.BackupScope
 import com.phelat.tedu.backup.entity.WebDavCredentials
 import com.phelat.tedu.backup.error.BackupErrorContext
@@ -31,7 +35,8 @@ class WebDavViewModel @Inject constructor(
     private val credentialsWritable: Writable<WebDavCredentials>,
     @Development private val logger: ExceptionLogger,
     private val webDavBackupUseCase: BackupUseCase,
-    private val dispatcher: Dispatcher
+    private val dispatcher: Dispatcher,
+    private val stringProvider: ResourceProvider<StringId, StringResource>
 ) : ViewModel() {
 
     private val _viewStateObservable = MutableLiveData(WebDavViewState())
@@ -39,6 +44,9 @@ class WebDavViewModel @Inject constructor(
 
     private val _credentialsObservable = SingleLiveData<WebDavCredentials>()
     val credentialsObservable: LiveData<WebDavCredentials> = _credentialsObservable
+
+    private val _snackBarObservable = SingleLiveData<String>()
+    val snackBarObservable: LiveData<String> = _snackBarObservable
 
     init {
         credentialsReadable.read()
@@ -97,9 +105,17 @@ class WebDavViewModel @Inject constructor(
                     _viewStateObservable.update {
                         copy(isSaveProgressVisible = false, isSaveButtonVisible = true)
                     }
-                    failure(logger::log)
+                    failure(::handleErrorCase)
                 }
         }
+    }
+
+    private fun handleErrorCase(error: BackupErrorContext) {
+        logger.log(error)
+        val messageId = StringId(R.string.backup_sync_failed_error)
+        stringProvider.getResource(messageId)
+            .resource
+            .also(_snackBarObservable::setValue)
     }
 
     companion object {

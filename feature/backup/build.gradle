@@ -35,5 +35,6 @@ dependencies {
     implementation project(":library:thread")
     implementation project(":library:mapper")
     implementation project(":library:sdkextensions")
+    implementation project(":library:androidresource")
 
 }

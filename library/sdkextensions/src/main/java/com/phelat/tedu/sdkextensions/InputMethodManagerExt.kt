@@ -21,5 +21,5 @@ fun Fragment.showKeyboard(inputToFocus: EditText) {
 
 fun Fragment.hideKeyboard(windowToken: IBinder) {
     (requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
-        .hideSoftInputFromWindow(windowToken, InputMethodManager.HIDE_IMPLICIT_ONLY)
+        .hideSoftInputFromWindow(windowToken, 0)
 }
