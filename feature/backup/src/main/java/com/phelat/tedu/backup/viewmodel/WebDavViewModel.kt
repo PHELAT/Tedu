@@ -1,5 +1,6 @@
 package com.phelat.tedu.backup.viewmodel
 
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -46,7 +47,10 @@ class WebDavViewModel @Inject constructor(
     fun onUrlTextChange(url: String) {
         _viewStateObservable.update {
             copy(
-                isSaveButtonEnabled = if (url.isEmpty()) {
+                isSaveButtonEnabled = if (
+                    url.isEmpty() ||
+                    url.matches(Patterns.WEB_URL.toRegex()).not()
+                ) {
                     isSaveButtonEnabled.switchOff(URL_FIELD_SWITCH)
                 } else {
                     isSaveButtonEnabled.switchOn(URL_FIELD_SWITCH)
