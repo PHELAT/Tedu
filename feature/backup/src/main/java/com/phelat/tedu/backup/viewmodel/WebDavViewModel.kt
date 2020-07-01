@@ -22,9 +22,10 @@ import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.ifSuccessful
 import com.phelat.tedu.functional.otherwise
-import com.phelat.tedu.functional.unBox
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.lifecycle.update
+import com.phelat.tedu.uiview.Navigate
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -47,6 +48,9 @@ class WebDavViewModel @Inject constructor(
 
     private val _snackBarObservable = SingleLiveData<String>()
     val snackBarObservable: LiveData<String> = _snackBarObservable
+
+    private val _navigationObservable = SingleLiveData<Navigate>()
+    val navigationObservable: LiveData<Navigate> = _navigationObservable
 
     init {
         credentialsReadable.read()
@@ -101,12 +105,13 @@ class WebDavViewModel @Inject constructor(
             val credentials = WebDavCredentials(url, username, password)
             credentialsWritable.write(credentials)
             withContext(dispatcher.iO) { webDavBackupUseCase.sync() }
-                .unBox {
+                .also {
                     _viewStateObservable.update {
                         copy(isSaveProgressVisible = false, isSaveButtonVisible = true)
                     }
-                    failure(::handleErrorCase)
                 }
+                .ifSuccessful { _navigationObservable.value = Navigate.Up }
+                .otherwise(::handleErrorCase)
         }
     }
 

@@ -18,6 +18,7 @@ import com.phelat.tedu.backup.state.WebDavViewState
 import com.phelat.tedu.backup.viewmodel.WebDavViewModel
 import com.phelat.tedu.lifecycle.ViewModelFactory
 import com.phelat.tedu.sdkextensions.hideKeyboard
+import com.phelat.tedu.uiview.observeNavigation
 import kotlinx.android.synthetic.main.fragment_webdav_setup.saveSettings
 import kotlinx.android.synthetic.main.fragment_webdav_setup.saveSettingsProgress
 import kotlinx.android.synthetic.main.fragment_webdav_setup.viewRoot
@@ -60,6 +61,7 @@ class WebDavSetupFragment : Fragment(R.layout.fragment_webdav_setup) {
             viewStateObservable.observe(viewLifecycleOwner, ::updateState)
             credentialsObservable.observe(viewLifecycleOwner, ::updateCredentials)
             snackBarObservable.observe(viewLifecycleOwner, ::showSnackBar)
+            navigationObservable.observeNavigation(this@WebDavSetupFragment)
         }
     }
 
