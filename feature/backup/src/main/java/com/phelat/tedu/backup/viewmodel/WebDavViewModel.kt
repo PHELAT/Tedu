@@ -25,7 +25,6 @@ import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.lifecycle.update
 import com.phelat.tedu.uiview.Navigate
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -110,9 +109,17 @@ class WebDavViewModel @Inject constructor(
                         copy(isSaveProgressVisible = false, isSaveButtonVisible = true)
                     }
                 }
-                .ifSuccessful { _navigationObservable.value = Navigate.Up }
+                .ifSuccessful { handleSuccessCase() }
                 .otherwise(::handleErrorCase)
         }
+    }
+
+    private fun handleSuccessCase() {
+        val messageId = StringId(R.string.backup_sync_succeed_message)
+        stringProvider.getResource(messageId)
+            .resource
+            .also(_snackBarObservable::setValue)
+        _navigationObservable.value = Navigate.Up
     }
 
     private fun handleErrorCase(error: BackupErrorContext) {

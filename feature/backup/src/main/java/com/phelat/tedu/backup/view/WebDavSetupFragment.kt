@@ -9,19 +9,18 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
-import com.google.android.material.snackbar.Snackbar
 import com.phelat.tedu.androiddagger.inject
 import com.phelat.tedu.backup.R
 import com.phelat.tedu.backup.di.component.BackupComponent
 import com.phelat.tedu.backup.entity.WebDavCredentials
 import com.phelat.tedu.backup.state.WebDavViewState
 import com.phelat.tedu.backup.viewmodel.WebDavViewModel
+import com.phelat.tedu.designsystem.ext.makeLongSnackBar
 import com.phelat.tedu.lifecycle.ViewModelFactory
 import com.phelat.tedu.sdkextensions.hideKeyboard
 import com.phelat.tedu.uiview.observeNavigation
 import kotlinx.android.synthetic.main.fragment_webdav_setup.saveSettings
 import kotlinx.android.synthetic.main.fragment_webdav_setup.saveSettingsProgress
-import kotlinx.android.synthetic.main.fragment_webdav_setup.viewRoot
 import kotlinx.android.synthetic.main.fragment_webdav_setup.webDavPasswordInput
 import kotlinx.android.synthetic.main.fragment_webdav_setup.webDavUrlInput
 import kotlinx.android.synthetic.main.fragment_webdav_setup.webDavUsernameInput
@@ -81,6 +80,6 @@ class WebDavSetupFragment : Fragment(R.layout.fragment_webdav_setup) {
 
     private fun showSnackBar(message: String) {
         hideKeyboard(webDavPasswordInput.windowToken)
-        Snackbar.make(viewRoot, message, Snackbar.LENGTH_LONG).show()
+        requireActivity().makeLongSnackBar(message).show()
     }
 }

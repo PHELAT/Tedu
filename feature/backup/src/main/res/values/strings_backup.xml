@@ -9,5 +9,6 @@
     <string name="backup_method_webdav_url">URL</string>
     
     <string name="backup_sync_failed_error">Connection failed!</string>
+    <string name="backup_sync_succeed_message">Saved backup settings</string>
 
 </resources>
