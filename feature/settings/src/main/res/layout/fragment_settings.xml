@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/viewRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -75,12 +76,12 @@
         android:layout_height="56dp"
         android:gravity="end|center_vertical"
         android:padding="16dp"
-        android:text="@string/settings_backup_status_syncing"
         android:textColor="@color/text_secondary_color"
         android:textSize="@dimen/font_size_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/userInterfaceModeTitle"
-        app:layout_constraintTop_toBottomOf="@id/userInterfaceMode" />
+        app:layout_constraintTop_toBottomOf="@id/userInterfaceMode"
+        tools:text="@string/sync_state_syncing" />
 
     <View
         android:id="@+id/backupClick"

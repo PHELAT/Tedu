@@ -7,6 +7,7 @@ import com.phelat.tedu.dependencyinjection.ComponentBuilder
 import com.phelat.tedu.dependencyinjection.StartupTasks
 import com.phelat.tedu.settings.di.component.DaggerSettingsComponent
 import com.phelat.tedu.settings.di.component.SettingsComponent
+import com.phelat.tedu.sync.di.builder.SyncComponentBuilder
 
 object SettingsComponentBuilder : ComponentBuilder<SettingsComponent>() {
 
@@ -15,6 +16,7 @@ object SettingsComponentBuilder : ComponentBuilder<SettingsComponent>() {
             .androidCoreComponent(AndroidCoreComponentBuilder.getComponent(addStartupTask))
             .androidResourceComponent(AndroidResourceComponentBuilder.getComponent(addStartupTask))
             .threadComponent(ThreadComponentBuilder.getComponent(addStartupTask))
+            .syncComponent(SyncComponentBuilder.getComponent(addStartupTask))
             .build()
     }
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="sync_state_success">Synced</string>
+    <string name="sync_state_failure">Failed</string>
+    <string name="sync_state_syncing">Syncing…</string>
+
+</resources>

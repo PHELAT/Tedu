@@ -11,6 +11,7 @@ import com.phelat.tedu.settings.di.module.SettingsModule
 import com.phelat.tedu.settings.di.module.SettingsStartUpModule
 import com.phelat.tedu.settings.di.module.UserInterfaceModeModule
 import com.phelat.tedu.settings.di.qualifier.SettingsStartupTasks
+import com.phelat.tedu.sync.di.component.SyncComponent
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 
@@ -26,7 +27,8 @@ import dagger.android.AndroidInjectionModule
     dependencies = [
         AndroidCoreComponent::class,
         AndroidResourceComponent::class,
-        ThreadComponent::class
+        ThreadComponent::class,
+        SyncComponent::class
     ]
 )
 interface SettingsComponent : DispatcherComponent {

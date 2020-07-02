@@ -1,29 +1,42 @@
 package com.phelat.tedu.settings.viewmodel
 
 import android.os.Build
+import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.phelat.tedu.androidresource.ResourceProvider
 import com.phelat.tedu.androidresource.input.StringId
 import com.phelat.tedu.androidresource.resource.StringResource
+import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.designsystem.entity.BottomSheetEntity
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.settings.R
+import com.phelat.tedu.settings.di.scope.SettingsScope
 import com.phelat.tedu.settings.entity.UserInterfaceMode
+import com.phelat.tedu.settings.state.SettingsViewState
+import com.phelat.tedu.sync.state.SyncState
 import com.phelat.tedu.uiview.Navigate
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@SettingsScope
+@OptIn(ExperimentalCoroutinesApi::class)
 class SettingsViewModel @Inject constructor(
     private val uiModeDataSourceReadable: Readable<UserInterfaceMode>,
     private val uiModeDataSourceWritable: Writable<UserInterfaceMode>,
-    private val stringResourceProvider: ResourceProvider<StringId, StringResource>
+    private val stringResourceProvider: ResourceProvider<StringId, StringResource>,
+    syncStateReadable: Readable<Flow<SyncState>>,
+    dispatcher: Dispatcher
 ) : ViewModel() {
 
     private val _userInterfaceTitleObservable = MutableLiveData<String>()
@@ -37,6 +50,10 @@ class SettingsViewModel @Inject constructor(
 
     private val _backupMethodSheetObservable = SingleLiveData<BottomSheetEntity>()
     val backupMethodSheetObservable: LiveData<BottomSheetEntity> = _backupMethodSheetObservable
+
+    val viewStateObservable: LiveData<SettingsViewState> = syncStateReadable.read()
+        .map { state -> mapSyncStateToSettingsViewState(state) }
+        .asLiveData(dispatcher.iO)
 
     init {
         _userInterfaceTitleObservable.value = getUserInterfaceModeTitle()
@@ -72,10 +89,9 @@ class SettingsViewModel @Inject constructor(
         } else {
             listOf(darkItem, lightItem)
         }
-        val sheetTitleId = StringId(R.string.settings_ui_mode_sheet_title)
         _userInterfaceSheetObservable.value = BottomSheetEntity(
             items = sheetItems,
-            sheetTitle = stringResourceProvider.getResource(sheetTitleId).resource
+            sheetTitle = getStringResource(R.string.settings_ui_mode_sheet_title)
         )
     }
 
@@ -99,7 +115,7 @@ class SettingsViewModel @Inject constructor(
             is UserInterfaceMode.DarkMode -> R.string.settings_ui_mode_dark
             is UserInterfaceMode.LightMode -> R.string.settings_ui_mode_light
         }
-        return stringResourceProvider.getResource(StringId(titleId)).resource
+        return getStringResource(titleId)
     }
 
     fun onBackUpClick() {
@@ -115,18 +131,43 @@ class SettingsViewModel @Inject constructor(
                 itemOnClickListener = {}
             )
         )
-        val sheetTitleId = StringId(R.string.settings_backup_method_title)
         _backupMethodSheetObservable.value = BottomSheetEntity(
             items = sheetItems,
-            sheetTitle = stringResourceProvider.getResource(sheetTitleId).resource
+            sheetTitle = getStringResource(R.string.settings_backup_method_title)
         )
     }
 
     private fun onWebDavBackupMethodClick() {
         viewModelScope.launch {
             delay(DELAY_FOR_NAVIGATING)
+            // TODO: use centralized deep link uri
             _navigationObservable.value = Navigate.ToDeepLink("tedu://webdav_setup")
         }
+    }
+
+    private fun mapSyncStateToSettingsViewState(state: SyncState): SettingsViewState {
+        return when (state) {
+            is SyncState.Success -> {
+                val syncStateText = getStringResource(R.string.sync_state_success)
+                SettingsViewState(syncStateText, isSyncStateTextVisible = true)
+            }
+            is SyncState.Failure -> {
+                val syncStateText = getStringResource(R.string.sync_state_failure)
+                SettingsViewState(syncStateText, isSyncStateTextVisible = true)
+            }
+            is SyncState.Syncing -> {
+                val syncStateText = getStringResource(R.string.sync_state_syncing)
+                SettingsViewState(syncStateText, isSyncStateTextVisible = true)
+            }
+            is SyncState.NotConfigured -> {
+                SettingsViewState(syncStateText = "", isSyncStateTextVisible = false)
+            }
+        }
+    }
+
+    private fun getStringResource(@StringRes id: Int): String {
+        val stringId = StringId(id)
+        return stringResourceProvider.getResource(stringId).resource
     }
 
     companion object {

@@ -29,6 +29,7 @@ dependencies {
 
     implementation project(":common:designsystem")
     implementation project(":common:todo")
+    implementation project(":common:sync")
     implementation project(":library:datasource")
     implementation project(":library:androiddagger")
     implementation project(":library:dependencyinjection")
