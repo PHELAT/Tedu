@@ -8,7 +8,8 @@ include ':feature:todolist',
 // Common Modules
 include ':common:designsystem',
         ':common:todo',
-        ':common:analytics'
+        ':common:analytics',
+        ':common:sync'
 // Library Modules
 include ':library:translation',
         ':library:datasource',
