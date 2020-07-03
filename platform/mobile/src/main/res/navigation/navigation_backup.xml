@@ -10,9 +10,7 @@
         android:id="@+id/webdav_setup_fragment"
         android:name="com.phelat.tedu.backup.view.WebDavSetupFragment"
         tools:layout="@layout/fragment_webdav_setup">
-
-        <deepLink app:uri="tedu://webdav_setup" />
-
+        <deepLink app:uri="@string/deeplink_webdav_setup" />
     </fragment>
 
 </navigation>

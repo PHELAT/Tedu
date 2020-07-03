@@ -140,8 +140,11 @@ class SettingsViewModel @Inject constructor(
     private fun onWebDavBackupMethodClick() {
         viewModelScope.launch {
             delay(DELAY_FOR_NAVIGATING)
-            // TODO: use centralized deep link uri
-            _navigationObservable.value = Navigate.ToDeepLink("tedu://webdav_setup")
+            val deepLinkId = StringId(R.string.deeplink_webdav_setup)
+            stringResourceProvider.getResource(deepLinkId)
+                .resource
+                .run(Navigate::ToDeepLink)
+                .also(_navigationObservable::setValue)
         }
     }
 
