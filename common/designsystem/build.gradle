@@ -11,6 +11,8 @@ dependencies {
 
     implementation "androidx.recyclerview:recyclerview:$library.recyclerview"
 
+    implementation "androidx.constraintlayout:constraintlayout:$library.constraintlayout"
+
     implementation "com.google.android.material:material:$library.material"
 
     implementation "com.google.dagger:dagger:$library.dagger"
@@ -20,5 +22,6 @@ dependencies {
 
     implementation project(":library:dependencyinjection")
     implementation project(":library:androiddagger")
+    implementation project(":library:translation")
 
 }

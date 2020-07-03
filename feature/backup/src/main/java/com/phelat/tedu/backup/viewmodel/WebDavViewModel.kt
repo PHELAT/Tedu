@@ -51,6 +51,9 @@ class WebDavViewModel @Inject constructor(
     private val _navigationObservable = SingleLiveData<Navigate>()
     val navigationObservable: LiveData<Navigate> = _navigationObservable
 
+    private val _confirmationSheetObservable = SingleLiveData<String>()
+    val confirmationSheetObservable: LiveData<String> = _confirmationSheetObservable
+
     init {
         credentialsReadable.read()
             .ifSuccessful(_credentialsObservable::setValue)
@@ -124,10 +127,21 @@ class WebDavViewModel @Inject constructor(
 
     private fun handleErrorCase(error: BackupErrorContext) {
         logger.log(error)
-        val messageId = StringId(R.string.backup_sync_failed_error)
-        stringProvider.getResource(messageId)
-            .resource
-            .also(_snackBarObservable::setValue)
+        if (error is BackupErrorContext.FileNotFound) {
+            val messageId = StringId(R.string.backup_file_not_found_confirmation)
+            stringProvider.getResource(messageId)
+                .resource
+                .also(_confirmationSheetObservable::setValue)
+        } else {
+            val messageId = StringId(R.string.backup_sync_failed_error)
+            stringProvider.getResource(messageId)
+                .resource
+                .also(_snackBarObservable::setValue)
+        }
+    }
+
+    fun onOkayConfirmationClick() {
+        TODO()
     }
 
     companion object {

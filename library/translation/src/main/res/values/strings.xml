@@ -2,5 +2,7 @@
 <resources>
 
     <string name="general_failure_message">Oops! an unexpected error happened</string>
-    
+    <string name="general_okay_text">Okay</string>
+    <string name="general_cancel_text">Cancel</string>
+
 </resources>

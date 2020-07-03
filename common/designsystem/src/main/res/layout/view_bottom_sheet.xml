@@ -1,36 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/viewRoot"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <View
-        android:layout_width="56dp"
-        android:layout_height="4dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/shape_bottom_sheet_pill" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/sheetTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
-        android:textColor="@color/text_primary_color"
-        android:textSize="@dimen/font_size_regular"
-        android:visibility="gone"
-        app:fontFamily="@font/robotoslab_medium" />
+    <include layout="@layout/view_bottom_sheet_header" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bottomSheetRecycler"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:paddingBottom="8dp" />
+        android:paddingBottom="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sheetTitle" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

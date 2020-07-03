@@ -15,6 +15,7 @@ import com.phelat.tedu.backup.di.component.BackupComponent
 import com.phelat.tedu.backup.entity.WebDavCredentials
 import com.phelat.tedu.backup.state.WebDavViewState
 import com.phelat.tedu.backup.viewmodel.WebDavViewModel
+import com.phelat.tedu.designsystem.component.view.ConfirmationBottomSheet
 import com.phelat.tedu.designsystem.ext.makeLongSnackBar
 import com.phelat.tedu.lifecycle.ViewModelFactory
 import com.phelat.tedu.sdkextensions.hideKeyboard
@@ -32,6 +33,8 @@ class WebDavSetupFragment : Fragment(R.layout.fragment_webdav_setup) {
     lateinit var viewModelFactory: ViewModelFactory
 
     private val webDavViewModel: WebDavViewModel by viewModels { viewModelFactory }
+
+    private var confirmationSheet: ConfirmationBottomSheet? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -61,6 +64,7 @@ class WebDavSetupFragment : Fragment(R.layout.fragment_webdav_setup) {
             credentialsObservable.observe(viewLifecycleOwner, ::updateCredentials)
             snackBarObservable.observe(viewLifecycleOwner, ::showSnackBar)
             navigationObservable.observeNavigation(this@WebDavSetupFragment)
+            confirmationSheetObservable.observe(viewLifecycleOwner, ::observeConfirmation)
         }
     }
 
@@ -81,5 +85,23 @@ class WebDavSetupFragment : Fragment(R.layout.fragment_webdav_setup) {
     private fun showSnackBar(message: String) {
         hideKeyboard(webDavPasswordInput.windowToken)
         requireActivity().makeLongSnackBar(message).show()
+    }
+
+    private fun observeConfirmation(message: String) {
+        confirmationSheet?.show()
+            ?: run {
+                confirmationSheet = ConfirmationBottomSheet(requireContext()).apply {
+                    sheetTitle = message
+                    onOkayButtonClick = webDavViewModel::onOkayConfirmationClick
+                }
+                observeConfirmation(message)
+            }
+    }
+
+    override fun onDestroyView() {
+        if (confirmationSheet?.isShowing == true) {
+            confirmationSheet?.dismiss()
+        }
+        super.onDestroyView()
     }
 }
