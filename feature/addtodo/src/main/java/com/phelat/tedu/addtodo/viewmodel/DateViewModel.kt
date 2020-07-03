@@ -8,6 +8,7 @@ import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
 import com.phelat.tedu.addtodo.R
+import com.phelat.tedu.addtodo.di.scope.AddTodoScope
 import com.phelat.tedu.addtodo.entity.SelectedDate
 import com.phelat.tedu.addtodo.view.TextStyle
 import com.phelat.tedu.addtodo.view.calendar.CalendarCellViewState
@@ -17,6 +18,7 @@ import com.phelat.tedu.androidresource.input.StringId
 import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Writable
+import com.phelat.tedu.date.TeduDate
 import com.phelat.tedu.date.di.qualifier.NowDate
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.mapper.Mapper
@@ -29,12 +31,14 @@ import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
 
+@AddTodoScope
 class DateViewModel @Inject constructor(
     private val selectedDateReadable: Readable<SelectedDate>,
     private val selectedDateWritable: Writable<SelectedDate>,
     private val dateToLocalDate: Mapper<Date, LocalDate>,
     private val stringResourceProvider: ResourceProvider<StringId, StringResource>,
-    @NowDate private val nowDate: Lazy<LocalDate>
+    @NowDate private val nowDate: Lazy<LocalDate>,
+    private val localDateToTeduDate: Mapper<LocalDate, TeduDate>
 ) : ViewModel() {
 
     private val _todoDateObservable = MutableLiveData<String>()
@@ -68,21 +72,18 @@ class DateViewModel @Inject constructor(
         _dateChangeObservable.value = previousSelectedDate
         _dateChangeObservable.value = selectedDateReadable.read().date
 
-        _todoDateObservable.value = when {
-            selectedDate == nowDate.value -> {
+        val teduDate = localDateToTeduDate.mapFirstToSecond(selectedDate)
+        _todoDateObservable.value = when (teduDate) {
+            is TeduDate.Today -> {
                 stringResourceProvider.getResource(StringId(R.string.addtodo_date_today_text)).resource
             }
-            isSelectedDateTomorrow(nowDate.value, selectedDate) -> {
+            is TeduDate.Tomorrow -> {
                 stringResourceProvider.getResource(StringId(R.string.addtodo_date_tomorrow_text)).resource
             }
-            else -> {
-                "${selectedDate.year}/${selectedDate.monthValue}/${selectedDate.dayOfMonth}"
+            is TeduDate.HumanReadableDate -> {
+                teduDate.date
             }
         }
-    }
-
-    private fun isSelectedDateTomorrow(today: LocalDate, selectedDate: LocalDate): Boolean {
-        return selectedDate.minusDays(1).dayOfYear == today.dayOfYear
     }
 
     fun onSelectDateClick() {

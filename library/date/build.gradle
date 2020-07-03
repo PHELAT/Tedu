@@ -14,6 +14,7 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$library.dagger"
 
     implementation project(":library:datasource")
+    implementation project(":library:mapper")
     implementation project(":library:dependencyinjection")
 
 }

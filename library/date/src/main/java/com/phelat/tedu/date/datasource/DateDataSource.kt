@@ -6,6 +6,7 @@ import com.phelat.tedu.date.di.qualifier.NowDate
 import com.phelat.tedu.dependencyinjection.library.LibraryScope
 import org.threeten.bp.LocalDate
 import org.threeten.bp.ZoneId
+import java.text.DateFormat
 import java.util.Date
 import javax.inject.Inject
 
@@ -31,6 +32,9 @@ class DateDataSource @Inject constructor(
                     .toInstant()
                     .toEpochMilli()
                 Date(tomorrow)
+            }
+            is TeduDate.HumanReadableDate -> {
+                requireNotNull(DateFormat.getInstance().parse(input.date))
             }
         }
     }

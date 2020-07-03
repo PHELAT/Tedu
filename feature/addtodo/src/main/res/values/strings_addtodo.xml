@@ -7,5 +7,6 @@
     <string name="addtodo_date_today_text">Today</string>
     <string name="addtodo_date_tomorrow_text">Tomorrow</string>
     <string name="addtodo_title_text">Add todo</string>
+    <string name="addtodo_scheduled_todo">Scheduled todo for %s</string>
 
 </resources>

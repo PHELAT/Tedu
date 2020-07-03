@@ -6,13 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.phelat.tedu.addtodo.R
+import com.phelat.tedu.addtodo.di.scope.AddTodoScope
 import com.phelat.tedu.addtodo.entity.SelectedDate
 import com.phelat.tedu.addtodo.view.AddTodoViewState
 import com.phelat.tedu.androidresource.ResourceProvider
+import com.phelat.tedu.androidresource.input.StringArg
 import com.phelat.tedu.androidresource.input.StringId
 import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Readable
+import com.phelat.tedu.date.TeduDate
 import com.phelat.tedu.functional.ifSuccessful
 import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
@@ -30,12 +33,15 @@ import org.threeten.bp.LocalDate
 import java.util.Date
 import javax.inject.Inject
 
+@AddTodoScope
 class AddTodoViewModel @Inject constructor(
     private val dispatcher: Dispatcher,
     private val todoRepository: TodoRepository,
     private val stringResourceProvider: ResourceProvider<StringId, StringResource>,
+    private val stringArgResourceProvider: ResourceProvider<StringArg, StringResource>,
     private val dateToLocalDate: Mapper<Date, LocalDate>,
-    private val selectedDateReadable: Readable<SelectedDate>
+    private val selectedDateReadable: Readable<SelectedDate>,
+    private val localDateToTeduDate: Mapper<LocalDate, TeduDate>
 ) : ViewModel() {
 
     private val _todoTextObservable = SingleLiveData<String>()
@@ -63,17 +69,39 @@ class AddTodoViewModel @Inject constructor(
     }
 
     fun onSaveTodoClicked(typedTodo: String) {
-        viewModelScope.launch(context = dispatcher.iO) {
+        viewModelScope.launch {
             val selectedDate = selectedDateReadable.read().date
             val action = getSaveAction(typedTodo, selectedDate)
-            todoRepository.processAction(action)
+            withContext(context = dispatcher.iO) { todoRepository.processAction(action) }
                 .ifSuccessful {
-                    _navigationObservable.postValue(Navigate.Up)
+                    val teduDate = localDateToTeduDate.mapFirstToSecond(selectedDate)
+                    if (teduDate != TeduDate.Today) {
+                        showScheduledTodoSnackBar(teduDate)
+                    }
+                    _navigationObservable.value = Navigate.Up
                 }
                 .otherwise { errorContext ->
                     handleTodoErrorContext(errorContext)
                 }
         }
+    }
+
+    private fun showScheduledTodoSnackBar(teduDate: TeduDate) {
+        val humanReadableDate = when (teduDate) {
+            is TeduDate.Today -> {
+                stringResourceProvider.getResource(StringId(R.string.addtodo_date_today_text)).resource
+            }
+            is TeduDate.Tomorrow -> {
+                stringResourceProvider.getResource(StringId(R.string.addtodo_date_tomorrow_text)).resource
+            }
+            is TeduDate.HumanReadableDate -> {
+                teduDate.date
+            }
+        }
+        val stringId = StringArg(R.string.addtodo_scheduled_todo, humanReadableDate)
+        stringArgResourceProvider.getResource(stringId)
+            .resource
+            .also(_snackBarObservable::setValue)
     }
 
     private fun getSaveAction(typedTodo: String, selectedDate: LocalDate): ActionEntity {
@@ -99,15 +127,13 @@ class AddTodoViewModel @Inject constructor(
         }
     }
 
-    private suspend fun handleTodoErrorContext(errorContext: TodoErrorContext) {
-        withContext(dispatcher.main) {
-            when (errorContext) {
-                is TodoErrorContext.InsertionFailed, is TodoErrorContext.UpdateFailed -> {
-                    val message = stringResourceProvider.getResource(
-                        StringId(R.string.general_failure_message)
-                    )
-                    _snackBarObservable.value = message.resource
-                }
+    private fun handleTodoErrorContext(errorContext: TodoErrorContext) {
+        when (errorContext) {
+            is TodoErrorContext.InsertionFailed, is TodoErrorContext.UpdateFailed -> {
+                val message = stringResourceProvider.getResource(
+                    StringId(R.string.general_failure_message)
+                )
+                _snackBarObservable.value = message.resource
             }
         }
     }

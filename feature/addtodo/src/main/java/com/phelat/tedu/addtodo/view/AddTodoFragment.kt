@@ -7,13 +7,13 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
-import com.google.android.material.snackbar.Snackbar
 import com.phelat.tedu.addtodo.R
 import com.phelat.tedu.addtodo.di.component.AddTodoComponent
 import com.phelat.tedu.addtodo.view.calendar.CalendarSheet
 import com.phelat.tedu.addtodo.viewmodel.AddTodoViewModel
 import com.phelat.tedu.addtodo.viewmodel.DateViewModel
 import com.phelat.tedu.androiddagger.inject
+import com.phelat.tedu.designsystem.ext.makeLongSnackBar
 import com.phelat.tedu.lifecycle.ViewModelFactory
 import com.phelat.tedu.sdkextensions.Visibility
 import com.phelat.tedu.sdkextensions.hideKeyboard
@@ -23,7 +23,6 @@ import kotlinx.android.synthetic.main.fragment_addtodo.dateClick
 import kotlinx.android.synthetic.main.fragment_addtodo.saveTodo
 import kotlinx.android.synthetic.main.fragment_addtodo.todoDate
 import kotlinx.android.synthetic.main.fragment_addtodo.todoInput
-import kotlinx.android.synthetic.main.fragment_addtodo.viewRoot
 import javax.inject.Inject
 
 class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
@@ -78,7 +77,8 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
     }
 
     private fun showSnackBar(message: String) {
-        Snackbar.make(viewRoot, message, Snackbar.LENGTH_LONG).show()
+        hideKeyboard(todoInput.windowToken)
+        requireActivity().makeLongSnackBar(message).show()
     }
 
     private fun handleCalendarSheetVisibility(visibility: Visibility) {
@@ -91,7 +91,7 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
                             dateViewModel,
                             viewLifecycleOwner
                         )
-                        handleCalendarSheetVisibility(Visibility.Visible)
+                        handleCalendarSheetVisibility(visibility)
                     }
             }
             is Visibility.InVisible -> {
