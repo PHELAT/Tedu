@@ -13,7 +13,7 @@ fun <T : Navigate> LiveData<T>.observeNavigation(fragment: Fragment) {
                 fragment.findNavController().navigate(it.directionId.id, it.bundle)
             }
             is Navigate.ToDeepLink -> {
-                fragment.findNavController().navigate(it.deepLink.toUri())
+                fragment.findNavController().interModuleNavigate(it.deepLink.toUri())
             }
             is Navigate.Up -> {
                 fragment.findNavController().navigateUp()
