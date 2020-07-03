@@ -10,6 +10,6 @@
     
     <string name="backup_sync_failed_error">Connection failed!</string>
     <string name="backup_sync_succeed_message">Saved backup settings</string>
-    <string name="backup_file_not_found_confirmation">Backup file not found in this directory. Create a new file?</string>
+    <string name="backup_file_not_found_confirmation">The backup file doesn\'t exist in this directory. Create a new file?</string>
 
 </resources>
