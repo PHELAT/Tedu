@@ -5,5 +5,5 @@ import com.phelat.tedu.functional.Response
 
 interface BackupUseCase {
 
-    suspend fun sync(): Response<Unit, BackupErrorContext>
+    suspend fun sync(createIfNotExists: Boolean): Response<Unit, BackupErrorContext>
 }

@@ -25,9 +25,9 @@ class WebDavBackupUseCase @Inject constructor(
     private val syncStateWritable: Writable<SyncState>
 ) : BackupUseCase {
 
-    override suspend fun sync(): Response<Unit, BackupErrorContext> {
+    override suspend fun sync(createIfNotExists: Boolean): Response<Unit, BackupErrorContext> {
         syncStateWritable.write(SyncState.Syncing)
-        return webDavBackupRepository.sync().run {
+        return webDavBackupRepository.sync(createIfNotExists).run {
             if (isSuccessful()) {
                 handleSuccessfulCase(getSuccessResponse().value).apply(::updateSyncState)
             } else {

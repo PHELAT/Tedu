@@ -6,5 +6,7 @@ import com.phelat.tedu.functional.Response
 
 interface BackupSyncRepository {
 
-    suspend fun sync(): Response<List<ActionStatusEntity>, BackupErrorContext>
+    suspend fun sync(
+        createIfNotExists: Boolean
+    ): Response<List<ActionStatusEntity>, BackupErrorContext>
 }

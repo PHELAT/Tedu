@@ -28,7 +28,7 @@ class BackupStartupTasksModule {
         @Development logger: ExceptionLogger
     ) = Runnable {
         MainScope().launch(context = dispatcher.iO) {
-            usecase.sync()
+            usecase.sync(createIfNotExists = false)
                 .ifNotSuccessful(logger::log)
         }
     }

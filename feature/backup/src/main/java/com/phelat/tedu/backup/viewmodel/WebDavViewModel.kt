@@ -106,14 +106,7 @@ class WebDavViewModel @Inject constructor(
             }
             val credentials = WebDavCredentials(url, username, password)
             credentialsWritable.write(credentials)
-            withContext(dispatcher.iO) { webDavBackupUseCase.sync() }
-                .also {
-                    _viewStateObservable.update {
-                        copy(isSaveProgressVisible = false, isSaveButtonVisible = true)
-                    }
-                }
-                .ifSuccessful { handleSuccessCase() }
-                .otherwise(::handleErrorCase)
+            sync()
         }
     }
 
@@ -141,7 +134,23 @@ class WebDavViewModel @Inject constructor(
     }
 
     fun onOkayConfirmationClick() {
-        TODO()
+        viewModelScope.launch {
+            _viewStateObservable.update {
+                copy(isSaveProgressVisible = true, isSaveButtonVisible = false)
+            }
+            sync(createIfNotExists = true)
+        }
+    }
+
+    private suspend fun sync(createIfNotExists: Boolean = false) {
+        withContext(dispatcher.iO) { webDavBackupUseCase.sync(createIfNotExists) }
+            .also {
+                _viewStateObservable.update {
+                    copy(isSaveProgressVisible = false, isSaveButtonVisible = true)
+                }
+            }
+            .ifSuccessful { handleSuccessCase() }
+            .otherwise(::handleErrorCase)
     }
 
     companion object {

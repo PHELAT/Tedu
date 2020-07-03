@@ -12,6 +12,7 @@ import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.Success
 import com.phelat.tedu.functional.getFailureResponse
 import com.phelat.tedu.functional.getSuccessResponse
+import com.phelat.tedu.functional.ifNotSuccessful
 import com.phelat.tedu.functional.isSuccessful
 import com.phelat.tedu.todo.entity.ActionEntity
 import kotlinx.coroutines.flow.Flow
@@ -26,14 +27,38 @@ internal class WebDavSyncRepository @Inject constructor(
     private val actionsReadable: Readable<Flow<List<ActionEntity>>>
 ) : BackupSyncRepository {
 
-    override suspend fun sync(): Response<List<ActionStatusEntity>, BackupErrorContext> {
+    override suspend fun sync(
+        createIfNotExists: Boolean
+    ): Response<List<ActionStatusEntity>, BackupErrorContext> {
         return credentialsReadable.read().run {
             if (isSuccessful()) {
-                readWebDav(getSuccessResponse().value)
+                val credentials = getSuccessResponse().value
+                val response = readWebDav(credentials)
+                processWebDavResponse(createIfNotExists, response, credentials)
             } else {
                 getFailureResponse()
             }
         }
+    }
+
+    private suspend fun processWebDavResponse(
+        createIfNotExists: Boolean,
+        response: Response<List<ActionStatusEntity>, BackupErrorContext>,
+        credentials: WebDavCredentials
+    ): Response<List<ActionStatusEntity>, BackupErrorContext> {
+        response.ifNotSuccessful { error ->
+            if (createIfNotExists && error is BackupErrorContext.FileNotFound) {
+                val localActions = actionsReadable.read().firstOrNull() ?: emptyList()
+                val allActions = combineRemoteAndLocalActions(emptyList(), localActions)
+                val updateResponse = updateRemoteActions(allActions, credentials)
+                return if (updateResponse.isSuccessful()) {
+                    Success(emptyList())
+                } else {
+                    updateResponse.getFailureResponse()
+                }
+            }
+        }
+        return response
     }
 
     private suspend fun readWebDav(
@@ -44,8 +69,12 @@ internal class WebDavSyncRepository @Inject constructor(
                 val remoteActions = getSuccessResponse().value
                 val localActions = actionsReadable.read().firstOrNull() ?: emptyList()
                 val allActions = combineRemoteAndLocalActions(remoteActions, localActions)
-                updateRemoteActions(allActions, credentials)
-                Success(allActions)
+                val updateResponse = updateRemoteActions(allActions, credentials)
+                if (updateResponse.isSuccessful()) {
+                    Success(allActions)
+                } else {
+                    updateResponse.getFailureResponse()
+                }
             } else {
                 getFailureResponse()
             }
@@ -77,9 +106,9 @@ internal class WebDavSyncRepository @Inject constructor(
     private fun updateRemoteActions(
         allActions: List<ActionStatusEntity>,
         credentials: WebDavCredentials
-    ) {
+    ): Response<Unit, BackupErrorContext> {
         val actions = allActions.map { entity -> entity.data }
         val writeRequest = WriteWebDavRequest(actions, credentials)
-        webDavWritable.write(writeRequest)
+        return webDavWritable.write(writeRequest)
     }
 }
