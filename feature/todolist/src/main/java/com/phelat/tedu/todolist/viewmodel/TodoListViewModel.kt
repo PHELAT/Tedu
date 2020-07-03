@@ -147,6 +147,7 @@ class TodoListViewModel @Inject constructor(
     private fun onEditTodoClick(todoEntity: TodoEntity) {
         val editBundle = Bundle()
         editBundle.putSerializable(TodoConstant.TODO_FOR_EDIT, todoEntity)
+        // TODO: use deeplink
         _navigationObservable.value = Navigate.ToDirection(
             DirectionId(R.id.navigation_addtodo),
             editBundle
@@ -173,7 +174,11 @@ class TodoListViewModel @Inject constructor(
     }
 
     private fun onAddTodoClick() {
-        _navigationObservable.value = Navigate.ToDirection(DirectionId(R.id.navigation_addtodo))
+        val deepLinkId = StringId(R.string.deeplink_addtodo)
+        stringResourceProvider.getResource(deepLinkId)
+            .resource
+            .run(Navigate::ToDeepLink)
+            .also(_navigationObservable::setValue)
     }
 
     fun onTodoDeletionUndoClick() {
