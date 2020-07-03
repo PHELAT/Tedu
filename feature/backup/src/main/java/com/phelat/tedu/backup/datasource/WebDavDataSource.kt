@@ -57,7 +57,6 @@ internal class WebDavDataSource @Inject constructor(
             sardine.put(url, content)
             Success(Unit)
         } catch (ignore: IOException) {
-            ignore.printStackTrace()
             Failure(BackupErrorContext.UpdateFileFailed())
         }
     }
