@@ -149,18 +149,34 @@ class SettingsViewModel @Inject constructor(
         return when (state) {
             is SyncState.Success -> {
                 val syncStateText = getStringResource(R.string.sync_state_success)
-                SettingsViewState(syncStateText, isSyncStateTextVisible = true)
+                SettingsViewState(
+                    syncStateText,
+                    isSyncStateTextVisible = true,
+                    isSyncArrowVisible = false
+                )
             }
             is SyncState.Failure -> {
                 val syncStateText = getStringResource(R.string.sync_state_failure)
-                SettingsViewState(syncStateText, isSyncStateTextVisible = true)
+                SettingsViewState(
+                    syncStateText,
+                    isSyncStateTextVisible = true,
+                    isSyncArrowVisible = false
+                )
             }
             is SyncState.Syncing -> {
                 val syncStateText = getStringResource(R.string.sync_state_syncing)
-                SettingsViewState(syncStateText, isSyncStateTextVisible = true)
+                SettingsViewState(
+                    syncStateText,
+                    isSyncStateTextVisible = true,
+                    isSyncArrowVisible = false
+                )
             }
             is SyncState.NotConfigured -> {
-                SettingsViewState(syncStateText = "", isSyncStateTextVisible = false)
+                SettingsViewState(
+                    syncStateText = "",
+                    isSyncStateTextVisible = false,
+                    isSyncArrowVisible = true
+                )
             }
         }
     }

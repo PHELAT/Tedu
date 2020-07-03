@@ -83,6 +83,17 @@
         app:layout_constraintTop_toBottomOf="@id/userInterfaceMode"
         tools:text="@string/sync_state_syncing" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/backupStatusArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/backupStatus"
+        app:layout_constraintEnd_toEndOf="@id/backupStatus"
+        app:layout_constraintTop_toTopOf="@id/backupStatus"
+        app:srcCompat="@drawable/ic_chevron_right_icon_secondary_24dp" />
+
     <View
         android:id="@+id/backupClick"
         android:layout_width="0dp"
