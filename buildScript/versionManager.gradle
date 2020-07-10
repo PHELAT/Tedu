@@ -34,6 +34,7 @@ ext {
             firebaseAnalytics  : '17.3.0',
             crashlyticsPlugin  : '2.0.0-beta03',
             firebaseCrashlytics: '17.0.0-beta03',
+            firebaseMessaging  : '20.2.3',
             multidex           : '2.0.1',
             vectordrawable     : '1.1.0',
             sardine            : '0.6'
