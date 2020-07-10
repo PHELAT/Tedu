@@ -15,7 +15,9 @@ android {
     }
     buildTypes {
         release {
-            applyFirebasePlugins()
+            if (file("google-services.json").exists()) {
+                applyFirebasePlugins()
+            }
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
