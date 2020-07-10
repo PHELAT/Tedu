@@ -18,6 +18,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$library.kotlin"
 
     implementation "com.google.firebase:firebase-crashlytics:$library.firebaseCrashlytics"
+    implementation "com.google.firebase:firebase-messaging:$library.firebaseMessaging"
 
     implementation "com.google.dagger:dagger:$library.dagger"
     kapt "com.google.dagger:dagger-compiler:$library.dagger"
