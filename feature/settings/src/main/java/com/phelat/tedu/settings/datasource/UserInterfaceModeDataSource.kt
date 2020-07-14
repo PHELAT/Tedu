@@ -1,6 +1,7 @@
 package com.phelat.tedu.settings.datasource
 
 import android.content.SharedPreferences
+import android.os.Build
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.dependencyinjection.feature.FeatureScope
@@ -13,11 +14,12 @@ class UserInterfaceModeDataSource @Inject constructor(
 ) : Readable<UserInterfaceMode>, Writable<UserInterfaceMode> {
 
     override fun read(): UserInterfaceMode {
-        val userInterfaceMode = settingsSharedPreferences.getInt(
-            USER_INTERFACE_MODE,
+        val defaultTheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            USER_INTERFACE_MODE_AUTOMATIC
+        } else {
             USER_INTERFACE_MODE_LIGHT
-        )
-        return when (userInterfaceMode) {
+        }
+        return when (settingsSharedPreferences.getInt(USER_INTERFACE_MODE, defaultTheme)) {
             USER_INTERFACE_MODE_LIGHT -> UserInterfaceMode.LightMode
             USER_INTERFACE_MODE_DARK -> UserInterfaceMode.DarkMode
             USER_INTERFACE_MODE_AUTOMATIC -> UserInterfaceMode.Automatic
