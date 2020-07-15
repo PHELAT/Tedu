@@ -8,8 +8,8 @@ ext {
     ]
 
     app = [
-            versionCode: 6,
-            versionName: "1.0.0-alpha01"
+            versionCode: 7,
+            versionName: "1.0.0-alpha02"
     ]
 
     library = [
@@ -32,11 +32,13 @@ ext {
             detekt             : '1.7.2',
             googleServices     : '4.3.3',
             firebaseAnalytics  : '17.3.0',
-            crashlyticsPlugin  : '2.0.0-beta03',
-            firebaseCrashlytics: '17.0.0-beta03',
+            crashlyticsPlugin  : '2.2.0',
+            firebaseCrashlytics: '17.1.1',
+            firebaseMessaging  : '20.2.3',
             multidex           : '2.0.1',
             vectordrawable     : '1.1.0',
-            sardine            : '0.6'
+            sardine            : '0.6',
+            core               : '1.3.0'
     ]
 
 }
