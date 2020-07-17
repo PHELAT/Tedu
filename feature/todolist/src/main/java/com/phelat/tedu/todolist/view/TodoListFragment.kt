@@ -15,7 +15,7 @@ import com.phelat.tedu.lifecycle.ViewModelFactory
 import com.phelat.tedu.todolist.R
 import com.phelat.tedu.todolist.di.component.TodoListComponent
 import com.phelat.tedu.todolist.viewmodel.TodoListViewModel
-import com.phelat.tedu.uiview.observeNavigation
+import com.phelat.tedu.navigation.observeNavigation
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_todolist.todoListRecycler

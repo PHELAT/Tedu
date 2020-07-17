@@ -16,7 +16,7 @@ import com.phelat.tedu.settings.R
 import com.phelat.tedu.settings.di.component.SettingsComponent
 import com.phelat.tedu.settings.state.SettingsViewState
 import com.phelat.tedu.settings.viewmodel.SettingsViewModel
-import com.phelat.tedu.uiview.observeNavigation
+import com.phelat.tedu.navigation.observeNavigation
 import kotlinx.android.synthetic.main.fragment_settings.backupClick
 import kotlinx.android.synthetic.main.fragment_settings.backupStatus
 import kotlinx.android.synthetic.main.fragment_settings.backupStatusArrow

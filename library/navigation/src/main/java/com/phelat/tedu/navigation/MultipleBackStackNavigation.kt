@@ -1,4 +1,4 @@
-package com.phelat.tedu.uiview
+package com.phelat.tedu.navigation
 
 import android.content.Intent
 import android.util.SparseArray
