@@ -9,7 +9,8 @@ include ':feature:todolist',
 include ':common:designsystem',
         ':common:todo',
         ':common:analytics',
-        ':common:sync'
+        ':common:sync',
+        ':common:plugins'
 // Library Modules
 include ':library:translation',
         ':library:datasource',
