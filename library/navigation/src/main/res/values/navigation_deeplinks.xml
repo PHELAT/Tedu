@@ -4,5 +4,6 @@
     <string name="deeplink_start">tedu://start</string>
     <string name="deeplink_webdav_setup">tedu://webdav_setup</string>
     <string name="deeplink_addtodo">tedu://add_todo</string>
+    <string name="deeplink_edittodo">tedu://edit_todo?extraData={extraData}</string>
 
 </resources>

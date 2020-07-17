@@ -17,7 +17,6 @@ class SerializableImnPlugin<T : Fragment, D : Serializable>(
         val bundle = fragment.requireArguments()
         val sign = bundle.getString(ExtraDataDataSource.INTER_MODULE_NAVIGATION_EXTRA_DATA)
         if (sign.isNullOrEmpty()) return
-        val data = ExtraDataDataSource.retrieveExtraData<D>(sign) ?: return
-        onExtraDataReceived(data)
+        ExtraDataDataSource.retrieveExtraData<D>(sign)?.apply(onExtraDataReceived)
     }
 }
