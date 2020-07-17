@@ -2,9 +2,14 @@ package com.phelat.tedu.plaugin
 
 import android.content.Context
 import android.os.Bundle
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 
-abstract class PlauginFragment : Fragment() {
+abstract class PlauginFragment : Fragment {
+
+    constructor() : super()
+
+    constructor(@LayoutRes layout: Int) : super(layout)
 
     private val fragmentPlugins by lazy(LazyThreadSafetyMode.NONE) { plugins() }
 
