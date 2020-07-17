@@ -18,11 +18,8 @@ object ExtraDataDataSource {
 
     private lateinit var context: Context
 
-    private var logger: (String) -> Unit = {}
-
-    fun setup(context: Context, logger: (String) -> Unit = {}) {
+    fun setup(context: Context) {
         this.context = context
-        this.logger = logger
         val navigationDirectory = File(context.cacheDir, INTER_MODULE_NAVIGATION_PATH)
         if (navigationDirectory.exists().not()) {
             navigationDirectory.mkdirs()
