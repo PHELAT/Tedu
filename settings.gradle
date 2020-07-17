@@ -23,6 +23,7 @@ include ':library:translation',
         ':library:androiddagger',
         ':library:sdkextensions',
         ':library:functional',
-        ':library:date'
+        ':library:date',
+        ':library:plaugin'
 
 rootProject.name = 'Tedu'
