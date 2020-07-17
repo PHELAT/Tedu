@@ -11,6 +11,7 @@
         android:id="@+id/addtodo_fragment"
         android:name="com.phelat.tedu.addtodo.view.AddTodoFragment">
         <deepLink app:uri="@string/deeplink_addtodo" />
+        <deepLink app:uri="@string/deeplink_edittodo" />
     </fragment>
 
 </navigation>

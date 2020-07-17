@@ -1,6 +1,5 @@
 package com.phelat.tedu.todolist.viewmodel
 
-import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,7 +19,7 @@ import com.phelat.tedu.functional.ifSuccessful
 import com.phelat.tedu.functional.mapForEach
 import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
-import com.phelat.tedu.todo.constant.TodoConstant
+import com.phelat.tedu.navigation.Navigate
 import com.phelat.tedu.todo.entity.Action
 import com.phelat.tedu.todo.entity.ActionEntity
 import com.phelat.tedu.todo.entity.TodoEntity
@@ -29,8 +28,6 @@ import com.phelat.tedu.todolist.R
 import com.phelat.tedu.todolist.di.scope.TodoListScope
 import com.phelat.tedu.todolist.view.AddTodoItem
 import com.phelat.tedu.todolist.view.TodoListItem
-import com.phelat.tedu.navigation.DirectionId
-import com.phelat.tedu.navigation.Navigate
 import com.xwray.groupie.Section
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
@@ -145,12 +142,10 @@ class TodoListViewModel @Inject constructor(
     }
 
     private fun onEditTodoClick(todoEntity: TodoEntity) {
-        val editBundle = Bundle()
-        editBundle.putSerializable(TodoConstant.TODO_FOR_EDIT, todoEntity)
-        // TODO: use deeplink
-        _navigationObservable.value = Navigate.ToDirection(
-            DirectionId(R.id.navigation_addtodo),
-            editBundle
+        val deepLink = stringResourceProvider.getResource(StringId(R.string.deeplink_edittodo)).resource
+        _navigationObservable.value = Navigate.ToSerializableDeepLink(
+            deepLink,
+            todoEntity
         )
     }
 
