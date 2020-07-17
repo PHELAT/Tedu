@@ -24,7 +24,7 @@ import com.phelat.tedu.functional.ifSuccessful
 import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.lifecycle.update
-import com.phelat.tedu.uiview.Navigate
+import com.phelat.tedu.navigation.Navigate
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

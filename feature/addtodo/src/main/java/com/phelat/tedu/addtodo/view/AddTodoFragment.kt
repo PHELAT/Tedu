@@ -18,7 +18,7 @@ import com.phelat.tedu.lifecycle.ViewModelFactory
 import com.phelat.tedu.sdkextensions.Visibility
 import com.phelat.tedu.sdkextensions.hideKeyboard
 import com.phelat.tedu.sdkextensions.showKeyboard
-import com.phelat.tedu.uiview.observeNavigation
+import com.phelat.tedu.navigation.observeNavigation
 import kotlinx.android.synthetic.main.fragment_addtodo.dateClick
 import kotlinx.android.synthetic.main.fragment_addtodo.saveTodo
 import kotlinx.android.synthetic.main.fragment_addtodo.todoDate

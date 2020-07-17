@@ -19,7 +19,7 @@ import com.phelat.tedu.designsystem.component.view.ConfirmationBottomSheet
 import com.phelat.tedu.designsystem.ext.makeLongSnackBar
 import com.phelat.tedu.lifecycle.ViewModelFactory
 import com.phelat.tedu.sdkextensions.hideKeyboard
-import com.phelat.tedu.uiview.observeNavigation
+import com.phelat.tedu.navigation.observeNavigation
 import kotlinx.android.synthetic.main.fragment_webdav_setup.saveSettings
 import kotlinx.android.synthetic.main.fragment_webdav_setup.saveSettingsProgress
 import kotlinx.android.synthetic.main.fragment_webdav_setup.webDavPasswordInput

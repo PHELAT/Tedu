@@ -21,7 +21,7 @@ import com.phelat.tedu.settings.di.scope.SettingsScope
 import com.phelat.tedu.settings.entity.UserInterfaceMode
 import com.phelat.tedu.settings.state.SettingsViewState
 import com.phelat.tedu.sync.state.SyncState
-import com.phelat.tedu.uiview.Navigate
+import com.phelat.tedu.navigation.Navigate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

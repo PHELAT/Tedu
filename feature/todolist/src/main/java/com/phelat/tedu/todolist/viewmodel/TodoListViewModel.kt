@@ -29,8 +29,8 @@ import com.phelat.tedu.todolist.R
 import com.phelat.tedu.todolist.di.scope.TodoListScope
 import com.phelat.tedu.todolist.view.AddTodoItem
 import com.phelat.tedu.todolist.view.TodoListItem
-import com.phelat.tedu.uiview.DirectionId
-import com.phelat.tedu.uiview.Navigate
+import com.phelat.tedu.navigation.DirectionId
+import com.phelat.tedu.navigation.Navigate
 import com.xwray.groupie.Section
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect

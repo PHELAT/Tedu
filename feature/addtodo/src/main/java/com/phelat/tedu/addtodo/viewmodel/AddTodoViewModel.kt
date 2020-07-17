@@ -26,7 +26,7 @@ import com.phelat.tedu.todo.entity.ActionEntity
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.error.TodoErrorContext
 import com.phelat.tedu.todo.repository.TodoRepository
-import com.phelat.tedu.uiview.Navigate
+import com.phelat.tedu.navigation.Navigate
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.threeten.bp.LocalDate
