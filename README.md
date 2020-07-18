@@ -2,8 +2,9 @@
 [![Build Status](https://travis-ci.org/PHELAT/Tedu.svg?branch=master)](https://travis-ci.org/PHELAT/Tedu)
 [![CodeFactor](https://www.codefactor.io/repository/github/phelat/tedu/badge)](https://www.codefactor.io/repository/github/phelat/tedu)  
 -
-### ⤵️ Download
-Tedu is currently released on Google Play, but it's released under an alpha program that is not available to public users. If you want to join the alpha program and test the app in its early stages, please drop an email at [phelatco@gmail.com](mailto:phelatco@gmail.com), and I will send you an invitation.
+### ⬇️ Download
+Tedu is currently released on Google Play, and you can download it by clicking on the button below:  
+<a href="https://play.google.com/store/apps/details?id=com.phelat.tedu&utm_source=github"><img src="https://raw.githubusercontent.com/PHELAT/Tedu/master/asset/google_play_badge.png" width="200px"/></a></br>
 ### 🤝 Contribute
 I believe that everyone can contribute to this project, even without the knowledge in computer science and programming. So please, if you have free time, consider contributing to this project in these areas:
 - **Report a bug**. If you've ever encountered a bug in the app, please consider reporting it through this [link](https://github.com/PHELAT/Tedu/issues/new?assignees=&labels=bug&template=bug_report.md&title=). If you think this is too complicated, it's totally fine, and you can report the bug in plain English to me through this [phelatco@gmail.com](mailto:phelatco@gmail.com) email address.
