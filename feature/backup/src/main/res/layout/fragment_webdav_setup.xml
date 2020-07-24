@@ -71,7 +71,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/webDavUrlLayout"
                     android:layout_width="0dp"
-                    android:layout_height="56dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:hint="@string/backup_method_webdav_url"
@@ -84,7 +84,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/webDavUrlInput"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="56dp"
                         android:inputType="textUri|text"
                         android:maxLines="1"
                         android:textColor="@color/text_primary_color" />
@@ -94,7 +94,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/webDavUsernameLayout"
                     android:layout_width="0dp"
-                    android:layout_height="56dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
@@ -108,7 +108,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/webDavUsernameInput"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="56dp"
                         android:inputType="text"
                         android:maxLines="1"
                         android:textColor="@color/text_primary_color" />
@@ -118,7 +118,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/webDavPasswordLayout"
                     android:layout_width="0dp"
-                    android:layout_height="56dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
@@ -133,7 +133,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/webDavPasswordInput"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="56dp"
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:textColor="@color/text_primary_color" />

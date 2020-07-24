@@ -25,6 +25,7 @@ import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.lifecycle.update
 import com.phelat.tedu.navigation.Navigate
+import com.phelat.tedu.sdkextensions.isValidUrlWithProtocol
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -97,6 +98,23 @@ class WebDavViewModel @Inject constructor(
     }
 
     fun onSaveCredentialsClick(url: String, username: String, password: String) {
+        if (url.isValidUrlWithProtocol().not()) {
+            val messageId = StringId(R.string.backup_unmatch_url_error)
+            _viewStateObservable.update {
+                copy(
+                    isUrlInputErrorEnabled = true,
+                    urlInputErrorMessage = stringProvider.getResource(messageId).resource
+                )
+            }
+            return
+        } else {
+            _viewStateObservable.update {
+                copy(
+                    isUrlInputErrorEnabled = false,
+                    urlInputErrorMessage = ""
+                )
+            }
+        }
         viewModelScope.launch {
             _viewStateObservable.update {
                 copy(isSaveProgressVisible = true, isSaveButtonVisible = false)
