@@ -63,10 +63,7 @@ class WebDavViewModel @Inject constructor(
     fun onUrlTextChange(url: String) {
         _viewStateObservable.update {
             copy(
-                isSaveButtonEnabled = if (
-                    url.isEmpty() ||
-                    url.matches(Patterns.WEB_URL.toRegex()).not()
-                ) {
+                isSaveButtonEnabled = if (url.matches(Patterns.WEB_URL.toRegex()).not()) {
                     isSaveButtonEnabled.switchOff(URL_FIELD_SWITCH)
                 } else {
                     isSaveButtonEnabled.switchOn(URL_FIELD_SWITCH)
