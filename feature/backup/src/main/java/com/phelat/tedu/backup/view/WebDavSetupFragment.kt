@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_webdav_setup.saveSettings
 import kotlinx.android.synthetic.main.fragment_webdav_setup.saveSettingsProgress
 import kotlinx.android.synthetic.main.fragment_webdav_setup.webDavPasswordInput
 import kotlinx.android.synthetic.main.fragment_webdav_setup.webDavUrlInput
+import kotlinx.android.synthetic.main.fragment_webdav_setup.webDavUrlLayout
 import kotlinx.android.synthetic.main.fragment_webdav_setup.webDavUsernameInput
 import javax.inject.Inject
 
@@ -74,6 +75,8 @@ class WebDavSetupFragment : Fragment(R.layout.fragment_webdav_setup) {
             isInvisible = state.isSaveButtonVisible.not()
         }
         saveSettingsProgress.isVisible = state.isSaveProgressVisible
+        webDavUrlLayout.error = state.urlInputErrorMessage
+        webDavUrlLayout.isErrorEnabled = state.isUrlInputErrorEnabled
     }
 
     private fun updateCredentials(credentials: WebDavCredentials) {

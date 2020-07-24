@@ -14,5 +14,7 @@ data class WebDavViewState(
         )
     ),
     val isSaveButtonVisible: Boolean = true,
-    val isSaveProgressVisible: Boolean = false
+    val isSaveProgressVisible: Boolean = false,
+    val isUrlInputErrorEnabled: Boolean = false,
+    val urlInputErrorMessage: String = ""
 )
