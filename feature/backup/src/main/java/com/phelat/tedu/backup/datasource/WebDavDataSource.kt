@@ -2,6 +2,7 @@ package com.phelat.tedu.backup.datasource
 
 import com.phelat.tedu.backup.entity.WebDavCredentials
 import com.phelat.tedu.backup.error.BackupErrorContext
+import com.phelat.tedu.sdkextensions.isValidUrlWithProtocol
 import com.phelat.tedu.backup.request.WriteWebDavRequest
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Writable
@@ -31,6 +32,9 @@ internal class WebDavDataSource @Inject constructor(
     override fun read(
         input: WebDavCredentials
     ): Response<List<ActionEntity>, BackupErrorContext> {
+        if (input.url.isValidUrlWithProtocol().not()) {
+            return Failure(BackupErrorContext.UrlDoesNotMatchPattern())
+        }
         sardine.setCredentials(input.username, input.password)
         return try {
             val url = getNormalizedUrl(input.url) + TEDU_BACKUP_FILE
@@ -50,6 +54,9 @@ internal class WebDavDataSource @Inject constructor(
     }
 
     override fun write(input: WriteWebDavRequest): Response<Unit, BackupErrorContext> {
+        if (input.credentials.url.isValidUrlWithProtocol().not()) {
+            return Failure(BackupErrorContext.UrlDoesNotMatchPattern())
+        }
         sardine.setCredentials(input.credentials.username, input.credentials.password)
         val content = actionEntityToByteArray(input.entities)
         val url = getNormalizedUrl(input.credentials.url) + TEDU_BACKUP_FILE
