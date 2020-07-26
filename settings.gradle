@@ -4,7 +4,8 @@ include ':platform:mobile'
 include ':feature:todolist',
         ':feature:addtodo',
         ':feature:settings',
-        ':feature:backup'
+        ':feature:backup',
+        ':feature:contributors'
 // Common Modules
 include ':common:designsystem',
         ':common:todo',
