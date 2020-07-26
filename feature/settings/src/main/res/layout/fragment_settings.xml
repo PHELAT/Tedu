@@ -105,4 +105,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/userInterfaceMode" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/contributorsTitle"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:text="@string/settings_contributors_title"
+        android:textColor="@color/text_primary_color"
+        android:textSize="@dimen/font_size_regular"
+        app:layout_constraintEnd_toStartOf="@id/contributorsArrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backupTitle" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/contributorsArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/contributorsTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/contributorsTitle"
+        app:layout_constraintTop_toTopOf="@id/contributorsTitle"
+        app:srcCompat="@drawable/ic_chevron_right_icon_secondary_24dp" />
+
+    <View
+        android:id="@+id/contributorsClick"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@drawable/selector_click_rectangle"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backupTitle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
