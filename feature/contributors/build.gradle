@@ -12,4 +12,9 @@ dependencies {
 
     implementation "androidx.core:core-ktx:$library.core"
 
+    implementation "androidx.constraintlayout:constraintlayout:$library.constraintlayout"
+
+    implementation "androidx.navigation:navigation-fragment-ktx:$library.navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$library.navigation"
+
 }

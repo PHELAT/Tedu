@@ -71,6 +71,7 @@ dependencies {
     implementation project(":feature:todolist")
     implementation project(":feature:settings")
     implementation project(":feature:backup")
+    implementation project(":feature:contributors")
     implementation project(":common:designsystem")
     implementation project(':library:navigation')
     implementation project(":library:translation")

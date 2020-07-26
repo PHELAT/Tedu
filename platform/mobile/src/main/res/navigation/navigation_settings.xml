@@ -8,6 +8,7 @@
     tools:ignore="UnusedNavigation">
 
     <include app:graph="@navigation/navigation_backup" />
+    <include app:graph="@navigation/navigation_contributors" />
 
     <fragment
         android:id="@+id/settings_fragment"
