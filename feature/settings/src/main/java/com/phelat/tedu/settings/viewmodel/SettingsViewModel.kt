@@ -190,11 +190,14 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onContributorsClick() {
-        val contributorsDeepLink = StringId(R.string.deeplink_contributors)
-        stringResourceProvider.getResource(contributorsDeepLink)
-            .resource
-            .run(Navigate::ToDeepLink)
-            .also(_navigationObservable::setValue)
+        viewModelScope.launch {
+            delay(DELAY_FOR_NAVIGATING)
+            val contributorsDeepLink = StringId(R.string.deeplink_contributors)
+            stringResourceProvider.getResource(contributorsDeepLink)
+                .resource
+                .run(Navigate::ToDeepLink)
+                .also(_navigationObservable::setValue)
+        }
     }
 
     companion object {
