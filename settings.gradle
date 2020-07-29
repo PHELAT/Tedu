@@ -26,6 +26,7 @@ include ':library:translation',
         ':library:sdkextensions',
         ':library:functional',
         ':library:date',
-        ':library:plaugin'
+        ':library:plaugin',
+        ':library:networking'
 
 rootProject.name = 'Tedu'
