@@ -9,6 +9,11 @@ import dagger.android.ContributesAndroidInjector
 interface ContributorsFragmentModule {
 
     @ContributorsScope
-    @ContributesAndroidInjector(modules = [ContributorsViewModelModule::class])
+    @ContributesAndroidInjector(
+        modules = [
+            ContributorsViewModelModule::class,
+            ContributorsNetworkModule::class
+        ]
+    )
     fun bindContributorsFragment(): ContributorsFragment
 }
