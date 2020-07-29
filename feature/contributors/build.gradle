@@ -30,9 +30,16 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$library.dagger"
     kapt "com.google.dagger:dagger-android-processor:$library.dagger"
 
+    implementation "com.squareup.retrofit2:retrofit:$library.retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$library.retrofit"
+
+    implementation "com.squareup.moshi:moshi:$library.moshi"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$library.moshi"
+
     implementation project(":common:designsystem")
     implementation project(":library:dependencyinjection")
     implementation project(":library:androiddagger")
     implementation project(":library:lifecycle")
+    implementation project(":library:networking")
 
 }

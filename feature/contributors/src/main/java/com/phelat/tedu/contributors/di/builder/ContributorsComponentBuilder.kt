@@ -4,10 +4,13 @@ import com.phelat.tedu.contributors.di.component.ContributorsComponent
 import com.phelat.tedu.contributors.di.component.DaggerContributorsComponent
 import com.phelat.tedu.dependencyinjection.ComponentBuilder
 import com.phelat.tedu.dependencyinjection.StartupTasks
+import com.phelat.tedu.networking.di.builder.NetworkingComponentBuilder
 
 object ContributorsComponentBuilder : ComponentBuilder<ContributorsComponent>() {
 
     override fun initializeComponent(addStartupTask: (StartupTasks) -> Unit): ContributorsComponent {
-        return DaggerContributorsComponent.create()
+        return DaggerContributorsComponent.builder()
+            .networkingComponent(NetworkingComponentBuilder.getComponent(addStartupTask))
+            .build()
     }
 }
