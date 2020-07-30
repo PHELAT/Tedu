@@ -12,7 +12,8 @@ interface ContributorsFragmentModule {
     @ContributesAndroidInjector(
         modules = [
             ContributorsViewModelModule::class,
-            ContributorsNetworkModule::class
+            ContributorsNetworkModule::class,
+            ContributionsDataModule::class
         ]
     )
     fun bindContributorsFragment(): ContributorsFragment

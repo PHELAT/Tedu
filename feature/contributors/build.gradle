@@ -37,9 +37,12 @@ dependencies {
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$library.moshi"
 
     implementation project(":common:designsystem")
+    implementation project(":common:analytics")
     implementation project(":library:dependencyinjection")
     implementation project(":library:androiddagger")
     implementation project(":library:lifecycle")
     implementation project(":library:networking")
+    implementation project(":library:datasource")
+    implementation project(":library:thread")
 
 }
