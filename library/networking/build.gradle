@@ -12,6 +12,7 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$library.dagger"
 
     implementation "com.squareup.okhttp3:okhttp:$library.okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$library.okhttp"
 
     implementation project(":library:dependencyinjection")
 
