@@ -2,6 +2,7 @@
   "contributions" : [
     {
       "contribution" : "Reported a bug",
+      "contributionNumber" : 1,
       "contributionLink" : "https://github.com/PHELAT/Tedu/issues/11"
     }
   ]
