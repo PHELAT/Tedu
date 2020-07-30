@@ -7,7 +7,7 @@ import com.phelat.tedu.datasource.Readable
 import javax.inject.Inject
 
 @ContributorsScope
-class ContributionsDataSource @Inject constructor(
+class ContributionsEntryDataSource @Inject constructor(
     private val api: ContributorsAPI
 ) : Readable.Suspendable<ContributionsResponse> {
 
