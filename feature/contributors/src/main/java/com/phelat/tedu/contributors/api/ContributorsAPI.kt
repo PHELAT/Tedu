@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface ContributorsAPI {
 
-    @GET("PHELAT/Tedu/contributions.json")
+    @GET("PHELAT/Tedu/master/contributions.json")
     suspend fun getContributorsEntryPoint(): ContributionsResponse
 }
