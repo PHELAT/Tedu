@@ -1,6 +1,7 @@
 package com.phelat.tedu.contributors.di.builder
 
 import com.phelat.tedu.analytics.di.builder.AnalyticsComponentBuilder
+import com.phelat.tedu.androidresource.di.builder.AndroidResourceComponentBuilder
 import com.phelat.tedu.contributors.di.component.ContributorsComponent
 import com.phelat.tedu.contributors.di.component.DaggerContributorsComponent
 import com.phelat.tedu.coroutines.di.builder.ThreadComponentBuilder
@@ -15,6 +16,7 @@ object ContributorsComponentBuilder : ComponentBuilder<ContributorsComponent>() 
             .networkingComponent(NetworkingComponentBuilder.getComponent(addStartupTask))
             .threadComponent(ThreadComponentBuilder.getComponent(addStartupTask))
             .analyticsComponent(AnalyticsComponentBuilder.getComponent(addStartupTask))
+            .androidResourceComponent(AndroidResourceComponentBuilder.getComponent(addStartupTask))
             .build()
     }
 }

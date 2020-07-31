@@ -2,5 +2,6 @@
 <resources>
 
     <string name="contributors_feature_name">Contributors</string>
+    <string name="contributors_bug_report_text">Reported a bug</string>
 
 </resources>

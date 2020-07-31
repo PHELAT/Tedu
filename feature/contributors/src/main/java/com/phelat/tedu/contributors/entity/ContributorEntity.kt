@@ -1,10 +1,7 @@
 package com.phelat.tedu.contributors.entity
 
-import com.squareup.moshi.JsonClass
-
-@JsonClass(generateAdapter = true)
 data class ContributorEntity(
-    val contributionNumber: Long,
+    val contributionNumber: String,
     val contributionLink: String,
     val contribution: String,
     val contributor: String

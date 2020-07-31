@@ -44,5 +44,7 @@ dependencies {
     implementation project(":library:networking")
     implementation project(":library:datasource")
     implementation project(":library:thread")
+    implementation project(":library:androidresource")
+    implementation project(":library:androidcore")
 
 }
