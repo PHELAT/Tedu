@@ -8,14 +8,42 @@
     android:minHeight="56dp">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/contributionTitle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/contributionNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/text_hint_color"
+        android:textSize="@dimen/font_size_small"
+        app:layout_constraintBottom_toBottomOf="@id/contributor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/contributor"
+        tools:text="#1" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/contributor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:gravity="center_vertical"
-        android:padding="16dp"
+        android:textColor="@color/text_secondary_color"
+        android:textSize="@dimen/font_size_regular"
+        app:layout_constraintStart_toEndOf="@id/contributionNumber"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Ali" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/contributionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
         android:textColor="@color/text_primary_color"
         android:textSize="@dimen/font_size_regular"
         app:fontFamily="@font/robotoslab_medium"
+        app:layout_constraintStart_toEndOf="@id/contributor"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Reported an issue" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

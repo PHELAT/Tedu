@@ -6,5 +6,6 @@ import com.squareup.moshi.JsonClass
 data class ContributorEntity(
     val contributionNumber: Long,
     val contributionLink: String,
-    val contribution: String
+    val contribution: String,
+    val contributor: String
 )

@@ -7,5 +7,6 @@
     <string name="general_oops_text">Oops…!</string>
     <string name="general_unknown_error_text">Something went wrong.</string>
     <string name="general_retry_text">Retry</string>
+    <string name="general_number_placeholder">#%d</string>
 
 </resources>
