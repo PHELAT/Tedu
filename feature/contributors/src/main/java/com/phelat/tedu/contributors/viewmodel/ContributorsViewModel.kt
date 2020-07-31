@@ -8,17 +8,17 @@ import com.phelat.tedu.analytics.ExceptionLogger
 import com.phelat.tedu.analytics.di.qualifier.Development
 import com.phelat.tedu.contributors.di.scope.ContributorsScope
 import com.phelat.tedu.contributors.entity.ContributorEntity
-import com.phelat.tedu.contributors.response.ContributionsResponse
 import com.phelat.tedu.contributors.view.ContributorItem
 import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Readable
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @ContributorsScope
 class ContributorsViewModel @Inject constructor(
-    private val datasource: Readable.Suspendable<ContributionsResponse>,
+    private val dataSource: Readable.Suspendable<List<ContributorEntity>>,
     dispatcher: Dispatcher,
     @Development private val logger: ExceptionLogger
 ) : ViewModel() {
@@ -32,22 +32,11 @@ class ContributorsViewModel @Inject constructor(
     }
 
     init {
-        _contributorsObservable.value = listOf(
-            ContributorItem(
-                ContributorEntity(
-                    contributionNumber = 2,
-                    contribution = "Reported an issue"
-                )
-            ),
-            ContributorItem(
-                ContributorEntity(
-                    contributionNumber = 1,
-                    contribution = "Proposed a feature"
-                )
-            )
-        )
-        viewModelScope.launch(context = dispatcher.iO + exceptionHandler) {
-            println(datasource.read())
+        viewModelScope.launch {
+            withContext(context = dispatcher.iO + exceptionHandler) {
+                dataSource.read()
+                    .map(::ContributorItem)
+            }.also(_contributorsObservable::setValue)
         }
     }
 }
