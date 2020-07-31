@@ -34,6 +34,7 @@ class ContributorsViewModel @Inject constructor(
     private val exceptionHandler = CoroutineExceptionHandler { _, error ->
         // TODO: handle error
         logger.log(error)
+        _viewStateObservable.update { copy(isProgressVisible = false) }
     }
 
     init {
