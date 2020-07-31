@@ -18,6 +18,8 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_contributors.contributionProgress
 import kotlinx.android.synthetic.main.fragment_contributors.contributorsRecycler
+import kotlinx.android.synthetic.main.fragment_contributors.errorGroup
+import kotlinx.android.synthetic.main.fragment_contributors.retryButton
 import javax.inject.Inject
 
 class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
@@ -39,6 +41,9 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
             layoutManager = LinearLayoutManager(requireContext())
             this.adapter = adapter
         }
+        retryButton.setOnClickListener {
+            viewModel.onRetryButtonClick()
+        }
         viewModel.apply {
             contributorsObservable.observe(viewLifecycleOwner, adapter::update)
             viewStateObservable.observe(viewLifecycleOwner, ::observeViewState)
@@ -47,5 +52,6 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
 
     private fun observeViewState(state: ContributionsViewState) {
         contributionProgress.isVisible = state.isProgressVisible
+        errorGroup.isVisible = state.isErrorVisible
     }
 }

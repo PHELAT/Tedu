@@ -14,6 +14,7 @@ import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.lifecycle.update
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -21,7 +22,7 @@ import javax.inject.Inject
 @ContributorsScope
 class ContributorsViewModel @Inject constructor(
     private val dataSource: Readable.Suspendable<List<ContributorEntity>>,
-    dispatcher: Dispatcher,
+    private val dispatcher: Dispatcher,
     @Development private val logger: ExceptionLogger
 ) : ViewModel() {
 
@@ -32,20 +33,39 @@ class ContributorsViewModel @Inject constructor(
     val viewStateObservable: LiveData<ContributionsViewState> = _viewStateObservable
 
     private val exceptionHandler = CoroutineExceptionHandler { _, error ->
-        // TODO: handle error
-        logger.log(error)
-        _viewStateObservable.update { copy(isProgressVisible = false) }
+        viewModelScope.launch {
+            delay(DELAY_BEFORE_SHOWING_ERROR_IN_MILLIS)
+            logger.log(error)
+            _viewStateObservable.update { copy(isProgressVisible = false, isErrorVisible = true) }
+        }
     }
 
     init {
         viewModelScope.launch(context = exceptionHandler) {
-            _viewStateObservable.update { copy(isProgressVisible = true) }
-            withContext(context = dispatcher.iO) {
-                dataSource.read()
-                    .map(::ContributorItem)
-            }.also {
-                _viewStateObservable.update { copy(isProgressVisible = false) }
-            }.also(_contributorsObservable::setValue)
+            fetchContributions()
         }
+    }
+
+    fun onRetryButtonClick() {
+        viewModelScope.launch(context = exceptionHandler) {
+            delay(DELAY_FOR_RETRY_IN_MILLIS)
+            _viewStateObservable.update { copy(isErrorVisible = false) }
+            fetchContributions()
+        }
+    }
+
+    private suspend fun fetchContributions() {
+        _viewStateObservable.update { copy(isProgressVisible = true) }
+        withContext(context = dispatcher.iO) {
+            dataSource.read()
+                .map(::ContributorItem)
+        }.also {
+            _viewStateObservable.update { copy(isProgressVisible = false) }
+        }.also(_contributorsObservable::setValue)
+    }
+
+    companion object {
+        private const val DELAY_FOR_RETRY_IN_MILLIS = 200L
+        private const val DELAY_BEFORE_SHOWING_ERROR_IN_MILLIS = 500L
     }
 }
