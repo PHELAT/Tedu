@@ -37,9 +37,9 @@ class ContributorsViewModel @Inject constructor(
     }
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(context = exceptionHandler) {
             _viewStateObservable.update { copy(isProgressVisible = true) }
-            withContext(context = dispatcher.iO + exceptionHandler) {
+            withContext(context = dispatcher.iO) {
                 dataSource.read()
                     .map(::ContributorItem)
             }.also {
