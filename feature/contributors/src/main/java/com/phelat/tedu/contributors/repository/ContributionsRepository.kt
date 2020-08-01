@@ -21,9 +21,12 @@ class ContributionsRepository @Inject constructor(
         if (contributionsEntry == null) {
             contributionsEntry = entryDataSource.read()
         }
-        val pageUrl = contributionsEntry?.contributions?.get(input.page) ?: return emptyList()
-        val request = ContributionPageRequest(pageUrl)
-        val response = contributionsDataSource.read(request)
-        return response.contributions
+        if (input.page > (contributionsEntry?.contributions?.size ?: -1) - 1) {
+            return emptyList()
+        }
+        return contributionsEntry?.contributions?.get(input.page)
+            ?.run(::ContributionPageRequest)
+            ?.let { request -> contributionsDataSource.read(request).contributions }
+            ?: emptyList()
     }
 }
