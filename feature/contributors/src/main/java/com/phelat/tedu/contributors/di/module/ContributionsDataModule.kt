@@ -5,6 +5,7 @@ import com.phelat.tedu.contributors.datasource.ContributionsEntryDataSource
 import com.phelat.tedu.contributors.di.scope.ContributorsScope
 import com.phelat.tedu.contributors.repository.ContributionsRepository
 import com.phelat.tedu.contributors.request.ContributionPageRequest
+import com.phelat.tedu.contributors.request.ContributionsRequest
 import com.phelat.tedu.contributors.response.ContributionPageResponse
 import com.phelat.tedu.contributors.response.ContributionsResponse
 import com.phelat.tedu.contributors.response.ContributorResponse
@@ -31,5 +32,5 @@ interface ContributionsDataModule {
     @ContributorsScope
     fun bindContributionRepository(
         input: ContributionsRepository
-    ): Readable.Suspendable<List<ContributorResponse>>
+    ): Readable.Suspendable.IO<ContributionsRequest, List<ContributorResponse>>
 }

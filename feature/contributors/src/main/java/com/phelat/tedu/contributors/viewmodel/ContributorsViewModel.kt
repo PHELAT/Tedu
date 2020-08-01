@@ -13,6 +13,7 @@ import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.contributors.R
 import com.phelat.tedu.contributors.di.scope.ContributorsScope
 import com.phelat.tedu.contributors.entity.ContributorEntity
+import com.phelat.tedu.contributors.request.ContributionsRequest
 import com.phelat.tedu.contributors.response.ContributorResponse
 import com.phelat.tedu.contributors.state.ContributionsViewState
 import com.phelat.tedu.contributors.view.ContributorItem
@@ -29,7 +30,7 @@ import javax.inject.Inject
 
 @ContributorsScope
 class ContributorsViewModel @Inject constructor(
-    private val dataSource: Readable.Suspendable<List<ContributorResponse>>,
+    private val dataSource: Readable.Suspendable.IO<ContributionsRequest, List<ContributorResponse>>,
     private val dispatcher: Dispatcher,
     @Development private val logger: ExceptionLogger,
     private val stringProvider: ResourceProvider<StringId, StringResource>,
@@ -59,6 +60,8 @@ class ContributorsViewModel @Inject constructor(
 
     private val paginationLoadingItem = PaginationLoadingItem()
 
+    private var page = 0
+
     init {
         viewModelScope.launch(context = exceptionHandler) {
             _viewStateObservable.update { copy(isProgressVisible = true) }
@@ -80,9 +83,10 @@ class ContributorsViewModel @Inject constructor(
 
     private suspend fun fetchContributions(): List<ContributorItem> {
         return withContext(context = dispatcher.iO) {
-            dataSource.read()
+            dataSource.read(ContributionsRequest(page))
                 .run(::mapResponseToEntity)
                 .map(::ContributorItem)
+                .also { page++ }
         }
     }
 
