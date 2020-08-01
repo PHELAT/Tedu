@@ -10,7 +10,7 @@ inline fun RecyclerView.onReachTheEnd(crossinline block: () -> Unit) {
             val totalItemCount: Int = requireNotNull(layoutManager).itemCount
             val pastVisibleItems: Int = (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
             if (pastVisibleItems + visibleItemCount + 2 >= totalItemCount) {
-                block.invoke()
+                post { block.invoke() }
             }
         }
     }
