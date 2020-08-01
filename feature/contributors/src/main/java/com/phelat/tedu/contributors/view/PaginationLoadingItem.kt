@@ -7,6 +7,7 @@ import com.xwray.groupie.kotlinandroidextensions.Item
 class PaginationLoadingItem : Item() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+        // No-op!
     }
 
     override fun getLayout(): Int = R.layout.item_pagination_loading

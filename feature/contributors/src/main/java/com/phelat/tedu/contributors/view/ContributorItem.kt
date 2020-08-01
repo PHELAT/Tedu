@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.item_contributor.contributor
 
 class ContributorItem(
     private val entity: ContributorEntity
-) : Item() {
+) : Item(entity.hashCode().toLong()) {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.contributionNumber.text = entity.contributionNumber

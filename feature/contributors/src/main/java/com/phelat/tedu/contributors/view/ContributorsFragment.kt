@@ -14,6 +14,7 @@ import com.phelat.tedu.contributors.di.component.ContributorsComponent
 import com.phelat.tedu.contributors.state.ContributionsViewState
 import com.phelat.tedu.contributors.viewmodel.ContributorsViewModel
 import com.phelat.tedu.lifecycle.ViewModelFactory
+import com.phelat.tedu.sdkextensions.onReachTheEnd
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_contributors.contributionProgress
@@ -40,6 +41,7 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
         contributorsRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
             this.adapter = adapter
+            onReachTheEnd { viewModel.onReachTheEndOfList() }
         }
         retryButton.setOnClickListener {
             viewModel.onRetryButtonClick()
@@ -53,5 +55,6 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
     private fun observeViewState(state: ContributionsViewState) {
         contributionProgress.isVisible = state.isProgressVisible
         errorGroup.isVisible = state.isErrorVisible
+        contributorsRecycler.isVisible = state.isListVisible
     }
 }
