@@ -85,7 +85,7 @@ class ContributorsViewModel @Inject constructor(
         return withContext(context = dispatcher.iO) {
             dataSource.read(ContributionsRequest(page))
                 .run(::mapResponseToEntity)
-                .map(::ContributorItem)
+                .map { entity -> ContributorItem(entity, ::onContributorItemClick) }
                 .also { page++ }
         }
     }
@@ -110,6 +110,9 @@ class ContributorsViewModel @Inject constructor(
             )
         }
         return contributors
+    }
+
+    private fun onContributorItemClick(entity: ContributorEntity) {
     }
 
     fun onReachTheEndOfList() {
