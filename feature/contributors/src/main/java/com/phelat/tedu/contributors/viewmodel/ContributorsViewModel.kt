@@ -1,5 +1,6 @@
 package com.phelat.tedu.contributors.viewmodel
 
+import androidx.core.text.parseAsHtml
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,7 @@ import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.contributors.R
 import com.phelat.tedu.contributors.di.scope.ContributorsScope
 import com.phelat.tedu.contributors.entity.ContributorEntity
+import com.phelat.tedu.contributors.entity.ContributorSheetEntity
 import com.phelat.tedu.contributors.request.ContributionsRequest
 import com.phelat.tedu.contributors.response.ContributorResponse
 import com.phelat.tedu.contributors.state.ContributionsViewState
@@ -20,12 +22,14 @@ import com.phelat.tedu.contributors.view.ContributorItem
 import com.phelat.tedu.contributors.view.PaginationLoadingItem
 import com.phelat.tedu.coroutines.Dispatcher
 import com.phelat.tedu.datasource.Readable
+import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.lifecycle.update
 import com.xwray.groupie.Section
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Locale
 import javax.inject.Inject
 
 @ContributorsScope
@@ -44,6 +48,9 @@ class ContributorsViewModel @Inject constructor(
 
     private val _viewStateObservable = MutableLiveData(ContributionsViewState())
     val viewStateObservable: LiveData<ContributionsViewState> = _viewStateObservable
+
+    private val _contributorDetailSheetObservable = SingleLiveData<ContributorSheetEntity>()
+    val contributorDetailSheetObservable: LiveData<ContributorSheetEntity> = _contributorDetailSheetObservable
 
     private val exceptionHandler = CoroutineExceptionHandler { _, error ->
         isPaginationLoading = false
@@ -113,6 +120,12 @@ class ContributorsViewModel @Inject constructor(
     }
 
     private fun onContributorItemClick(entity: ContributorEntity) {
+        val message = StringArg(
+            R.string.contributors_thank_message,
+            entity.contributor,
+            entity.contribution.toLowerCase(Locale.ENGLISH)
+        ).let { stringArg -> stringArgProvider.getResource(stringArg) }
+        _contributorDetailSheetObservable.value = ContributorSheetEntity(message.resource.parseAsHtml())
     }
 
     fun onReachTheEndOfList() {

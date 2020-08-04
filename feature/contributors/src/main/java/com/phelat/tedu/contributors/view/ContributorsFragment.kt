@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.phelat.tedu.androiddagger.inject
 import com.phelat.tedu.contributors.R
 import com.phelat.tedu.contributors.di.component.ContributorsComponent
+import com.phelat.tedu.contributors.entity.ContributorSheetEntity
 import com.phelat.tedu.contributors.state.ContributionsViewState
 import com.phelat.tedu.contributors.viewmodel.ContributorsViewModel
 import com.phelat.tedu.lifecycle.ViewModelFactory
@@ -29,6 +30,8 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
     lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel: ContributorsViewModel by viewModels { viewModelFactory }
+
+    private var contributorSheet: ContributorSheet? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -49,6 +52,10 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
         viewModel.apply {
             contributorsObservable.observe(viewLifecycleOwner, adapter::update)
             viewStateObservable.observe(viewLifecycleOwner, ::observeViewState)
+            contributorDetailSheetObservable.observe(
+                viewLifecycleOwner,
+                ::observeContributorDetailSheetObservable
+            )
         }
     }
 
@@ -56,5 +63,15 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
         contributionProgress.isVisible = state.isProgressVisible
         errorGroup.isVisible = state.isErrorVisible
         contributorsRecycler.isVisible = state.isListVisible
+    }
+
+    private fun observeContributorDetailSheetObservable(entity: ContributorSheetEntity) {
+        val sheetSettings: (ContributorSheet) -> Unit = { sheet ->
+            sheet.sheetTitle = entity.sheetTitle
+        }
+        contributorSheet?.also(sheetSettings::invoke)?.show() ?: run {
+            contributorSheet = ContributorSheet(requireContext()).also(sheetSettings::invoke)
+            observeContributorDetailSheetObservable(entity)
+        }
     }
 }
