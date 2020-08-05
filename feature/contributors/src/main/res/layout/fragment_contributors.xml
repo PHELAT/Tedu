@@ -9,14 +9,27 @@
         android:id="@+id/contributorsTitleText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:paddingStart="8dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
         android:text="@string/contributors_feature_name"
         android:textColor="@color/text_secondary_color"
         android:textSize="@dimen/font_size_title_1"
         app:fontFamily="@font/robotoslab_black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/handshakeIcon"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/handshakeIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/contributorsTitleText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/contributorsTitleText"
+        app:srcCompat="@drawable/ic_handshake" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contributorsRecycler"
