@@ -107,10 +107,11 @@ class ContributorsViewModel @Inject constructor(
                     CONTRIBUTION_BUG_REPORT -> bugReportText
                     CONTRIBUTION_PROPOSED_FEATURE -> proposedFeatureText
                     CONTRIBUTION_DONATION -> {
-                        StringArg(
+                        val stringArgs = StringArg(
                             R.string.contributors_donated_text,
                             value.donation ?: continue@loop
-                        ).let(stringArgProvider::getResource).resource
+                        )
+                        stringArgProvider.getResource(stringArgs).resource
                     }
                     else -> continue@loop
                 },
