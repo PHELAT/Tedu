@@ -100,10 +100,18 @@ class ContributorsViewModel @Inject constructor(
     private fun mapResponseToEntity(response: List<ContributorResponse>): List<ContributorEntity> {
         val contributors = mutableListOf<ContributorEntity>()
         val bugReportText = stringProvider.getResource(StringId(R.string.contributors_bug_report_text)).resource
+        val proposedFeatureText = stringProvider.getResource(StringId(R.string.contributors_proposed_feature_text)).resource
         loop@ for (value in response) {
             contributors += ContributorEntity(
                 contribution = when (value.contribution) {
                     CONTRIBUTION_BUG_REPORT -> bugReportText
+                    CONTRIBUTION_PROPOSED_FEATURE -> proposedFeatureText
+                    CONTRIBUTION_DONATION -> {
+                        StringArg(
+                            R.string.contributors_donated_text,
+                            value.donation ?: continue@loop
+                        ).let(stringArgProvider::getResource).resource
+                    }
                     else -> continue@loop
                 },
                 contributionLink = value.contributionLink,
@@ -144,5 +152,7 @@ class ContributorsViewModel @Inject constructor(
         private const val DELAY_FOR_RETRY_IN_MILLIS = 200L
         private const val DELAY_BEFORE_SHOWING_ERROR_IN_MILLIS = 500L
         private const val CONTRIBUTION_BUG_REPORT = "bug-report"
+        private const val CONTRIBUTION_PROPOSED_FEATURE = "proposed-feature"
+        private const val CONTRIBUTION_DONATION = "donated"
     }
 }

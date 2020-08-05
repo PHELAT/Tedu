@@ -4,29 +4,36 @@
       "contributor": "openmac",
       "contribution": "bug-report",
       "contributionLink": "https://github.com/PHELAT/Tedu/issues/11",
-      "contributionNumber": 60
+      "contributionNumber": 60,
+      "contributorLink": "https://github.com/openmac",
+      "contributorLinkType": "github"
     },
     {
       "contributor": "openmac",
       "contribution": "bug-report",
       "contributionLink": "https://github.com/PHELAT/Tedu/issues/11",
-      "contributionNumber": 59
+      "contributionNumber": 59,
+      "contributorLink": "https://github.com/openmac",
+      "contributorLinkType": "twitter"
     },
     {
       "contributor": "openmac",
       "contribution": "bug-report",
       "contributionLink": "https://github.com/PHELAT/Tedu/issues/11",
-      "contributionNumber": 58
+      "contributionNumber": 58,
+      "contributorLink": "https://github.com/openmac",
+      "contributorLinkType": "instagram"
     },
     {
-      "contributor": "openmac",
-      "contribution": "bug-report",
+      "contributor": "Mahdi",
+      "contribution": "proposed-feature",
       "contributionLink": "https://github.com/PHELAT/Tedu/issues/11",
       "contributionNumber": 57
     },
     {
-      "contributor": "openmac",
-      "contribution": "bug-report",
+      "contributor": "Ali",
+      "contribution": "donated",
+      "donation": "$50",
       "contributionLink": "https://github.com/PHELAT/Tedu/issues/11",
       "contributionNumber": 56
     },
