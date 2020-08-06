@@ -17,6 +17,7 @@ import com.phelat.tedu.contributors.di.component.ContributorsComponent
 import com.phelat.tedu.contributors.entity.ContributorSheetEntity
 import com.phelat.tedu.contributors.state.ContributionsViewState
 import com.phelat.tedu.contributors.viewmodel.ContributorsViewModel
+import com.phelat.tedu.designsystem.ext.makeLongSnackBar
 import com.phelat.tedu.lifecycle.ViewModelFactory
 import com.phelat.tedu.sdkextensions.onReachTheEnd
 import com.xwray.groupie.GroupAdapter
@@ -60,6 +61,7 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
                 ::observeContributorDetailSheetObservable
             )
             openBrowserObservable.observe(viewLifecycleOwner, ::observeOpenBrowser)
+            snackBarObservable.observe(viewLifecycleOwner, ::observeSnackBar)
         }
     }
 
@@ -88,5 +90,9 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
         } catch (ignored: ActivityNotFoundException) {
             viewModel.onActivityNotFoundForBrowser()
         }
+    }
+
+    private fun observeSnackBar(message: String) {
+        requireActivity().makeLongSnackBar(message).show()
     }
 }

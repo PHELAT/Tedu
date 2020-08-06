@@ -10,5 +10,6 @@
         <![CDATA[We thank <u>%s</u> for their contribution to this project and the fact they %s.]]>
     </string>
     <string name="contributors_contribution_link_text">Link to Contribution</string>
+    <string name="contributors_no_browser_found_message">No browsers were found on your device to open the link!</string>
 
 </resources>

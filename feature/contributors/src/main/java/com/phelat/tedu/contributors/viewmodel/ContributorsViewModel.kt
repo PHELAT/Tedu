@@ -55,6 +55,9 @@ class ContributorsViewModel @Inject constructor(
     private val _openBrowserObservable = SingleLiveData<String>()
     val openBrowserObservable: LiveData<String> = _openBrowserObservable
 
+    private val _snackBarObservable = SingleLiveData<String>()
+    val snackBarObservable: LiveData<String> = _snackBarObservable
+
     private val exceptionHandler = CoroutineExceptionHandler { _, error ->
         isPaginationLoading = false
         viewModelScope.launch {
@@ -172,7 +175,9 @@ class ContributorsViewModel @Inject constructor(
     }
 
     fun onActivityNotFoundForBrowser() {
-        TODO()
+        val messageId = StringId(R.string.contributors_no_browser_found_message)
+        val message = stringProvider.getResource(messageId).resource
+        _snackBarObservable.value = message
     }
 
     companion object {
