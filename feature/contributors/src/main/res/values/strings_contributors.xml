@@ -8,5 +8,6 @@
     <string name="contributors_thank_message">
         <![CDATA[We thank <u>%s</u> for their contribution to this project and the fact they %s.]]>
     </string>
+    <string name="contributors_contribution_link_text">Link to Contribution</string>
 
 </resources>

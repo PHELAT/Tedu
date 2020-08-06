@@ -52,6 +52,9 @@ class ContributorsViewModel @Inject constructor(
     private val _contributorDetailSheetObservable = SingleLiveData<ContributorSheetEntity>()
     val contributorDetailSheetObservable: LiveData<ContributorSheetEntity> = _contributorDetailSheetObservable
 
+    private val _openBrowserObservable = SingleLiveData<String>()
+    val openBrowserObservable: LiveData<String> = _openBrowserObservable
+
     private val exceptionHandler = CoroutineExceptionHandler { _, error ->
         isPaginationLoading = false
         viewModelScope.launch {
@@ -68,6 +71,8 @@ class ContributorsViewModel @Inject constructor(
     private val paginationLoadingItem = PaginationLoadingItem()
 
     private var page = 0
+
+    private var clickedContributor: ContributorEntity? = null
 
     init {
         viewModelScope.launch(context = exceptionHandler) {
@@ -129,6 +134,7 @@ class ContributorsViewModel @Inject constructor(
     }
 
     private fun onContributorItemClick(entity: ContributorEntity) {
+        clickedContributor = entity
         val message = StringArg(
             R.string.contributors_thank_message,
             entity.contributor,
@@ -149,11 +155,26 @@ class ContributorsViewModel @Inject constructor(
         }
     }
 
+    fun onContributorLinkClick() {
+        clickedContributor?.also { contributorEntity ->
+            viewModelScope.launch {
+                delay(DELAY_BEFORE_OPENING_CONTRIBUTOR_LINK_IN_MILLIS)
+                _openBrowserObservable.value = contributorEntity.contributionLink
+            }
+        }
+    }
+
+    fun onActivityNotFoundForBrowser() {
+        TODO()
+    }
+
     companion object {
         private const val DELAY_FOR_RETRY_IN_MILLIS = 200L
         private const val DELAY_BEFORE_SHOWING_ERROR_IN_MILLIS = 500L
+        private const val DELAY_BEFORE_OPENING_CONTRIBUTOR_LINK_IN_MILLIS = 200L
         private const val CONTRIBUTION_BUG_REPORT = "bug-report"
         private const val CONTRIBUTION_PROPOSED_FEATURE = "proposed-feature"
         private const val CONTRIBUTION_DONATION = "donated"
+        // TODO: translation
     }
 }

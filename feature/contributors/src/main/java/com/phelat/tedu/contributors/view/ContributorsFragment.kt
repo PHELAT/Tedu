@@ -1,8 +1,11 @@
 package com.phelat.tedu.contributors.view
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -56,6 +59,7 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
                 viewLifecycleOwner,
                 ::observeContributorDetailSheetObservable
             )
+            openBrowserObservable.observe(viewLifecycleOwner, ::observeOpenBrowser)
         }
     }
 
@@ -66,12 +70,23 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
     }
 
     private fun observeContributorDetailSheetObservable(entity: ContributorSheetEntity) {
+        // TODO: hide link to contribution when url is empty
         val sheetSettings: (ContributorSheet) -> Unit = { sheet ->
             sheet.sheetTitle = entity.sheetTitle
+            sheet.onContributorLinkClick = viewModel::onContributorLinkClick
         }
         contributorSheet?.also(sheetSettings::invoke)?.show() ?: run {
-            contributorSheet = ContributorSheet(requireContext()).also(sheetSettings::invoke)
+            contributorSheet = ContributorSheet(requireContext())
             observeContributorDetailSheetObservable(entity)
+        }
+    }
+
+    private fun observeOpenBrowser(url: String) {
+        try {
+            Intent(Intent.ACTION_VIEW).apply { data = url.toUri() }
+                .also(::startActivity)
+        } catch (ignored: ActivityNotFoundException) {
+            viewModel.onActivityNotFoundForBrowser()
         }
     }
 }

@@ -26,10 +26,16 @@ class ContributorSheet(
             field = value
         }
 
+    var onContributorLinkClick: () -> Unit = {}
+
     init {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.view_contributor_detail_sheet, null, false)
         bottomSheetTitle = view.findViewById(R.id.sheetTitle)
+        view.findViewById<View>(R.id.contributionLinkClick).setOnClickListener {
+            onContributorLinkClick.invoke()
+            dismiss()
+        }
         setContentView(view)
     }
 }
