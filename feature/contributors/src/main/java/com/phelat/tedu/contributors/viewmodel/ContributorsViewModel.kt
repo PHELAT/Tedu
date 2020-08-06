@@ -139,8 +139,13 @@ class ContributorsViewModel @Inject constructor(
             R.string.contributors_thank_message,
             entity.contributor,
             entity.contribution.toLowerCase(Locale.ENGLISH)
-        ).let { stringArg -> stringArgProvider.getResource(stringArg) }
-        _contributorDetailSheetObservable.value = ContributorSheetEntity(message.resource.parseAsHtml())
+        ).let { stringArg ->
+            stringArgProvider.getResource(stringArg).resource
+        }
+        _contributorDetailSheetObservable.value = ContributorSheetEntity(
+            sheetTitle = message.parseAsHtml(),
+            isLinkToContributionVisible = entity.contributionLink.isNullOrEmpty().not()
+        )
     }
 
     fun onReachTheEndOfList() {

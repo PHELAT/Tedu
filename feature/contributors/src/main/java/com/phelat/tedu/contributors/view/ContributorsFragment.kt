@@ -70,10 +70,10 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
     }
 
     private fun observeContributorDetailSheetObservable(entity: ContributorSheetEntity) {
-        // TODO: hide link to contribution when url is empty
         val sheetSettings: (ContributorSheet) -> Unit = { sheet ->
             sheet.sheetTitle = entity.sheetTitle
             sheet.onContributorLinkClick = viewModel::onContributorLinkClick
+            sheet.isLinkToContributionVisible = entity.isLinkToContributionVisible
         }
         contributorSheet?.also(sheetSettings::invoke)?.show() ?: run {
             contributorSheet = ContributorSheet(requireContext())
