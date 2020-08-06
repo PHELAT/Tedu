@@ -5,6 +5,7 @@
     <string name="contributors_bug_report_text">Reported a bug</string>
     <string name="contributors_proposed_feature_text">Proposed a feature</string>
     <string name="contributors_donated_text">Donated %s</string>
+    <string name="contributors_translation_text">Helped in translation</string>
     <string name="contributors_thank_message">
         <![CDATA[We thank <u>%s</u> for their contribution to this project and the fact they %s.]]>
     </string>

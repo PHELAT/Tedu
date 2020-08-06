@@ -106,6 +106,7 @@ class ContributorsViewModel @Inject constructor(
         val contributors = mutableListOf<ContributorEntity>()
         val bugReportText = stringProvider.getResource(StringId(R.string.contributors_bug_report_text)).resource
         val proposedFeatureText = stringProvider.getResource(StringId(R.string.contributors_proposed_feature_text)).resource
+        val translationText = stringProvider.getResource(StringId(R.string.contributors_translation_text)).resource
         loop@ for (value in response) {
             contributors += ContributorEntity(
                 contribution = when (value.contribution) {
@@ -118,6 +119,7 @@ class ContributorsViewModel @Inject constructor(
                         )
                         stringArgProvider.getResource(stringArgs).resource
                     }
+                    CONTRIBUTION_TRANSLATION -> translationText
                     else -> continue@loop
                 },
                 contributionLink = value.contributionLink,
@@ -180,6 +182,6 @@ class ContributorsViewModel @Inject constructor(
         private const val CONTRIBUTION_BUG_REPORT = "bug-report"
         private const val CONTRIBUTION_PROPOSED_FEATURE = "proposed-feature"
         private const val CONTRIBUTION_DONATION = "donated"
-        // TODO: translation
+        private const val CONTRIBUTION_TRANSLATION = "translation"
     }
 }
