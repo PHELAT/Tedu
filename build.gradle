@@ -42,6 +42,9 @@ subprojects {
         exclude(".*/resources/.*")
         exclude(".*/build/.*")
     }
+    dependencies {
+        detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:$library.detekt"
+    }
 }
 
 apply from: "$rootDir/buildScript/androidLibraryModule.gradle"
