@@ -11,5 +11,9 @@
     </string>
     <string name="contributors_contribution_link_text">Link to Contribution</string>
     <string name="contributors_no_browser_found_message">No browsers were found on your device to open the link!</string>
+    <string name="contributors_contributor_link_text">Link to %s\'s %s</string>
+    <string name="contributors_contributor_link_twitter_text">Twitter</string>
+    <string name="contributors_contributor_link_instagram_text">Instagram</string>
+    <string name="contributors_contributor_link_github_text">Github</string>
 
 </resources>

@@ -8,5 +8,7 @@ data class ContributorResponse(
     val contributionLink: String?,
     val contribution: String,
     val contributor: String,
-    val donation: String?
+    val donation: String?,
+    val contributorLink: String?,
+    val contributorLinkType: String?
 )

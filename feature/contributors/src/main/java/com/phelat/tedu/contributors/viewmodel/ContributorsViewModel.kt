@@ -132,7 +132,9 @@ class ContributorsViewModel @Inject constructor(
                         R.string.general_number_placeholder,
                         value.contributionNumber
                     )
-                ).resource
+                ).resource,
+                contributorLink = value.contributorLink,
+                contributorLinkType = value.contributorLinkType
             )
         }
         return contributors
@@ -147,9 +149,38 @@ class ContributorsViewModel @Inject constructor(
         ).let { stringArg ->
             stringArgProvider.getResource(stringArg).resource
         }
+        val contributorLinkType = when (entity.contributorLinkType) {
+            CONTRIBUTOR_LINK_TWITTER -> {
+                val stringId = StringId(R.string.contributors_contributor_link_twitter_text)
+                stringProvider.getResource(stringId).resource
+            }
+            CONTRIBUTOR_LINK_INSTAGRAM -> {
+                val stringId = StringId(R.string.contributors_contributor_link_instagram_text)
+                stringProvider.getResource(stringId).resource
+            }
+            CONTRIBUTOR_LINK_GITHUB -> {
+                val stringId = StringId(R.string.contributors_contributor_link_github_text)
+                stringProvider.getResource(stringId).resource
+            }
+            else -> null
+        }
+        val contributorLinkText = if (contributorLinkType != null) {
+            val stringArgs = StringArg(
+                R.string.contributors_contributor_link_text,
+                entity.contributor,
+                contributorLinkType
+            )
+            stringArgProvider.getResource(stringArgs).resource
+        } else {
+            null
+        }
         _contributorDetailSheetObservable.value = ContributorSheetEntity(
             sheetTitle = message.parseAsHtml(),
-            isLinkToContributionVisible = entity.contributionLink.isNullOrEmpty().not()
+            isLinkToContributionVisible = entity.contributionLink.isNullOrEmpty().not(),
+            isLinkToContributorVisible = entity.contributorLink.isNullOrEmpty()
+                .not()
+                .and(contributorLinkType != null),
+            linkToContributorText = contributorLinkText ?: ""
         )
     }
 
@@ -165,10 +196,10 @@ class ContributorsViewModel @Inject constructor(
         }
     }
 
-    fun onContributorLinkClick() {
+    fun onContributionLinkClick() {
         clickedContributor?.also { contributorEntity ->
             viewModelScope.launch {
-                delay(DELAY_BEFORE_OPENING_CONTRIBUTOR_LINK_IN_MILLIS)
+                delay(DELAY_BEFORE_OPENING_LINK_IN_MILLIS)
                 _openBrowserObservable.value = contributorEntity.contributionLink
             }
         }
@@ -180,13 +211,25 @@ class ContributorsViewModel @Inject constructor(
         _snackBarObservable.value = message
     }
 
+    fun onContributorLinkClick() {
+        clickedContributor?.also { contributorEntity ->
+            viewModelScope.launch {
+                delay(DELAY_BEFORE_OPENING_LINK_IN_MILLIS)
+                _openBrowserObservable.value = requireNotNull(contributorEntity.contributorLink)
+            }
+        }
+    }
+
     companion object {
         private const val DELAY_FOR_RETRY_IN_MILLIS = 200L
         private const val DELAY_BEFORE_SHOWING_ERROR_IN_MILLIS = 500L
-        private const val DELAY_BEFORE_OPENING_CONTRIBUTOR_LINK_IN_MILLIS = 200L
+        private const val DELAY_BEFORE_OPENING_LINK_IN_MILLIS = 200L
         private const val CONTRIBUTION_BUG_REPORT = "bug-report"
         private const val CONTRIBUTION_PROPOSED_FEATURE = "proposed-feature"
         private const val CONTRIBUTION_DONATION = "donated"
         private const val CONTRIBUTION_TRANSLATION = "translation"
+        private const val CONTRIBUTOR_LINK_TWITTER = "twitter"
+        private const val CONTRIBUTOR_LINK_INSTAGRAM = "instagram"
+        private const val CONTRIBUTOR_LINK_GITHUB = "github"
     }
 }

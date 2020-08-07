@@ -74,8 +74,11 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
     private fun observeContributorDetailSheetObservable(entity: ContributorSheetEntity) {
         val sheetSettings: (ContributorSheet) -> Unit = { sheet ->
             sheet.sheetTitle = entity.sheetTitle
-            sheet.onContributorLinkClick = viewModel::onContributorLinkClick
+            sheet.onContributionLinkClick = viewModel::onContributionLinkClick
             sheet.isLinkToContributionVisible = entity.isLinkToContributionVisible
+            sheet.isContributorLinkVisible = entity.isLinkToContributorVisible
+            sheet.contributorLinkText = entity.linkToContributorText
+            sheet.onContributorLinkClick = viewModel::onContributorLinkClick
         }
         contributorSheet?.also(sheetSettings::invoke)?.show() ?: run {
             contributorSheet = ContributorSheet(requireContext())

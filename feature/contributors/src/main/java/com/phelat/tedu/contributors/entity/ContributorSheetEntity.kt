@@ -4,5 +4,7 @@ import android.text.Spanned
 
 data class ContributorSheetEntity(
     val sheetTitle: Spanned,
-    val isLinkToContributionVisible: Boolean
+    val isLinkToContributionVisible: Boolean,
+    val isLinkToContributorVisible: Boolean,
+    val linkToContributorText: String
 )

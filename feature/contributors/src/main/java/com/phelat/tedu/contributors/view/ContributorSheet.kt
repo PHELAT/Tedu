@@ -18,7 +18,11 @@ class ContributorSheet(
 
     private val bottomSheetTitle: AppCompatTextView
 
+    private val contributorLinkTextView: AppCompatTextView
+
     private val contributionLinkGroup: Group
+
+    private val contributorLinkGroup: Group
 
     var sheetTitle: Spanned = buildSpannedString {}
         get() = bottomSheetTitle.text.toSpanned()
@@ -30,7 +34,7 @@ class ContributorSheet(
             field = value
         }
 
-    var onContributorLinkClick: () -> Unit = {}
+    var onContributionLinkClick: () -> Unit = {}
 
     var isLinkToContributionVisible: Boolean = true
         get() = contributionLinkGroup.isVisible
@@ -39,12 +43,34 @@ class ContributorSheet(
             field = value
         }
 
+    var contributorLinkText: String = ""
+        get() = contributorLinkTextView.text.toString()
+        set(value) {
+            contributorLinkTextView.text = value
+            field = value
+        }
+
+    var isContributorLinkVisible: Boolean = true
+        get() = contributorLinkGroup.isVisible
+        set(value) {
+            contributorLinkGroup.isVisible = value
+            field = value
+        }
+
+    var onContributorLinkClick: () -> Unit = {}
+
     init {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.view_contributor_detail_sheet, null, false)
         bottomSheetTitle = view.findViewById(R.id.sheetTitle)
         contributionLinkGroup = view.findViewById(R.id.contributionLinkGroup)
+        contributorLinkTextView = view.findViewById(R.id.contributorLinkTitle)
+        contributorLinkGroup = view.findViewById(R.id.contributorLinkGroup)
         view.findViewById<View>(R.id.contributionLinkClick).setOnClickListener {
+            onContributionLinkClick.invoke()
+            dismiss()
+        }
+        view.findViewById<View>(R.id.contributorLinkClick).setOnClickListener {
             onContributorLinkClick.invoke()
             dismiss()
         }
