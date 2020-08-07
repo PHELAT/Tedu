@@ -5,5 +5,5 @@ import com.phelat.tedu.androidresource.Input
 
 class StringArg(
     @StringRes val stringId: Int,
-    vararg val stringArgs: String
+    vararg val stringArgs: Any
 ) : Input

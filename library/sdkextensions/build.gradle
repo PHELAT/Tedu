@@ -8,5 +8,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$library.kotlin"
 
     implementation "androidx.fragment:fragment-ktx:$library.fragment"
+    implementation "androidx.recyclerview:recyclerview:$library.recyclerview"
 
 }

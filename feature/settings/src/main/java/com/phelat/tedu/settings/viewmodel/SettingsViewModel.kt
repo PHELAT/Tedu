@@ -16,12 +16,12 @@ import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.designsystem.entity.BottomSheetEntity
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.lifecycle.SingleLiveData
+import com.phelat.tedu.navigation.Navigate
 import com.phelat.tedu.settings.R
 import com.phelat.tedu.settings.di.scope.SettingsScope
 import com.phelat.tedu.settings.entity.UserInterfaceMode
 import com.phelat.tedu.settings.state.SettingsViewState
 import com.phelat.tedu.sync.state.SyncState
-import com.phelat.tedu.navigation.Navigate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -187,6 +187,17 @@ class SettingsViewModel @Inject constructor(
     private fun getStringResource(@StringRes id: Int): String {
         val stringId = StringId(id)
         return stringResourceProvider.getResource(stringId).resource
+    }
+
+    fun onContributorsClick() {
+        viewModelScope.launch {
+            delay(DELAY_FOR_NAVIGATING)
+            val contributorsDeepLink = StringId(R.string.deeplink_contributors)
+            stringResourceProvider.getResource(contributorsDeepLink)
+                .resource
+                .run(Navigate::ToDeepLink)
+                .also(_navigationObservable::setValue)
+        }
     }
 
     companion object {

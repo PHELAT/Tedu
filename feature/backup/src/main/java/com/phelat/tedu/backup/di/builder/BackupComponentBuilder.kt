@@ -8,6 +8,7 @@ import com.phelat.tedu.backup.di.component.DaggerBackupComponent
 import com.phelat.tedu.coroutines.di.builder.ThreadComponentBuilder
 import com.phelat.tedu.dependencyinjection.ComponentBuilder
 import com.phelat.tedu.dependencyinjection.StartupTasks
+import com.phelat.tedu.networking.di.builder.NetworkingComponentBuilder
 import com.phelat.tedu.sync.di.builder.SyncComponentBuilder
 import com.phelat.tedu.todo.di.builder.TodoComponentBuilder
 
@@ -21,6 +22,7 @@ object BackupComponentBuilder : ComponentBuilder<BackupComponent>() {
             .analyticsComponent(AnalyticsComponentBuilder.getComponent(addStartupTask))
             .androidResourceComponent(AndroidResourceComponentBuilder.getComponent(addStartupTask))
             .syncComponent(SyncComponentBuilder.getComponent(addStartupTask))
+            .networkingComponent(NetworkingComponentBuilder.getComponent(addStartupTask))
             .build()
     }
 
