@@ -25,10 +25,12 @@ import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.lifecycle.update
 import com.phelat.tedu.navigation.Navigate
 import com.phelat.tedu.sdkextensions.isValidUrlWithProtocol
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@Suppress("TooManyFunctions")
 @BackupScope
 class WebDavViewModel @Inject constructor(
     credentialsReadable: WebDavCredentialsReadable,
@@ -56,7 +58,10 @@ class WebDavViewModel @Inject constructor(
 
     init {
         credentialsReadable.read()
-            .ifSuccessful(_credentialsObservable::setValue)
+            .ifSuccessful { credentials ->
+                _viewStateObservable.update { copy(isDeleteConfigVisible = true) }
+                _credentialsObservable.value = credentials
+            }
             .otherwise(logger::log)
     }
 
@@ -120,6 +125,7 @@ class WebDavViewModel @Inject constructor(
             }
             val credentials = WebDavCredentials(url, username, password)
             credentialsWritable.write(credentials)
+            _viewStateObservable.update { copy(isDeleteConfigVisible = true) }
             sync()
         }
     }
@@ -167,7 +173,19 @@ class WebDavViewModel @Inject constructor(
             .otherwise(::handleErrorCase)
     }
 
+    fun onDeleteConfigClick() {
+        viewModelScope.launch {
+            delay(DELAY_BEFORE_DELETING_CONFIG_IN_MILLIS)
+            val emptyCredentials = WebDavCredentials(url = "", username = "", password = "")
+            credentialsWritable.write(emptyCredentials)
+            _credentialsObservable.value = emptyCredentials
+            _viewStateObservable.update { copy(isDeleteConfigVisible = false) }
+            webDavBackupUseCase.sync(false)
+        }
+    }
+
     companion object {
+        private const val DELAY_BEFORE_DELETING_CONFIG_IN_MILLIS = 200L
         const val URL_FIELD_SWITCH = "url_field_switch"
         const val USERNAME_FIELD_SWITCH = "username_field_switch"
         const val PASSWORD_FIELD_SWITCH = "password_field_switch"
