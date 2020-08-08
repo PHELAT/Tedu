@@ -33,5 +33,5 @@ internal class ContributionsRepository @Inject constructor(
 }
 
 typealias ContributionsReadable = Readable.Suspendable.IO<
-        ContributionsRequest,
-        @JvmSuppressWildcards List<ContributorResponse>>
+    ContributionsRequest,
+    @JvmSuppressWildcards List<ContributorResponse>>

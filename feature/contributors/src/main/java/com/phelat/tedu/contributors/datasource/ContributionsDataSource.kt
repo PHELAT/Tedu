@@ -18,5 +18,5 @@ internal class ContributionsDataSource @Inject constructor(
 }
 
 typealias ContributionPageReadable = Readable.Suspendable.IO<
-        ContributionPageRequest,
-        ContributionPageResponse>
+    ContributionPageRequest,
+    ContributionPageResponse>
