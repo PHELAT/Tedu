@@ -1,6 +1,5 @@
 <img src="https://raw.githubusercontent.com/PHELAT/Tedu/master/asset/Tedu.png"/></br>
 [![Build Status](https://travis-ci.org/PHELAT/Tedu.svg?branch=master)](https://travis-ci.org/PHELAT/Tedu)
-[![CodeFactor](https://www.codefactor.io/repository/github/phelat/tedu/badge)](https://www.codefactor.io/repository/github/phelat/tedu)  
 -
 ### ⬇️ Download
 Tedu is currently released on Google Play, and you can download it by clicking on the button below:  
