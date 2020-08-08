@@ -25,6 +25,7 @@ import com.phelat.tedu.sync.state.SyncState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -35,7 +36,7 @@ class SettingsViewModel @Inject constructor(
     private val uiModeDataSourceReadable: Readable<UserInterfaceMode>,
     private val uiModeDataSourceWritable: Writable<UserInterfaceMode>,
     private val stringResourceProvider: ResourceProvider<StringId, StringResource>,
-    syncStateReadable: Readable<Flow<SyncState>>,
+    private val syncStateReadable: Readable<Flow<SyncState>>,
     dispatcher: Dispatcher
 ) : ViewModel() {
 
@@ -119,22 +120,28 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onBackUpClick() {
-        val sheetItems = listOf(
-            BottomSheetItemEntity(
-                itemIconResource = R.drawable.ic_backup_icon_secondary_24dp,
-                itemTitleResource = R.string.settings_backup_method_webdav_title,
-                itemOnClickListener = ::onWebDavBackupMethodClick
-            ),
-            BottomSheetItemEntity(
-                itemIconResource = R.drawable.ic_google_drive_icon_secondary_24dp,
-                itemTitleResource = R.string.settings_backup_method_drive_title,
-                itemOnClickListener = {}
-            )
-        )
-        _backupMethodSheetObservable.value = BottomSheetEntity(
-            items = sheetItems,
-            sheetTitle = getStringResource(R.string.settings_backup_method_title)
-        )
+        viewModelScope.launch {
+            if (syncStateReadable.read().first() !is SyncState.NotConfigured) {
+                onWebDavBackupMethodClick()
+            } else {
+                val sheetItems = listOf(
+                    BottomSheetItemEntity(
+                        itemIconResource = R.drawable.ic_backup_icon_secondary_24dp,
+                        itemTitleResource = R.string.settings_backup_method_webdav_title,
+                        itemOnClickListener = ::onWebDavBackupMethodClick
+                    ),
+                    BottomSheetItemEntity(
+                        itemIconResource = R.drawable.ic_google_drive_icon_secondary_24dp,
+                        itemTitleResource = R.string.settings_backup_method_drive_title,
+                        itemOnClickListener = {}
+                    )
+                )
+                _backupMethodSheetObservable.value = BottomSheetEntity(
+                    items = sheetItems,
+                    sheetTitle = getStringResource(R.string.settings_backup_method_title)
+                )
+            }
+        }
     }
 
     private fun onWebDavBackupMethodClick() {
