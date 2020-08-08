@@ -11,7 +11,9 @@ import com.phelat.tedu.networking.di.builder.NetworkingComponentBuilder
 
 object ContributorsComponentBuilder : ComponentBuilder<ContributorsComponent>() {
 
-    override fun initializeComponent(addStartupTask: (StartupTasks) -> Unit): ContributorsComponent {
+    override fun initializeComponent(
+        addStartupTask: (StartupTasks) -> Unit
+    ): ContributorsComponent {
         return DaggerContributorsComponent.builder()
             .networkingComponent(NetworkingComponentBuilder.getComponent(addStartupTask))
             .threadComponent(ThreadComponentBuilder.getComponent(addStartupTask))

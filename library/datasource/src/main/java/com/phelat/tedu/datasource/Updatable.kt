@@ -7,7 +7,6 @@ interface Updatable<I> {
     interface IO<I, O> {
 
         fun update(input: I): O
-
     }
 
     interface Suspendable<I> {
@@ -17,9 +16,6 @@ interface Updatable<I> {
         interface IO<I, O> {
 
             suspend fun update(input: I): O
-
         }
-
     }
-
 }

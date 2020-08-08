@@ -7,7 +7,6 @@ interface Writable<I> {
     interface IO<I, O> {
 
         fun write(input: I): O
-
     }
 
     interface Suspendable<I> {
@@ -17,9 +16,6 @@ interface Writable<I> {
         interface IO<I, O> {
 
             suspend fun write(input: I): O
-
         }
-
     }
-
 }

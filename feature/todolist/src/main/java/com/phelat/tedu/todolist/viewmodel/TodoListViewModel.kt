@@ -142,7 +142,8 @@ class TodoListViewModel @Inject constructor(
     }
 
     private fun onEditTodoClick(todoEntity: TodoEntity) {
-        val deepLink = stringResourceProvider.getResource(StringId(R.string.deeplink_edittodo)).resource
+        val deepLink = stringResourceProvider.getResource(StringId(R.string.deeplink_edittodo))
+            .resource
         _navigationObservable.value = Navigate.ToSerializableDeepLink(
             deepLink,
             todoEntity

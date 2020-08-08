@@ -21,9 +21,12 @@ import javax.inject.Inject
 class TodoSyncRepository @Inject constructor(
     private val todoReadable: Readable.IO<Date, Flow<List<TodoEntity>>>,
     private val todoWritable: Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
-    private val todoUpdatable: Updatable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
-    private val todoDeletable: Deletable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
-    private val actionsWritable: Writable.Suspendable.IO<ActionEntity, Response<Unit, TodoErrorContext>>
+    private val todoUpdatable: Updatable.Suspendable.IO<TodoEntity,
+            Response<Unit, TodoErrorContext>>,
+    private val todoDeletable: Deletable.Suspendable.IO<TodoEntity,
+            Response<Unit, TodoErrorContext>>,
+    private val actionsWritable: Writable.Suspendable.IO<ActionEntity,
+            Response<Unit, TodoErrorContext>>
 ) : TodoRepository {
 
     override suspend fun processAction(entity: ActionEntity): Response<Unit, TodoErrorContext> {

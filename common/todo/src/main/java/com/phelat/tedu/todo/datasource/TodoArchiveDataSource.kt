@@ -20,14 +20,17 @@ internal class TodoArchiveDataSource @Inject constructor(
     private val todoEntityDao: TodoEntityDao,
     private val mapper: Mapper<TodoDatabaseEntity, TodoEntity>
 ) : Readable.Suspendable.IO<Date, @JvmSuppressWildcards ArchivableTodos>,
-    Deletable.Suspendable.IO<@JvmSuppressWildcards ArchivableTodos, @JvmSuppressWildcards Response<Unit, TodoArchivableErrorContext>> {
+    Deletable.Suspendable.IO<@JvmSuppressWildcards ArchivableTodos,
+            @JvmSuppressWildcards Response<Unit, TodoArchivableErrorContext>> {
 
     override suspend fun read(input: Date): ArchivableTodos {
         return todoEntityDao.selectAllDoneTodosBefore(input)
             .map(mapper::mapFirstToSecond)
     }
 
-    override suspend fun delete(input: ArchivableTodos): Response<Unit, TodoArchivableErrorContext> {
+    override suspend fun delete(
+        input: ArchivableTodos
+    ): Response<Unit, TodoArchivableErrorContext> {
         val todoDatabaseEntities = input.map(mapper::mapSecondToFirst)
         val affectedRows = todoEntityDao.deleteTodos(todoDatabaseEntities)
         return if (affectedRows > 0) {

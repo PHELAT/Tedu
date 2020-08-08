@@ -12,7 +12,8 @@ import javax.inject.Inject
 @ContributorsScope
 class ContributionsRepository @Inject constructor(
     private val entryDataSource: Readable.Suspendable<ContributionsResponse>,
-    private val contributionsDataSource: Readable.Suspendable.IO<ContributionPageRequest, ContributionPageResponse>
+    private val contributionsDataSource: Readable.Suspendable.IO<ContributionPageRequest,
+            ContributionPageResponse>
 ) : Readable.Suspendable.IO<ContributionsRequest, @JvmSuppressWildcards List<ContributorResponse>> {
 
     private var contributionsEntry: ContributionsResponse? = null

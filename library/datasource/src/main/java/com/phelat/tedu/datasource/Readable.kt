@@ -7,7 +7,6 @@ interface Readable<O> {
     interface IO<I, O> {
 
         fun read(input: I): O
-
     }
 
     interface Suspendable<O> {
@@ -17,9 +16,6 @@ interface Readable<O> {
         interface IO<I, O> {
 
             suspend fun read(input: I): O
-
         }
-
     }
-
 }

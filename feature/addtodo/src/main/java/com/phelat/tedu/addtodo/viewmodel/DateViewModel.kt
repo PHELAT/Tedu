@@ -72,10 +72,12 @@ class DateViewModel @Inject constructor(
         val teduDate = localDateToTeduDate.mapFirstToSecond(selectedDate)
         _todoDateObservable.value = when (teduDate) {
             is TeduDate.Today -> {
-                stringResourceProvider.getResource(StringId(R.string.addtodo_date_today_text)).resource
+                stringResourceProvider.getResource(StringId(R.string.addtodo_date_today_text))
+                    .resource
             }
             is TeduDate.Tomorrow -> {
-                stringResourceProvider.getResource(StringId(R.string.addtodo_date_tomorrow_text)).resource
+                stringResourceProvider.getResource(StringId(R.string.addtodo_date_tomorrow_text))
+                    .resource
             }
             is TeduDate.HumanReadableDate -> {
                 teduDate.date

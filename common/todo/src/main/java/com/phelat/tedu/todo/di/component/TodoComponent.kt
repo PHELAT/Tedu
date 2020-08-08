@@ -39,7 +39,8 @@ interface TodoComponent {
 
     fun exposeTodoArchiveReadableDataSource(): Readable.Suspendable.IO<Date, ArchivableTodos>
 
-    fun exposeTodoArchiveDeletableDataSource(): Deletable.Suspendable.IO<ArchivableTodos, Response<Unit, TodoArchivableErrorContext>>
+    fun exposeTodoArchiveDeletableDataSource(): Deletable.Suspendable.IO<ArchivableTodos,
+            Response<Unit, TodoArchivableErrorContext>>
 
     fun exposeMapperDateToLocalDate(): Mapper<Date, LocalDate>
 
@@ -47,7 +48,8 @@ interface TodoComponent {
 
     fun exposeTodoActionsReadable(): Readable<Flow<List<ActionEntity>>>
 
-    fun exposeTodoActionsWritable(): Writable.Suspendable.IO<ActionEntity, Response<Unit, TodoErrorContext>>
+    fun exposeTodoActionsWritable(): Writable.Suspendable.IO<ActionEntity,
+            Response<Unit, TodoErrorContext>>
 
     @TodoStartupTasks
     fun getTodoStartupTasks(): StartupTasks

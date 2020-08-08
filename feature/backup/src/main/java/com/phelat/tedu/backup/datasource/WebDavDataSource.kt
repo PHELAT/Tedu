@@ -26,7 +26,8 @@ import javax.inject.Inject
 @FeatureScope
 internal class WebDavDataSource @Inject constructor(
     private val sardine: Sardine
-) : Readable.IO<WebDavCredentials, @JvmSuppressWildcards Response<List<ActionEntity>, BackupErrorContext>>,
+) : Readable.IO<WebDavCredentials,
+        @JvmSuppressWildcards Response<List<ActionEntity>, BackupErrorContext>>,
     Writable.IO<WriteWebDavRequest, @JvmSuppressWildcards Response<Unit, BackupErrorContext>> {
 
     override fun read(

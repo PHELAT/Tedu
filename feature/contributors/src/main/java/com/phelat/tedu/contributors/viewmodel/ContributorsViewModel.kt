@@ -34,7 +34,8 @@ import javax.inject.Inject
 
 @ContributorsScope
 class ContributorsViewModel @Inject constructor(
-    private val dataSource: Readable.Suspendable.IO<ContributionsRequest, List<ContributorResponse>>,
+    private val dataSource: Readable.Suspendable.IO<ContributionsRequest,
+            List<ContributorResponse>>,
     private val dispatcher: Dispatcher,
     @Development private val logger: ExceptionLogger,
     private val stringProvider: ResourceProvider<StringId, StringResource>,
@@ -43,14 +44,17 @@ class ContributorsViewModel @Inject constructor(
 
     private val contributorsSection = Section()
 
-    private val _contributorsObservable = MutableLiveData<List<Section>>(listOf(contributorsSection))
+    private val _contributorsObservable = MutableLiveData<List<Section>>(
+        listOf(contributorsSection)
+    )
     val contributorsObservable: LiveData<List<Section>> = _contributorsObservable
 
     private val _viewStateObservable = MutableLiveData(ContributionsViewState())
     val viewStateObservable: LiveData<ContributionsViewState> = _viewStateObservable
 
     private val _contributorDetailSheetObservable = SingleLiveData<ContributorSheetEntity>()
-    val contributorDetailSheetObservable: LiveData<ContributorSheetEntity> = _contributorDetailSheetObservable
+    val contributorDetailSheetObservable: LiveData<ContributorSheetEntity> =
+        _contributorDetailSheetObservable
 
     private val _openBrowserObservable = SingleLiveData<String>()
     val openBrowserObservable: LiveData<String> = _openBrowserObservable
@@ -107,9 +111,15 @@ class ContributorsViewModel @Inject constructor(
 
     private fun mapResponseToEntity(response: List<ContributorResponse>): List<ContributorEntity> {
         val contributors = mutableListOf<ContributorEntity>()
-        val bugReportText = stringProvider.getResource(StringId(R.string.contributors_bug_report_text)).resource
-        val proposedFeatureText = stringProvider.getResource(StringId(R.string.contributors_proposed_feature_text)).resource
-        val translationText = stringProvider.getResource(StringId(R.string.contributors_translation_text)).resource
+        val bugReportText = stringProvider.getResource(
+            StringId(R.string.contributors_bug_report_text)
+        ).resource
+        val proposedFeatureText = stringProvider.getResource(
+            StringId(R.string.contributors_proposed_feature_text)
+        ).resource
+        val translationText = stringProvider.getResource(
+            StringId(R.string.contributors_translation_text)
+        ).resource
         loop@ for (value in response) {
             contributors += ContributorEntity(
                 contribution = when (value.contribution) {

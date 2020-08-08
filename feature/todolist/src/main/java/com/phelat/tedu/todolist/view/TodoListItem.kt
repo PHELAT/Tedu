@@ -23,7 +23,8 @@ class TodoListItem(
                     R.color.text_hint_color
                 )
             )
-            viewHolder.todoTitle.paintFlags = viewHolder.todoTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            viewHolder.todoTitle.paintFlags = viewHolder.todoTitle.paintFlags or
+                    Paint.STRIKE_THRU_TEXT_FLAG
         } else {
             viewHolder.todoTitle.setTextColor(
                 ContextCompat.getColor(
@@ -31,7 +32,8 @@ class TodoListItem(
                     R.color.text_primary_color
                 )
             )
-            viewHolder.todoTitle.paintFlags = viewHolder.todoTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            viewHolder.todoTitle.paintFlags = viewHolder.todoTitle.paintFlags and
+                    Paint.STRIKE_THRU_TEXT_FLAG.inv()
         }
         viewHolder.itemView.setOnClickListener {
             onClickListener.invoke(todoEntity)

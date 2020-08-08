@@ -8,7 +8,8 @@ inline fun RecyclerView.onReachTheEnd(crossinline block: () -> Unit) {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             val visibleItemCount: Int = requireNotNull(layoutManager).childCount
             val totalItemCount: Int = requireNotNull(layoutManager).itemCount
-            val pastVisibleItems: Int = (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+            val pastVisibleItems: Int = (layoutManager as LinearLayoutManager)
+                .findFirstVisibleItemPosition()
             if (pastVisibleItems + visibleItemCount + 2 >= totalItemCount) {
                 post { block.invoke() }
             }

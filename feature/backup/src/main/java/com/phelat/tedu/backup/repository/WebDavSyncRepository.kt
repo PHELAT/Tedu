@@ -22,7 +22,8 @@ import javax.inject.Inject
 @FeatureScope
 internal class WebDavSyncRepository @Inject constructor(
     private val credentialsReadable: Readable<Response<WebDavCredentials, BackupErrorContext>>,
-    private val webDavReadable: Readable.IO<WebDavCredentials, Response<List<ActionEntity>, BackupErrorContext>>,
+    private val webDavReadable: Readable.IO<WebDavCredentials,
+            Response<List<ActionEntity>, BackupErrorContext>>,
     private val webDavWritable: Writable.IO<WriteWebDavRequest, Response<Unit, BackupErrorContext>>,
     private val actionsReadable: Readable<Flow<List<ActionEntity>>>
 ) : BackupSyncRepository {
