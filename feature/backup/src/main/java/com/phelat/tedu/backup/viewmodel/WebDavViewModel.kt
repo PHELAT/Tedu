@@ -11,15 +11,14 @@ import com.phelat.tedu.androidresource.ResourceProvider
 import com.phelat.tedu.androidresource.input.StringId
 import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.backup.R
+import com.phelat.tedu.backup.datasource.WebDavCredentialsReadable
+import com.phelat.tedu.backup.datasource.WebDavCredentialsWritable
 import com.phelat.tedu.backup.di.scope.BackupScope
 import com.phelat.tedu.backup.entity.WebDavCredentials
 import com.phelat.tedu.backup.error.BackupErrorContext
 import com.phelat.tedu.backup.state.WebDavViewState
 import com.phelat.tedu.backup.usecase.BackupUseCase
 import com.phelat.tedu.coroutines.Dispatcher
-import com.phelat.tedu.datasource.Readable
-import com.phelat.tedu.datasource.Writable
-import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.ifSuccessful
 import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
@@ -32,8 +31,8 @@ import javax.inject.Inject
 
 @BackupScope
 class WebDavViewModel @Inject constructor(
-    credentialsReadable: Readable<Response<WebDavCredentials, BackupErrorContext>>,
-    private val credentialsWritable: Writable<WebDavCredentials>,
+    credentialsReadable: WebDavCredentialsReadable,
+    private val credentialsWritable: WebDavCredentialsWritable,
     @Development private val logger: ExceptionLogger,
     private val webDavBackupUseCase: BackupUseCase,
     private val dispatcher: Dispatcher,

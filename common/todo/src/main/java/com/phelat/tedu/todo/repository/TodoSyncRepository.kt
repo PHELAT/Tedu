@@ -1,14 +1,15 @@
 package com.phelat.tedu.todo.repository
 
-import com.phelat.tedu.datasource.Deletable
-import com.phelat.tedu.datasource.Readable
-import com.phelat.tedu.datasource.Updatable
-import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.dependencyinjection.common.CommonScope
 import com.phelat.tedu.functional.Failure
 import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.getFailureResponse
 import com.phelat.tedu.functional.ifSuccessful
+import com.phelat.tedu.todo.datasource.TodoActionsWritable
+import com.phelat.tedu.todo.datasource.TodoDataSourceDeletable
+import com.phelat.tedu.todo.datasource.TodoDataSourceReadable
+import com.phelat.tedu.todo.datasource.TodoDataSourceUpdatable
+import com.phelat.tedu.todo.datasource.TodoDataSourceWritable
 import com.phelat.tedu.todo.entity.Action
 import com.phelat.tedu.todo.entity.ActionEntity
 import com.phelat.tedu.todo.entity.TodoEntity
@@ -19,14 +20,11 @@ import javax.inject.Inject
 
 @CommonScope
 class TodoSyncRepository @Inject constructor(
-    private val todoReadable: Readable.IO<Date, Flow<List<TodoEntity>>>,
-    private val todoWritable: Writable.Suspendable.IO<TodoEntity, Response<Unit, TodoErrorContext>>,
-    private val todoUpdatable: Updatable.Suspendable.IO<TodoEntity,
-            Response<Unit, TodoErrorContext>>,
-    private val todoDeletable: Deletable.Suspendable.IO<TodoEntity,
-            Response<Unit, TodoErrorContext>>,
-    private val actionsWritable: Writable.Suspendable.IO<ActionEntity,
-            Response<Unit, TodoErrorContext>>
+    private val todoReadable: TodoDataSourceReadable,
+    private val todoWritable: TodoDataSourceWritable,
+    private val todoUpdatable: TodoDataSourceUpdatable,
+    private val todoDeletable: TodoDataSourceDeletable,
+    private val actionsWritable: TodoActionsWritable
 ) : TodoRepository {
 
     override suspend fun processAction(entity: ActionEntity): Response<Unit, TodoErrorContext> {

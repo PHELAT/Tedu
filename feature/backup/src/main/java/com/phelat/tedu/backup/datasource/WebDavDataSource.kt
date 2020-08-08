@@ -2,7 +2,6 @@ package com.phelat.tedu.backup.datasource
 
 import com.phelat.tedu.backup.entity.WebDavCredentials
 import com.phelat.tedu.backup.error.BackupErrorContext
-import com.phelat.tedu.sdkextensions.isValidUrlWithProtocol
 import com.phelat.tedu.backup.request.WriteWebDavRequest
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Writable
@@ -10,6 +9,7 @@ import com.phelat.tedu.dependencyinjection.feature.FeatureScope
 import com.phelat.tedu.functional.Failure
 import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.Success
+import com.phelat.tedu.sdkextensions.isValidUrlWithProtocol
 import com.phelat.tedu.todo.entity.Action
 import com.phelat.tedu.todo.entity.ActionEntity
 import com.phelat.tedu.todo.entity.TodoEntity
@@ -26,9 +26,8 @@ import javax.inject.Inject
 @FeatureScope
 internal class WebDavDataSource @Inject constructor(
     private val sardine: Sardine
-) : Readable.IO<WebDavCredentials,
-        @JvmSuppressWildcards Response<List<ActionEntity>, BackupErrorContext>>,
-    Writable.IO<WriteWebDavRequest, @JvmSuppressWildcards Response<Unit, BackupErrorContext>> {
+) : WebDavReadable,
+    WebDavWritable {
 
     override fun read(
         input: WebDavCredentials
@@ -152,3 +151,9 @@ internal class WebDavDataSource @Inject constructor(
         private const val ACTIONS_KEY = "actions"
     }
 }
+
+typealias WebDavReadable = Readable.IO<WebDavCredentials,
+        @JvmSuppressWildcards Response<List<ActionEntity>, BackupErrorContext>>
+
+typealias WebDavWritable = Writable.IO<WriteWebDavRequest,
+        @JvmSuppressWildcards Response<Unit, BackupErrorContext>>

@@ -2,18 +2,15 @@ package com.phelat.tedu.backup.di.module
 
 import com.phelat.tedu.backup.BackupSyncRepository
 import com.phelat.tedu.backup.datasource.WebDavCredentialsDataSource
+import com.phelat.tedu.backup.datasource.WebDavCredentialsReadable
+import com.phelat.tedu.backup.datasource.WebDavCredentialsWritable
 import com.phelat.tedu.backup.datasource.WebDavDataSource
-import com.phelat.tedu.backup.entity.WebDavCredentials
-import com.phelat.tedu.backup.error.BackupErrorContext
+import com.phelat.tedu.backup.datasource.WebDavReadable
+import com.phelat.tedu.backup.datasource.WebDavWritable
 import com.phelat.tedu.backup.repository.WebDavSyncRepository
-import com.phelat.tedu.backup.request.WriteWebDavRequest
 import com.phelat.tedu.backup.usecase.BackupUseCase
 import com.phelat.tedu.backup.usecase.WebDavBackupUseCase
-import com.phelat.tedu.datasource.Readable
-import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.dependencyinjection.feature.FeatureScope
-import com.phelat.tedu.functional.Response
-import com.phelat.tedu.todo.entity.ActionEntity
 import dagger.Binds
 import dagger.Module
 
@@ -24,25 +21,21 @@ internal interface WebDavBindingsModule {
     @FeatureScope
     fun bindWritableWebDavCredentialsDataSource(
         input: WebDavCredentialsDataSource
-    ): Writable<WebDavCredentials>
+    ): WebDavCredentialsWritable
 
     @Binds
     @FeatureScope
     fun bindReadableWebDavCredentialsDataSource(
         input: WebDavCredentialsDataSource
-    ): Readable<Response<WebDavCredentials, BackupErrorContext>>
+    ): WebDavCredentialsReadable
 
     @Binds
     @FeatureScope
-    fun bindReadableWebDavDataSource(
-        input: WebDavDataSource
-    ): Readable.IO<WebDavCredentials, Response<List<ActionEntity>, BackupErrorContext>>
+    fun bindReadableWebDavDataSource(input: WebDavDataSource): WebDavReadable
 
     @Binds
     @FeatureScope
-    fun bindWritableWebDavDataSource(
-        input: WebDavDataSource
-    ): Writable.IO<WriteWebDavRequest, Response<Unit, BackupErrorContext>>
+    fun bindWritableWebDavDataSource(input: WebDavDataSource): WebDavWritable
 
     @Binds
     @FeatureScope

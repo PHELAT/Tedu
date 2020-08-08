@@ -22,10 +22,10 @@ import javax.inject.Inject
 internal class TodoDataSource @Inject constructor(
     private val todoEntityDao: TodoEntityDao,
     private val mapper: Mapper<TodoDatabaseEntity, TodoEntity>
-) : Writable.Suspendable.IO<TodoEntity, @JvmSuppressWildcards Response<Unit, TodoErrorContext>>,
-    Readable.IO<Date, Flow<@JvmSuppressWildcards List<TodoEntity>>>,
-    Updatable.Suspendable.IO<TodoEntity, @JvmSuppressWildcards Response<Unit, TodoErrorContext>>,
-    Deletable.Suspendable.IO<TodoEntity, @JvmSuppressWildcards Response<Unit, TodoErrorContext>> {
+) : TodoDataSourceWritable,
+    TodoDataSourceReadable,
+    TodoDataSourceUpdatable,
+    TodoDataSourceDeletable {
 
     override suspend fun write(input: TodoEntity): Response<Unit, TodoErrorContext> {
         val todoDatabaseEntity = mapper.mapSecondToFirst(input)
@@ -62,3 +62,14 @@ internal class TodoDataSource @Inject constructor(
         }
     }
 }
+
+typealias TodoDataSourceDeletable = Deletable.Suspendable.IO<TodoEntity,
+        @JvmSuppressWildcards Response<Unit, TodoErrorContext>>
+
+typealias TodoDataSourceUpdatable = Updatable.Suspendable.IO<TodoEntity,
+        @JvmSuppressWildcards Response<Unit, TodoErrorContext>>
+
+typealias TodoDataSourceReadable = Readable.IO<Date, Flow<@JvmSuppressWildcards List<TodoEntity>>>
+
+typealias TodoDataSourceWritable = Writable.Suspendable.IO<TodoEntity,
+        @JvmSuppressWildcards Response<Unit, TodoErrorContext>>
