@@ -19,9 +19,7 @@ import javax.inject.Inject
 internal class TodoArchiveDataSource @Inject constructor(
     private val todoEntityDao: TodoEntityDao,
     private val mapper: Mapper<TodoDatabaseEntity, TodoEntity>
-) : Readable.Suspendable.IO<Date, @JvmSuppressWildcards ArchivableTodos>,
-    Deletable.Suspendable.IO<@JvmSuppressWildcards ArchivableTodos,
-            @JvmSuppressWildcards Response<Unit, TodoArchivableErrorContext>> {
+) : ArchivableTodoReadable, ArchivableTodoDeletable {
 
     override suspend fun read(input: Date): ArchivableTodos {
         return todoEntityDao.selectAllDoneTodosBefore(input)
@@ -40,3 +38,9 @@ internal class TodoArchiveDataSource @Inject constructor(
         }
     }
 }
+
+typealias ArchivableTodoReadable = Readable.Suspendable.IO<Date,
+        @JvmSuppressWildcards ArchivableTodos>
+
+typealias ArchivableTodoDeletable = Deletable.Suspendable.IO<@JvmSuppressWildcards ArchivableTodos,
+        @JvmSuppressWildcards Response<Unit, TodoArchivableErrorContext>>

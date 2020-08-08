@@ -10,8 +10,8 @@ import com.phelat.tedu.androidresource.ResourceProvider
 import com.phelat.tedu.androidresource.input.StringId
 import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.coroutines.Dispatcher
-import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.date.TeduDate
+import com.phelat.tedu.date.datasource.DateDataSourceReadable
 import com.phelat.tedu.designsystem.entity.BottomSheetEntity
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.functional.ifNotSuccessful
@@ -36,14 +36,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.Date
 import javax.inject.Inject
 
 @TodoListScope
 class TodoListViewModel @Inject constructor(
     private val dispatcher: Dispatcher,
     private val todoRepository: TodoRepository,
-    private val dateDataSourceReadable: Readable.IO<TeduDate, Date>,
+    private val dateDataSourceReadable: DateDataSourceReadable,
     private val stringResourceProvider: ResourceProvider<StringId, StringResource>,
     @NonFatal private val nonFatalLogger: ExceptionLogger
 ) : ViewModel() {

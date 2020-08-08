@@ -13,8 +13,9 @@ import javax.inject.Inject
 
 @CommonScope
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-class SyncStateDataSource @Inject constructor() :
-    Readable<@JvmSuppressWildcards Flow<SyncState>>, Writable<SyncState> {
+internal class SyncStateDataSource @Inject constructor() :
+    Readable<@JvmSuppressWildcards Flow<SyncState>>,
+    Writable<SyncState> {
 
     private val channel = ConflatedBroadcastChannel<SyncState>()
 

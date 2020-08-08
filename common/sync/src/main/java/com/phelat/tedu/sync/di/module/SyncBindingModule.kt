@@ -9,7 +9,7 @@ import dagger.Module
 import kotlinx.coroutines.flow.Flow
 
 @Module
-interface SyncBindingModule {
+internal interface SyncBindingModule {
 
     @Binds
     fun bindSyncStateDataSourceReadable(input: SyncStateDataSource): Readable<Flow<SyncState>>

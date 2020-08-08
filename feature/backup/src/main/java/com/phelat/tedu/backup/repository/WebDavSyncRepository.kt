@@ -1,12 +1,13 @@
 package com.phelat.tedu.backup.repository
 
 import com.phelat.tedu.backup.BackupSyncRepository
+import com.phelat.tedu.backup.datasource.WebDavCredentialsReadable
+import com.phelat.tedu.backup.datasource.WebDavReadable
+import com.phelat.tedu.backup.datasource.WebDavWritable
 import com.phelat.tedu.backup.entity.ActionStatusEntity
 import com.phelat.tedu.backup.entity.WebDavCredentials
 import com.phelat.tedu.backup.error.BackupErrorContext
 import com.phelat.tedu.backup.request.WriteWebDavRequest
-import com.phelat.tedu.datasource.Readable
-import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.dependencyinjection.feature.FeatureScope
 import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.Success
@@ -14,18 +15,17 @@ import com.phelat.tedu.functional.getFailureResponse
 import com.phelat.tedu.functional.getSuccessResponse
 import com.phelat.tedu.functional.ifNotSuccessful
 import com.phelat.tedu.functional.isSuccessful
+import com.phelat.tedu.todo.datasource.TodoActionsReadable
 import com.phelat.tedu.todo.entity.ActionEntity
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
 @FeatureScope
 internal class WebDavSyncRepository @Inject constructor(
-    private val credentialsReadable: Readable<Response<WebDavCredentials, BackupErrorContext>>,
-    private val webDavReadable: Readable.IO<WebDavCredentials,
-            Response<List<ActionEntity>, BackupErrorContext>>,
-    private val webDavWritable: Writable.IO<WriteWebDavRequest, Response<Unit, BackupErrorContext>>,
-    private val actionsReadable: Readable<Flow<List<ActionEntity>>>
+    private val credentialsReadable: WebDavCredentialsReadable,
+    private val webDavReadable: WebDavReadable,
+    private val webDavWritable: WebDavWritable,
+    private val actionsReadable: TodoActionsReadable
 ) : BackupSyncRepository {
 
     override suspend fun sync(
