@@ -7,11 +7,13 @@ import com.phelat.tedu.datasource.Readable
 import javax.inject.Inject
 
 @ContributorsScope
-class ContributionsEntryDataSource @Inject constructor(
+internal class ContributionsEntryDataSource @Inject constructor(
     private val api: ContributorsAPI
-) : Readable.Suspendable<ContributionsResponse> {
+) : ContributionsEntryReadable {
 
     override suspend fun read(): ContributionsResponse {
         return api.getContributorsEntryPoint()
     }
 }
+
+typealias ContributionsEntryReadable = Readable.Suspendable<ContributionsResponse>

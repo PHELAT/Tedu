@@ -8,11 +8,15 @@ import com.phelat.tedu.datasource.Readable
 import javax.inject.Inject
 
 @ContributorsScope
-class ContributionsDataSource @Inject constructor(
+internal class ContributionsDataSource @Inject constructor(
     private val api: ContributorsAPI
-) : Readable.Suspendable.IO<ContributionPageRequest, ContributionPageResponse> {
+) : ContributionPageReadable {
 
     override suspend fun read(input: ContributionPageRequest): ContributionPageResponse {
         return api.getContributionPage(input.pageUrl)
     }
 }
+
+typealias ContributionPageReadable = Readable.Suspendable.IO<
+        ContributionPageRequest,
+        ContributionPageResponse>

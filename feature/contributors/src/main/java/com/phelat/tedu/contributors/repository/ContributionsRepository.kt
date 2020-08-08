@@ -1,20 +1,20 @@
 package com.phelat.tedu.contributors.repository
 
+import com.phelat.tedu.contributors.datasource.ContributionPageReadable
+import com.phelat.tedu.contributors.datasource.ContributionsEntryReadable
 import com.phelat.tedu.contributors.di.scope.ContributorsScope
 import com.phelat.tedu.contributors.request.ContributionPageRequest
 import com.phelat.tedu.contributors.request.ContributionsRequest
-import com.phelat.tedu.contributors.response.ContributionPageResponse
 import com.phelat.tedu.contributors.response.ContributionsResponse
 import com.phelat.tedu.contributors.response.ContributorResponse
 import com.phelat.tedu.datasource.Readable
 import javax.inject.Inject
 
 @ContributorsScope
-class ContributionsRepository @Inject constructor(
-    private val entryDataSource: Readable.Suspendable<ContributionsResponse>,
-    private val contributionsDataSource: Readable.Suspendable.IO<ContributionPageRequest,
-            ContributionPageResponse>
-) : Readable.Suspendable.IO<ContributionsRequest, @JvmSuppressWildcards List<ContributorResponse>> {
+internal class ContributionsRepository @Inject constructor(
+    private val entryDataSource: ContributionsEntryReadable,
+    private val contributionsDataSource: ContributionPageReadable
+) : ContributionsReadable {
 
     private var contributionsEntry: ContributionsResponse? = null
 
@@ -31,3 +31,7 @@ class ContributionsRepository @Inject constructor(
             ?: emptyList()
     }
 }
+
+typealias ContributionsReadable = Readable.Suspendable.IO<
+        ContributionsRequest,
+        @JvmSuppressWildcards List<ContributorResponse>>

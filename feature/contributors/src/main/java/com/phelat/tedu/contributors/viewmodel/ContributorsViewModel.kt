@@ -15,13 +15,13 @@ import com.phelat.tedu.contributors.R
 import com.phelat.tedu.contributors.di.scope.ContributorsScope
 import com.phelat.tedu.contributors.entity.ContributorEntity
 import com.phelat.tedu.contributors.entity.ContributorSheetEntity
+import com.phelat.tedu.contributors.repository.ContributionsReadable
 import com.phelat.tedu.contributors.request.ContributionsRequest
 import com.phelat.tedu.contributors.response.ContributorResponse
 import com.phelat.tedu.contributors.state.ContributionsViewState
 import com.phelat.tedu.contributors.view.ContributorItem
 import com.phelat.tedu.contributors.view.PaginationLoadingItem
 import com.phelat.tedu.coroutines.Dispatcher
-import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.lifecycle.update
 import com.xwray.groupie.Section
@@ -34,8 +34,7 @@ import javax.inject.Inject
 
 @ContributorsScope
 class ContributorsViewModel @Inject constructor(
-    private val dataSource: Readable.Suspendable.IO<ContributionsRequest,
-            List<ContributorResponse>>,
+    private val dataSource: ContributionsReadable,
     private val dispatcher: Dispatcher,
     @Development private val logger: ExceptionLogger,
     private val stringProvider: ResourceProvider<StringId, StringResource>,
