@@ -16,15 +16,16 @@ import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.designsystem.entity.BottomSheetEntity
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.lifecycle.SingleLiveData
+import com.phelat.tedu.navigation.Navigate
 import com.phelat.tedu.settings.R
 import com.phelat.tedu.settings.di.scope.SettingsScope
 import com.phelat.tedu.settings.entity.UserInterfaceMode
 import com.phelat.tedu.settings.state.SettingsViewState
 import com.phelat.tedu.sync.state.SyncState
-import com.phelat.tedu.uiview.Navigate
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -35,7 +36,7 @@ class SettingsViewModel @Inject constructor(
     private val uiModeDataSourceReadable: Readable<UserInterfaceMode>,
     private val uiModeDataSourceWritable: Writable<UserInterfaceMode>,
     private val stringResourceProvider: ResourceProvider<StringId, StringResource>,
-    syncStateReadable: Readable<Flow<SyncState>>,
+    private val syncStateReadable: Readable<Flow<SyncState>>,
     dispatcher: Dispatcher
 ) : ViewModel() {
 
@@ -119,22 +120,28 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onBackUpClick() {
-        val sheetItems = listOf(
-            BottomSheetItemEntity(
-                itemIconResource = R.drawable.ic_backup_icon_secondary_24dp,
-                itemTitleResource = R.string.settings_backup_method_webdav_title,
-                itemOnClickListener = ::onWebDavBackupMethodClick
-            ),
-            BottomSheetItemEntity(
-                itemIconResource = R.drawable.ic_google_drive_icon_secondary_24dp,
-                itemTitleResource = R.string.settings_backup_method_drive_title,
-                itemOnClickListener = {}
-            )
-        )
-        _backupMethodSheetObservable.value = BottomSheetEntity(
-            items = sheetItems,
-            sheetTitle = getStringResource(R.string.settings_backup_method_title)
-        )
+        viewModelScope.launch {
+            if (syncStateReadable.read().first() !is SyncState.NotConfigured) {
+                onWebDavBackupMethodClick()
+            } else {
+                val sheetItems = listOf(
+                    BottomSheetItemEntity(
+                        itemIconResource = R.drawable.ic_backup_icon_secondary_24dp,
+                        itemTitleResource = R.string.settings_backup_method_webdav_title,
+                        itemOnClickListener = ::onWebDavBackupMethodClick
+                    ),
+                    BottomSheetItemEntity(
+                        itemIconResource = R.drawable.ic_google_drive_icon_secondary_24dp,
+                        itemTitleResource = R.string.settings_backup_method_drive_title,
+                        itemOnClickListener = {}
+                    )
+                )
+                _backupMethodSheetObservable.value = BottomSheetEntity(
+                    items = sheetItems,
+                    sheetTitle = getStringResource(R.string.settings_backup_method_title)
+                )
+            }
+        }
     }
 
     private fun onWebDavBackupMethodClick() {
@@ -187,6 +194,17 @@ class SettingsViewModel @Inject constructor(
     private fun getStringResource(@StringRes id: Int): String {
         val stringId = StringId(id)
         return stringResourceProvider.getResource(stringId).resource
+    }
+
+    fun onContributorsClick() {
+        viewModelScope.launch {
+            delay(DELAY_FOR_NAVIGATING)
+            val contributorsDeepLink = StringId(R.string.deeplink_contributors)
+            stringResourceProvider.getResource(contributorsDeepLink)
+                .resource
+                .run(Navigate::ToDeepLink)
+                .also(_navigationObservable::setValue)
+        }
     }
 
     companion object {

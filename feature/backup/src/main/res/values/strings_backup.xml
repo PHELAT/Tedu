@@ -7,8 +7,10 @@
     <string name="backup_method_webdav_username">Username</string>
     <string name="backup_method_webdav_password">Password</string>
     <string name="backup_method_webdav_url">URL</string>
+    <string name="backup_delete_configuration">Delete Backup Method</string>
     
     <string name="backup_sync_failed_error">Connection failed!</string>
+    <string name="backup_unmatch_url_error">Url should contain a protocol. e.g., https://site.com</string>
     <string name="backup_sync_succeed_message">Saved backup settings</string>
     <string name="backup_file_not_found_confirmation">The backup file doesn\'t exist in this directory. Create a new file?</string>
 

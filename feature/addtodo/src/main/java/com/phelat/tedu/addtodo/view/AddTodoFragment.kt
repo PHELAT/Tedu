@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import com.phelat.tedu.addtodo.R
@@ -15,17 +14,21 @@ import com.phelat.tedu.addtodo.viewmodel.DateViewModel
 import com.phelat.tedu.androiddagger.inject
 import com.phelat.tedu.designsystem.ext.makeLongSnackBar
 import com.phelat.tedu.lifecycle.ViewModelFactory
+import com.phelat.tedu.navigation.observeNavigation
+import com.phelat.tedu.plaugin.FragmentPlugin
+import com.phelat.tedu.plaugin.PlauginFragment
+import com.phelat.tedu.plugins.SerializableImnPlugin
 import com.phelat.tedu.sdkextensions.Visibility
 import com.phelat.tedu.sdkextensions.hideKeyboard
 import com.phelat.tedu.sdkextensions.showKeyboard
-import com.phelat.tedu.uiview.observeNavigation
+import com.phelat.tedu.todo.entity.TodoEntity
 import kotlinx.android.synthetic.main.fragment_addtodo.dateClick
 import kotlinx.android.synthetic.main.fragment_addtodo.saveTodo
 import kotlinx.android.synthetic.main.fragment_addtodo.todoDate
 import kotlinx.android.synthetic.main.fragment_addtodo.todoInput
 import javax.inject.Inject
 
-class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
+class AddTodoFragment : PlauginFragment(R.layout.fragment_addtodo) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -39,12 +42,6 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         inject<AddTodoComponent>()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addTodoViewModel.onBundleReceive(arguments)
-        dateViewModel.onBundleReceive(arguments)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -115,4 +112,11 @@ class AddTodoFragment : Fragment(R.layout.fragment_addtodo) {
         handleCalendarSheetVisibility(Visibility.InVisible)
         super.onDestroyView()
     }
+
+    override fun plugins(): MutableList<FragmentPlugin> = mutableListOf(
+        SerializableImnPlugin(fragment = this) { fragmentArgument: TodoEntity ->
+            addTodoViewModel.onFragmentArgumentReceived(fragmentArgument)
+            dateViewModel.onFragmentArgumentReceived(fragmentArgument)
+        }
+    )
 }

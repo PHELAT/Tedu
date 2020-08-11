@@ -7,7 +7,6 @@ interface Deletable<I> {
     interface IO<I, O> {
 
         fun delete(input: I): O
-
     }
 
     interface Suspendable<I> {
@@ -17,9 +16,6 @@ interface Deletable<I> {
         interface IO<I, O> {
 
             suspend fun delete(input: I): O
-
         }
-
     }
-
 }

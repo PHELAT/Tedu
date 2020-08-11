@@ -71,7 +71,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/webDavUrlLayout"
                     android:layout_width="0dp"
-                    android:layout_height="56dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:hint="@string/backup_method_webdav_url"
@@ -84,7 +84,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/webDavUrlInput"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="56dp"
                         android:inputType="textUri|text"
                         android:maxLines="1"
                         android:textColor="@color/text_primary_color" />
@@ -94,7 +94,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/webDavUsernameLayout"
                     android:layout_width="0dp"
-                    android:layout_height="56dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
@@ -108,7 +108,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/webDavUsernameInput"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="56dp"
                         android:inputType="text"
                         android:maxLines="1"
                         android:textColor="@color/text_primary_color" />
@@ -118,7 +118,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/webDavPasswordLayout"
                     android:layout_width="0dp"
-                    android:layout_height="56dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
@@ -133,12 +133,30 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/webDavPasswordInput"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="56dp"
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:textColor="@color/text_primary_color" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/webDavDeleteConfig"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/selector_click_rectangle"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="16dp"
+                    android:text="@string/backup_delete_configuration"
+                    android:textColor="@color/warning_primary"
+                    android:textSize="@dimen/font_size_small"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/webDavPasswordLayout" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

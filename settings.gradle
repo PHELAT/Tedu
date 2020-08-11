@@ -4,12 +4,14 @@ include ':platform:mobile'
 include ':feature:todolist',
         ':feature:addtodo',
         ':feature:settings',
-        ':feature:backup'
+        ':feature:backup',
+        ':feature:contributors'
 // Common Modules
 include ':common:designsystem',
         ':common:todo',
         ':common:analytics',
-        ':common:sync'
+        ':common:sync',
+        ':common:plugins'
 // Library Modules
 include ':library:translation',
         ':library:datasource',
@@ -23,6 +25,8 @@ include ':library:translation',
         ':library:androiddagger',
         ':library:sdkextensions',
         ':library:functional',
-        ':library:date'
+        ':library:date',
+        ':library:plaugin',
+        ':library:networking'
 
 rootProject.name = 'Tedu'

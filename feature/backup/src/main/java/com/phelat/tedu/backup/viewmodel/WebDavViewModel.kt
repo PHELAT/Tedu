@@ -11,28 +11,30 @@ import com.phelat.tedu.androidresource.ResourceProvider
 import com.phelat.tedu.androidresource.input.StringId
 import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.backup.R
+import com.phelat.tedu.backup.datasource.WebDavCredentialsReadable
+import com.phelat.tedu.backup.datasource.WebDavCredentialsWritable
 import com.phelat.tedu.backup.di.scope.BackupScope
 import com.phelat.tedu.backup.entity.WebDavCredentials
 import com.phelat.tedu.backup.error.BackupErrorContext
 import com.phelat.tedu.backup.state.WebDavViewState
 import com.phelat.tedu.backup.usecase.BackupUseCase
 import com.phelat.tedu.coroutines.Dispatcher
-import com.phelat.tedu.datasource.Readable
-import com.phelat.tedu.datasource.Writable
-import com.phelat.tedu.functional.Response
 import com.phelat.tedu.functional.ifSuccessful
 import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.lifecycle.update
-import com.phelat.tedu.uiview.Navigate
+import com.phelat.tedu.navigation.Navigate
+import com.phelat.tedu.sdkextensions.isValidUrlWithProtocol
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@Suppress("TooManyFunctions")
 @BackupScope
 class WebDavViewModel @Inject constructor(
-    credentialsReadable: Readable<Response<WebDavCredentials, BackupErrorContext>>,
-    private val credentialsWritable: Writable<WebDavCredentials>,
+    credentialsReadable: WebDavCredentialsReadable,
+    private val credentialsWritable: WebDavCredentialsWritable,
     @Development private val logger: ExceptionLogger,
     private val webDavBackupUseCase: BackupUseCase,
     private val dispatcher: Dispatcher,
@@ -56,17 +58,17 @@ class WebDavViewModel @Inject constructor(
 
     init {
         credentialsReadable.read()
-            .ifSuccessful(_credentialsObservable::setValue)
+            .ifSuccessful { credentials ->
+                _viewStateObservable.update { copy(isDeleteConfigVisible = true) }
+                _credentialsObservable.value = credentials
+            }
             .otherwise(logger::log)
     }
 
     fun onUrlTextChange(url: String) {
         _viewStateObservable.update {
             copy(
-                isSaveButtonEnabled = if (
-                    url.isEmpty() ||
-                    url.matches(Patterns.WEB_URL.toRegex()).not()
-                ) {
+                isSaveButtonEnabled = if (url.matches(Patterns.WEB_URL.toRegex()).not()) {
                     isSaveButtonEnabled.switchOff(URL_FIELD_SWITCH)
                 } else {
                     isSaveButtonEnabled.switchOn(URL_FIELD_SWITCH)
@@ -100,12 +102,30 @@ class WebDavViewModel @Inject constructor(
     }
 
     fun onSaveCredentialsClick(url: String, username: String, password: String) {
+        if (url.isValidUrlWithProtocol().not()) {
+            val messageId = StringId(R.string.backup_unmatch_url_error)
+            _viewStateObservable.update {
+                copy(
+                    isUrlInputErrorEnabled = true,
+                    urlInputErrorMessage = stringProvider.getResource(messageId).resource
+                )
+            }
+            return
+        } else {
+            _viewStateObservable.update {
+                copy(
+                    isUrlInputErrorEnabled = false,
+                    urlInputErrorMessage = ""
+                )
+            }
+        }
         viewModelScope.launch {
             _viewStateObservable.update {
                 copy(isSaveProgressVisible = true, isSaveButtonVisible = false)
             }
             val credentials = WebDavCredentials(url, username, password)
             credentialsWritable.write(credentials)
+            _viewStateObservable.update { copy(isDeleteConfigVisible = true) }
             sync()
         }
     }
@@ -153,7 +173,19 @@ class WebDavViewModel @Inject constructor(
             .otherwise(::handleErrorCase)
     }
 
+    fun onDeleteConfigClick() {
+        viewModelScope.launch {
+            delay(DELAY_BEFORE_DELETING_CONFIG_IN_MILLIS)
+            val emptyCredentials = WebDavCredentials(url = "", username = "", password = "")
+            credentialsWritable.write(emptyCredentials)
+            _credentialsObservable.value = emptyCredentials
+            _viewStateObservable.update { copy(isDeleteConfigVisible = false) }
+            webDavBackupUseCase.sync(false)
+        }
+    }
+
     companion object {
+        private const val DELAY_BEFORE_DELETING_CONFIG_IN_MILLIS = 200L
         const val URL_FIELD_SWITCH = "url_field_switch"
         const val USERNAME_FIELD_SWITCH = "username_field_switch"
         const val PASSWORD_FIELD_SWITCH = "password_field_switch"

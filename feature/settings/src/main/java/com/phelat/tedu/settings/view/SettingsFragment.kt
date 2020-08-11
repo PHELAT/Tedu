@@ -16,10 +16,11 @@ import com.phelat.tedu.settings.R
 import com.phelat.tedu.settings.di.component.SettingsComponent
 import com.phelat.tedu.settings.state.SettingsViewState
 import com.phelat.tedu.settings.viewmodel.SettingsViewModel
-import com.phelat.tedu.uiview.observeNavigation
+import com.phelat.tedu.navigation.observeNavigation
 import kotlinx.android.synthetic.main.fragment_settings.backupClick
 import kotlinx.android.synthetic.main.fragment_settings.backupStatus
 import kotlinx.android.synthetic.main.fragment_settings.backupStatusArrow
+import kotlinx.android.synthetic.main.fragment_settings.contributorsClick
 import kotlinx.android.synthetic.main.fragment_settings.userInterfaceMode
 import kotlinx.android.synthetic.main.fragment_settings.userInterfaceModeClick
 import javax.inject.Inject
@@ -46,6 +47,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
         backupClick.setOnClickListener {
             settingsViewModel.onBackUpClick()
+        }
+        contributorsClick.setOnClickListener {
+            settingsViewModel.onContributorsClick()
         }
         settingsViewModel.apply {
             navigationObservable.observeNavigation(this@SettingsFragment)

@@ -1,6 +1,5 @@
 package com.phelat.tedu.todolist.viewmodel
 
-import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,8 +10,8 @@ import com.phelat.tedu.androidresource.ResourceProvider
 import com.phelat.tedu.androidresource.input.StringId
 import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.coroutines.Dispatcher
-import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.date.TeduDate
+import com.phelat.tedu.date.datasource.DateDataSourceReadable
 import com.phelat.tedu.designsystem.entity.BottomSheetEntity
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 import com.phelat.tedu.functional.ifNotSuccessful
@@ -20,7 +19,7 @@ import com.phelat.tedu.functional.ifSuccessful
 import com.phelat.tedu.functional.mapForEach
 import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
-import com.phelat.tedu.todo.constant.TodoConstant
+import com.phelat.tedu.navigation.Navigate
 import com.phelat.tedu.todo.entity.Action
 import com.phelat.tedu.todo.entity.ActionEntity
 import com.phelat.tedu.todo.entity.TodoEntity
@@ -29,8 +28,6 @@ import com.phelat.tedu.todolist.R
 import com.phelat.tedu.todolist.di.scope.TodoListScope
 import com.phelat.tedu.todolist.view.AddTodoItem
 import com.phelat.tedu.todolist.view.TodoListItem
-import com.phelat.tedu.uiview.DirectionId
-import com.phelat.tedu.uiview.Navigate
 import com.xwray.groupie.Section
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
@@ -39,14 +36,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.Date
 import javax.inject.Inject
 
 @TodoListScope
 class TodoListViewModel @Inject constructor(
     private val dispatcher: Dispatcher,
     private val todoRepository: TodoRepository,
-    private val dateDataSourceReadable: Readable.IO<TeduDate, Date>,
+    private val dateDataSourceReadable: DateDataSourceReadable,
     private val stringResourceProvider: ResourceProvider<StringId, StringResource>,
     @NonFatal private val nonFatalLogger: ExceptionLogger
 ) : ViewModel() {
@@ -145,12 +141,11 @@ class TodoListViewModel @Inject constructor(
     }
 
     private fun onEditTodoClick(todoEntity: TodoEntity) {
-        val editBundle = Bundle()
-        editBundle.putSerializable(TodoConstant.TODO_FOR_EDIT, todoEntity)
-        // TODO: use deeplink
-        _navigationObservable.value = Navigate.ToDirection(
-            DirectionId(R.id.navigation_addtodo),
-            editBundle
+        val deepLink = stringResourceProvider.getResource(StringId(R.string.deeplink_edittodo))
+            .resource
+        _navigationObservable.value = Navigate.ToSerializableDeepLink(
+            deepLink,
+            todoEntity
         )
     }
 

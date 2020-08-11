@@ -2,9 +2,9 @@ package com.phelat.tedu.functional
 
 sealed class Response<out V, out E>
 
-data class Success<out V>(val value: V): Response<V, Nothing>()
+data class Success<out V>(val value: V) : Response<V, Nothing>()
 
-data class Failure<out E>(val error: E): Response<Nothing, E>()
+data class Failure<out E>(val error: E) : Response<Nothing, E>()
 
 class ResponseUnboxed<V, E> {
 

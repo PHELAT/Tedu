@@ -12,10 +12,10 @@ import com.phelat.tedu.functional.Success
 import javax.inject.Inject
 
 @FeatureScope
-class WebDavCredentialsDataSource @Inject constructor(
+internal class WebDavCredentialsDataSource @Inject constructor(
     private val sharedPreferences: SharedPreferences
-) : Writable<WebDavCredentials>,
-    Readable<@JvmSuppressWildcards Response<WebDavCredentials, BackupErrorContext>> {
+) : WebDavCredentialsWritable,
+    WebDavCredentialsReadable {
 
     override fun write(input: WebDavCredentials) {
         sharedPreferences.edit()
@@ -43,3 +43,8 @@ class WebDavCredentialsDataSource @Inject constructor(
         private const val WEB_DAV_PASSWORD = "web_dav_password"
     }
 }
+
+typealias WebDavCredentialsWritable = Writable<WebDavCredentials>
+
+typealias WebDavCredentialsReadable = Readable<@JvmSuppressWildcards Response<WebDavCredentials,
+        BackupErrorContext>>

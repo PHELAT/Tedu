@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="contributors_feature_name">Contributors</string>
+    <string name="contributors_bug_report_text">Reported a bug</string>
+    <string name="contributors_proposed_feature_text">Proposed a feature</string>
+    <string name="contributors_donated_text">Donated %s</string>
+    <string name="contributors_translation_text">Helped in translation</string>
+    <string name="contributors_thank_message">
+        <![CDATA[We thank <u>%s</u> for their contribution to this project and the fact they %s.]]>
+    </string>
+    <string name="contributors_contribution_link_text">Link to Contribution</string>
+    <string name="contributors_no_browser_found_message">No browsers were found on your device to open the link!</string>
+    <string name="contributors_contributor_link_text">Link to %s\'s %s</string>
+    <string name="contributors_contributor_link_twitter_text">Twitter</string>
+    <string name="contributors_contributor_link_instagram_text">Instagram</string>
+    <string name="contributors_contributor_link_github_text">Github</string>
+
+</resources>

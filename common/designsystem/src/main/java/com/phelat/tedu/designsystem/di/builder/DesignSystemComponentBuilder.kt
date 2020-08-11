@@ -7,7 +7,9 @@ import com.phelat.tedu.designsystem.di.component.DesignSystemComponent
 
 object DesignSystemComponentBuilder : ComponentBuilder<DesignSystemComponent>() {
 
-    override fun initializeComponent(addStartupTask: (StartupTasks) -> Unit): DesignSystemComponent {
+    override fun initializeComponent(
+        addStartupTask: (StartupTasks) -> Unit
+    ): DesignSystemComponent {
         return DaggerDesignSystemComponent.create()
     }
 

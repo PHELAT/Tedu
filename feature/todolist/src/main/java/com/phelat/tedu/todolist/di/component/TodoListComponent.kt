@@ -7,6 +7,7 @@ import com.phelat.tedu.coroutines.di.component.ThreadComponent
 import com.phelat.tedu.date.di.component.DateComponent
 import com.phelat.tedu.dependencyinjection.feature.FeatureScope
 import com.phelat.tedu.designsystem.di.component.DesignSystemComponent
+import com.phelat.tedu.navigation.di.component.NavigationComponent
 import com.phelat.tedu.todo.di.component.TodoComponent
 import com.phelat.tedu.todolist.di.module.TodoListBindingModule
 import dagger.Component
@@ -24,7 +25,8 @@ import dagger.android.AndroidInjectionModule
         AnalyticsComponent::class,
         DateComponent::class,
         AndroidResourceComponent::class,
-        DesignSystemComponent::class
+        DesignSystemComponent::class,
+        NavigationComponent::class
     ]
 )
 interface TodoListComponent : DispatcherComponent

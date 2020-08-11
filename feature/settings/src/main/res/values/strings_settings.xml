@@ -10,6 +10,7 @@
     <string name="settings_ui_mode_light">Light</string>
 
     <string name="settings_backup_title">Backup</string>
+    <string name="settings_contributors_title">Contributors</string>
 
     <string name="settings_backup_method_title">Select Backup Method</string>
     <string name="settings_backup_method_webdav_title">WebDAV</string>

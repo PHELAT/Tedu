@@ -1,6 +1,5 @@
 package com.phelat.tedu.addtodo.viewmodel
 
-import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,13 +19,12 @@ import com.phelat.tedu.functional.ifSuccessful
 import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.mapper.Mapper
-import com.phelat.tedu.todo.constant.TodoConstant
+import com.phelat.tedu.navigation.Navigate
 import com.phelat.tedu.todo.entity.Action
 import com.phelat.tedu.todo.entity.ActionEntity
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.error.TodoErrorContext
 import com.phelat.tedu.todo.repository.TodoRepository
-import com.phelat.tedu.uiview.Navigate
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.threeten.bp.LocalDate
@@ -58,13 +56,10 @@ class AddTodoViewModel @Inject constructor(
 
     private var todoForEdit: TodoEntity? = null
 
-    fun onBundleReceive(bundle: Bundle?) {
-        val todoForEdit = bundle?.getSerializable(TodoConstant.TODO_FOR_EDIT)
-        if (todoForEdit is TodoEntity) {
-            this.todoForEdit = todoForEdit
-            if (_todoTextObservable.value == null) {
-                _todoTextObservable.value = todoForEdit.todo
-            }
+    fun onFragmentArgumentReceived(fragmentArgument: TodoEntity) {
+        this.todoForEdit = fragmentArgument
+        if (_todoTextObservable.value == null) {
+            _todoTextObservable.value = fragmentArgument.todo
         }
     }
 
@@ -89,10 +84,12 @@ class AddTodoViewModel @Inject constructor(
     private fun showScheduledTodoSnackBar(teduDate: TeduDate) {
         val humanReadableDate = when (teduDate) {
             is TeduDate.Today -> {
-                stringResourceProvider.getResource(StringId(R.string.addtodo_date_today_text)).resource
+                stringResourceProvider.getResource(StringId(R.string.addtodo_date_today_text))
+                    .resource
             }
             is TeduDate.Tomorrow -> {
-                stringResourceProvider.getResource(StringId(R.string.addtodo_date_tomorrow_text)).resource
+                stringResourceProvider.getResource(StringId(R.string.addtodo_date_tomorrow_text))
+                    .resource
             }
             is TeduDate.HumanReadableDate -> {
                 teduDate.date

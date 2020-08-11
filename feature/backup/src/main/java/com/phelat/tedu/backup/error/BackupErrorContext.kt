@@ -13,4 +13,6 @@ sealed class BackupErrorContext : Throwable() {
     class CredentialsEmpty : BackupErrorContext()
 
     class LocalUpdateFailed : BackupErrorContext()
+
+    class UrlDoesNotMatchPattern : BackupErrorContext()
 }

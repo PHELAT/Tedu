@@ -18,12 +18,14 @@ import com.phelat.tedu.backup.viewmodel.WebDavViewModel
 import com.phelat.tedu.designsystem.component.view.ConfirmationBottomSheet
 import com.phelat.tedu.designsystem.ext.makeLongSnackBar
 import com.phelat.tedu.lifecycle.ViewModelFactory
+import com.phelat.tedu.navigation.observeNavigation
 import com.phelat.tedu.sdkextensions.hideKeyboard
-import com.phelat.tedu.uiview.observeNavigation
 import kotlinx.android.synthetic.main.fragment_webdav_setup.saveSettings
 import kotlinx.android.synthetic.main.fragment_webdav_setup.saveSettingsProgress
+import kotlinx.android.synthetic.main.fragment_webdav_setup.webDavDeleteConfig
 import kotlinx.android.synthetic.main.fragment_webdav_setup.webDavPasswordInput
 import kotlinx.android.synthetic.main.fragment_webdav_setup.webDavUrlInput
+import kotlinx.android.synthetic.main.fragment_webdav_setup.webDavUrlLayout
 import kotlinx.android.synthetic.main.fragment_webdav_setup.webDavUsernameInput
 import javax.inject.Inject
 
@@ -59,6 +61,9 @@ class WebDavSetupFragment : Fragment(R.layout.fragment_webdav_setup) {
                 webDavPasswordInput.text.toString()
             )
         }
+        webDavDeleteConfig.setOnClickListener {
+            webDavViewModel.onDeleteConfigClick()
+        }
         webDavViewModel.apply {
             viewStateObservable.observe(viewLifecycleOwner, ::updateState)
             credentialsObservable.observe(viewLifecycleOwner, ::updateCredentials)
@@ -74,6 +79,9 @@ class WebDavSetupFragment : Fragment(R.layout.fragment_webdav_setup) {
             isInvisible = state.isSaveButtonVisible.not()
         }
         saveSettingsProgress.isVisible = state.isSaveProgressVisible
+        webDavUrlLayout.error = state.urlInputErrorMessage
+        webDavUrlLayout.isErrorEnabled = state.isUrlInputErrorEnabled
+        webDavDeleteConfig.isVisible = state.isDeleteConfigVisible
     }
 
     private fun updateCredentials(credentials: WebDavCredentials) {

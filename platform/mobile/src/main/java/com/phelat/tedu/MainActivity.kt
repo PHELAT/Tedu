@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import com.phelat.tedu.settings.entity.UserInterfaceMode
-import com.phelat.tedu.uiview.setupWithNavController
+import com.phelat.tedu.navigation.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.bottomNavigationView
 
 class MainActivity : AppCompatActivity() {

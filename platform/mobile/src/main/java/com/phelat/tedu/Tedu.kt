@@ -6,6 +6,7 @@ import com.phelat.tedu.addtodo.di.builder.AddTodoComponentBuilder
 import com.phelat.tedu.androidcore.di.builder.AndroidCoreComponentBuilder
 import com.phelat.tedu.androiddagger.DaggerAndroidApplication
 import com.phelat.tedu.backup.di.builder.BackupComponentBuilder
+import com.phelat.tedu.contributors.di.builder.ContributorsComponentBuilder
 import com.phelat.tedu.settings.di.builder.SettingsComponentBuilder
 import com.phelat.tedu.todolist.di.builder.TodoListComponentBuilder
 
@@ -18,6 +19,7 @@ class Tedu : DaggerAndroidApplication() {
         installFeature(AddTodoComponentBuilder)
         installFeature(SettingsComponentBuilder)
         installFeature(BackupComponentBuilder)
+        installFeature(ContributorsComponentBuilder)
         runStartupTasks(::printMeasures)
     }
 

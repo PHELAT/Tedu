@@ -19,8 +19,8 @@ import javax.inject.Inject
 internal class TodoActionsDataSource @Inject constructor(
     private val actionsDao: ActionEntityDao,
     private val mapper: Mapper<ActionEntity, ActionDatabaseEntity>
-) : Writable.Suspendable.IO<ActionEntity, @JvmSuppressWildcards Response<Unit, TodoErrorContext>>,
-    Readable<@JvmSuppressWildcards Flow<List<ActionEntity>>> {
+) : TodoActionsWritable,
+    TodoActionsReadable {
 
     override suspend fun write(input: ActionEntity): Response<Unit, TodoErrorContext> {
         return mapper.mapFirstToSecond(input)
@@ -35,3 +35,8 @@ internal class TodoActionsDataSource @Inject constructor(
             .mapForEach(mapper::mapSecondToFirst)
     }
 }
+
+typealias TodoActionsWritable = Writable.Suspendable.IO<ActionEntity,
+        @JvmSuppressWildcards Response<Unit, TodoErrorContext>>
+
+typealias TodoActionsReadable = Readable<@JvmSuppressWildcards Flow<List<ActionEntity>>>

@@ -1,6 +1,5 @@
 package com.phelat.tedu.addtodo.viewmodel
 
-import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,7 +22,6 @@ import com.phelat.tedu.date.di.qualifier.NowDate
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.sdkextensions.Visibility
-import com.phelat.tedu.todo.constant.TodoConstant
 import com.phelat.tedu.todo.entity.TodoEntity
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.TextStyle.FULL
@@ -50,10 +48,9 @@ class DateViewModel @Inject constructor(
     private val _dateChangeObservable = SingleLiveData<LocalDate>()
     val dateChangeObservable: LiveData<LocalDate> = _dateChangeObservable
 
-    fun onBundleReceive(bundle: Bundle?) {
-        val todoForEdit = bundle?.getSerializable(TodoConstant.TODO_FOR_EDIT)
-        if (todoForEdit is TodoEntity && _todoDateObservable.value == null) {
-            val date = dateToLocalDate.mapFirstToSecond(todoForEdit.date)
+    fun onFragmentArgumentReceived(fragmentArgument: TodoEntity) {
+        if (_todoDateObservable.value == null) {
+            val date = dateToLocalDate.mapFirstToSecond(fragmentArgument.date)
             updateSelectedDate(date)
         }
     }
@@ -75,10 +72,12 @@ class DateViewModel @Inject constructor(
         val teduDate = localDateToTeduDate.mapFirstToSecond(selectedDate)
         _todoDateObservable.value = when (teduDate) {
             is TeduDate.Today -> {
-                stringResourceProvider.getResource(StringId(R.string.addtodo_date_today_text)).resource
+                stringResourceProvider.getResource(StringId(R.string.addtodo_date_today_text))
+                    .resource
             }
             is TeduDate.Tomorrow -> {
-                stringResourceProvider.getResource(StringId(R.string.addtodo_date_tomorrow_text)).resource
+                stringResourceProvider.getResource(StringId(R.string.addtodo_date_tomorrow_text))
+                    .resource
             }
             is TeduDate.HumanReadableDate -> {
                 teduDate.date

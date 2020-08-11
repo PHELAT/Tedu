@@ -11,10 +11,10 @@ import java.util.Date
 import javax.inject.Inject
 
 @LibraryScope
-class DateDataSource @Inject constructor(
+internal class DateDataSource @Inject constructor(
     @NowDate private val now: Lazy<@JvmSuppressWildcards LocalDate>,
     private val zoneId: Lazy<@JvmSuppressWildcards ZoneId>
-) : Readable.IO<TeduDate, Date> {
+) : DateDataSourceReadable {
 
     override fun read(input: TeduDate): Date {
         return when (input) {
@@ -39,3 +39,5 @@ class DateDataSource @Inject constructor(
         }
     }
 }
+
+typealias DateDataSourceReadable = Readable.IO<TeduDate, Date>
