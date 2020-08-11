@@ -13,7 +13,7 @@ I believe that everyone can contribute to this project, even without the knowled
 
 **There is going to be a page inside the app with a list of all contributors/sponsors and a link to their github/social media(Of course, with their consent).**
 ### ❤️ Sponsor
-As you know, this project is free and doesn't have annoying ads; hence, it's not profitable. But you can always keep a developer motivated by buying him/her a cup of coffee. This surely helps me to develop and maintain the app.  
+As you know, this project is free and doesn't have annoying ads; hence, it's not profitable. But you can always keep a developer motivated by buying them a cup of coffee. This surely helps me to develop and maintain the app.  
 [![Paypal](https://raw.githubusercontent.com/PHELAT/Tedu/master/asset/paypal.png)](https://paypal.me/mahdinouri)
 [![Bitcoin](https://raw.githubusercontent.com/PHELAT/Tedu/master/asset/bitcoin.png)](https://blockchair.com/bitcoin/address/169d2AG9y8CLzqfDXar4xN7euhwGhVXEkL)
 
