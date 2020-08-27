@@ -5,14 +5,15 @@ import com.phelat.tedu.analytics.BuildConfig
 import com.phelat.tedu.analytics.ExceptionLogger
 import com.phelat.tedu.dependencyinjection.common.CommonScope
 import javax.inject.Inject
+import dagger.Lazy
 
 @CommonScope
 class NonFatalExceptionLogger @Inject constructor(
-    private val crashlytics: FirebaseCrashlytics
+    private val crashlytics: Lazy<FirebaseCrashlytics>
 ) : ExceptionLogger {
 
     override fun log(throwable: Throwable) {
-        crashlytics.recordException(throwable)
+//        crashlytics.recordException(throwable)
         if (BuildConfig.DEBUG) {
             throwable.printStackTrace()
         }

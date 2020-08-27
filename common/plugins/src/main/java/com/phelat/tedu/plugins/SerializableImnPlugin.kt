@@ -3,6 +3,7 @@ package com.phelat.tedu.plugins
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.phelat.tedu.navigation.ExtraDataDataSource
+import com.phelat.tedu.navigation.requireExtraBag
 import com.phelat.tedu.plaugin.FragmentPlugin
 import java.io.Serializable
 
@@ -17,6 +18,6 @@ class SerializableImnPlugin<T : Fragment, D : Serializable>(
         val bundle = fragment.requireArguments()
         val sign = bundle.getString(ExtraDataDataSource.INTER_MODULE_NAVIGATION_EXTRA_DATA)
         if (sign.isNullOrEmpty()) return
-        ExtraDataDataSource.retrieveExtraData<D>(sign)?.apply(onExtraDataReceived)
+        fragment.requireActivity().requireExtraBag.getSerial<D>(sign)?.apply(onExtraDataReceived)
     }
 }

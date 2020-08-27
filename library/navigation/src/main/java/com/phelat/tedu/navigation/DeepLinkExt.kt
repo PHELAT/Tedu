@@ -1,5 +1,6 @@
 package com.phelat.tedu.navigation
 
+import android.app.Activity
 import android.net.Uri
 import android.os.Parcelable
 import androidx.navigation.NavController
@@ -14,19 +15,21 @@ fun NavController.interModuleNavigate(
 }
 
 fun NavController.interModuleNavigate(
+    activity: Activity,
     link: Uri,
     serializableData: Serializable?,
     navOptions: NavOptions = defaultNavOptions
 ) {
-    interModuleNavigate(link, serializableData, ExtraDataDataSource::storeExtraData, navOptions)
+    interModuleNavigate(link, serializableData, activity.requireExtraBag::storeData, navOptions)
 }
 
 fun NavController.interModuleNavigate(
+    activity: Activity,
     link: Uri,
     parcelableData: Parcelable?,
     navOptions: NavOptions = defaultNavOptions
 ) {
-    interModuleNavigate(link, parcelableData, ExtraDataDataSource::storeExtraData, navOptions)
+    interModuleNavigate(link, parcelableData, activity.requireExtraBag::storeData, navOptions)
 }
 
 private fun <T : Any> NavController.interModuleNavigate(
@@ -53,3 +56,7 @@ private val defaultNavOptions = NavOptions.Builder()
     .setPopEnterAnim(R.anim.nav_default_pop_enter_anim)
     .setPopExitAnim(R.anim.nav_default_pop_exit_anim)
     .build()
+
+val Activity.requireExtraBag: ExtraDataBag
+    get() = (this as? ExtraDataBag)
+        ?: error("Activity= ${this::class.java.name} must implement ExtraDataBag")

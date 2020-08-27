@@ -14,18 +14,27 @@ fun <T : Navigate> LiveData<T>.observeNavigation(fragment: Fragment) {
             }
             is Navigate.ToDeepLink -> {
                 fragment.findNavController()
-                    .interModuleNavigate(it.deepLink.toUri(), serializableData = null)
+                    .interModuleNavigate(
+                        fragment.requireActivity(),
+                        it.deepLink.toUri(),
+                        serializableData = null
+                    )
             }
             is Navigate.ToSerializableDeepLink -> {
                 fragment.findNavController()
                     .interModuleNavigate(
+                        fragment.requireActivity(),
                         it.deepLink.toUri(),
                         serializableData = it.serializableData
                     )
             }
             is Navigate.ToParcelableDeepLink -> {
                 fragment.findNavController()
-                    .interModuleNavigate(it.deepLink.toUri(), parcelableData = it.parcelableData)
+                    .interModuleNavigate(
+                        fragment.requireActivity(),
+                        it.deepLink.toUri(),
+                        parcelableData = it.parcelableData
+                    )
             }
             is Navigate.Up -> {
                 fragment.findNavController().navigateUp()
