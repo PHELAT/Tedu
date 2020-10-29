@@ -43,7 +43,7 @@ subprojects {
         exclude(".*/build/.*")
     }
     dependencies {
-        detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:$library.detekt"
+        //detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:$library.detekt"
     }
 }
 

@@ -10,3 +10,6 @@ dependencies {
     implementation "com.google.dagger:dagger:$library.dagger"
 
 }
+
+sourceCompatibility = "8"
+targetCompatibility = "8"

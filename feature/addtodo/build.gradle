@@ -40,7 +40,7 @@ dependencies {
     implementation project(":library:navigation")
     implementation project(":library:mapper")
     implementation project(":library:androidcore")
-    implementation project(":library:androiddagger")
+    implementation project(':library:daggercore')
     implementation project(":library:sdkextensions")
     implementation project(":library:functional")
     implementation project(":library:translation")

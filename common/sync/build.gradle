@@ -17,6 +17,6 @@ dependencies {
 
     implementation project(":library:datasource")
     implementation project(":library:dependencyinjection")
-    implementation project(":library:androiddagger")
+    implementation project(':library:daggercore')
 
 }

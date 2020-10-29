@@ -28,7 +28,7 @@ dependencies {
     implementation project(":common:analytics")
     implementation project(":common:sync")
     implementation project(":library:lifecycle")
-    implementation project(":library:androiddagger")
+    implementation project(':library:daggercore')
     implementation project(":library:dependencyinjection")
     implementation project(":library:datasource")
     implementation project(":library:functional")

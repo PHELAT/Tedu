@@ -33,6 +33,6 @@ dependencies {
     implementation project(':library:dependencyinjection')
     implementation project(':library:androidcore')
     implementation project(':library:functional')
-    implementation project(':library:androiddagger')
+    implementation project(':library:daggercore')
 
 }

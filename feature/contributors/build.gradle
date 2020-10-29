@@ -39,7 +39,7 @@ dependencies {
     implementation project(":common:designsystem")
     implementation project(":common:analytics")
     implementation project(":library:dependencyinjection")
-    implementation project(":library:androiddagger")
+    implementation project(':library:daggercore')
     implementation project(":library:lifecycle")
     implementation project(":library:networking")
     implementation project(":library:datasource")

@@ -76,7 +76,7 @@ dependencies {
     implementation project(':library:navigation')
     implementation project(":library:translation")
     implementation project(":library:dependencyinjection")
-    implementation project(":library:androiddagger")
+    implementation project(':library:daggercore')
     implementation project(":library:androidcore")
 
 }
