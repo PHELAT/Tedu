@@ -12,8 +12,6 @@ dependencies {
 
     implementation "com.google.dagger:dagger:$library.dagger"
     kapt "com.google.dagger:dagger-compiler:$library.dagger"
-    implementation "com.google.dagger:dagger-android-support:$library.dagger"
-    kapt "com.google.dagger:dagger-android-processor:$library.dagger"
 
     implementation project(":library:datasource")
     implementation project(":library:dependencyinjection")
