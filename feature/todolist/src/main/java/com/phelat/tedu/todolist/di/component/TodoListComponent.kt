@@ -9,16 +9,11 @@ import com.phelat.tedu.dependencyinjection.feature.FeatureScope
 import com.phelat.tedu.designsystem.di.component.DesignSystemComponent
 import com.phelat.tedu.navigation.di.component.NavigationComponent
 import com.phelat.tedu.todo.di.component.TodoComponent
-import com.phelat.tedu.todolist.di.module.TodoListBindingModule
 import dagger.Component
-import dagger.android.AndroidInjectionModule
 
 @FeatureScope
 @Component(
-    modules = [
-        AndroidInjectionModule::class,
-        TodoListBindingModule::class
-    ],
+    modules = [],
     dependencies = [
         TodoComponent::class,
         ThreadComponent::class,

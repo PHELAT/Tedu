@@ -6,21 +6,17 @@ import com.phelat.tedu.androidresource.di.component.AndroidResourceComponent
 import com.phelat.tedu.coroutines.di.component.ThreadComponent
 import com.phelat.tedu.dependencyinjection.StartupTasks
 import com.phelat.tedu.dependencyinjection.feature.FeatureScope
-import com.phelat.tedu.settings.di.module.SettingsFragmentModule
 import com.phelat.tedu.settings.di.module.SettingsModule
 import com.phelat.tedu.settings.di.module.SettingsStartUpModule
 import com.phelat.tedu.settings.di.module.UserInterfaceModeModule
 import com.phelat.tedu.settings.di.qualifier.SettingsStartupTasks
 import com.phelat.tedu.sync.di.component.SyncComponent
 import dagger.Component
-import dagger.android.AndroidInjectionModule
 
 @FeatureScope
 @Component(
     modules = [
-        AndroidInjectionModule::class,
         SettingsStartUpModule::class,
-        SettingsFragmentModule::class,
         UserInterfaceModeModule::class,
         SettingsModule::class
     ],

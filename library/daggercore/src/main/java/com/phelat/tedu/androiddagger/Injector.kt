@@ -4,7 +4,7 @@ import android.app.Activity
 import androidx.fragment.app.Fragment
 import java.util.Locale
 
-inline fun <reified Component : DispatcherComponent> Fragment.inject() {
+inline fun <reified Component : DispatcherComponent> Fragment.inject(): Component {
     var dispatcherContainer: DispatcherContainer? = null
     var parentFragment: Fragment? = this
     while (parentFragment?.parentFragment?.also { parentFragment = it } != null) {
@@ -31,5 +31,5 @@ inline fun <reified Component : DispatcherComponent> Fragment.inject() {
         )
     }
     val androidInjector = dispatcherContainer.androidInjector(Component::class)
-    androidInjector.inject(this)
+    return androidInjector.getComponent {} as Component
 }

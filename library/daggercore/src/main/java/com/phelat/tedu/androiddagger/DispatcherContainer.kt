@@ -1,9 +1,9 @@
 package com.phelat.tedu.androiddagger
 
-import dagger.android.AndroidInjector
+import com.phelat.tedu.dependencyinjection.ComponentBuilder
 import kotlin.reflect.KClass
 
 interface DispatcherContainer {
 
-    fun androidInjector(dispatcherComponent: KClass<*>): AndroidInjector<Any>
+    fun androidInjector(dispatcherComponent: KClass<*>): ComponentBuilder<*>
 }
