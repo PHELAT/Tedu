@@ -2,6 +2,7 @@ package com.phelat.tedu.androiddagger
 
 import android.app.Application
 import com.phelat.tedu.dependencyinjection.ComponentBuilder
+import com.phelat.tedu.dependencyinjection.DispatcherComponent
 import kotlin.reflect.KClass
 import kotlin.time.ExperimentalTime
 import kotlin.time.TimeSource
@@ -12,7 +13,7 @@ abstract class DaggerAndroidApplication : Application(), DispatcherContainer {
 
     protected val startupTasks = LinkedHashMap<String, Runnable>()
 
-    override fun androidInjector(dispatcherComponent: KClass<*>): ComponentBuilder<*> {
+    override fun componentInjector(dispatcherComponent: KClass<*>): ComponentBuilder<*> {
         return requireNotNull(dispatchers[dispatcherComponent])
     }
 

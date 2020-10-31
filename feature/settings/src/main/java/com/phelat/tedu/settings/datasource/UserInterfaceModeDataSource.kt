@@ -4,11 +4,9 @@ import android.content.SharedPreferences
 import android.os.Build
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Writable
-import com.phelat.tedu.dependencyinjection.feature.FeatureScope
 import com.phelat.tedu.settings.entity.UserInterfaceMode
 import javax.inject.Inject
 
-@FeatureScope
 class UserInterfaceModeDataSource @Inject constructor(
     private val settingsSharedPreferences: SharedPreferences
 ) : Readable<UserInterfaceMode>, Writable<UserInterfaceMode> {

@@ -37,7 +37,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        inject<SettingsComponent>()
+        inject<SettingsComponent>().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -41,7 +41,7 @@ class AddTodoFragment : PlauginFragment(R.layout.fragment_addtodo) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        inject<AddTodoComponent>()
+        inject<AddTodoComponent>().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

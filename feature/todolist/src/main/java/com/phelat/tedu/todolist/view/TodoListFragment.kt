@@ -33,7 +33,7 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        inject<TodoListComponent>()
+        inject<TodoListComponent>().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -77,6 +77,7 @@ dependencies {
     implementation project(":library:dependencyinjection")
     implementation project(':library:daggercore')
     implementation project(":library:androidcore")
+    implementation project(":library:date")
 
 }
 

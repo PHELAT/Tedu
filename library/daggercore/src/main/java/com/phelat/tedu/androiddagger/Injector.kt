@@ -2,6 +2,7 @@ package com.phelat.tedu.androiddagger
 
 import android.app.Activity
 import androidx.fragment.app.Fragment
+import com.phelat.tedu.dependencyinjection.DispatcherComponent
 import java.util.Locale
 
 inline fun <reified Component : DispatcherComponent> Fragment.inject(): Component {
@@ -30,6 +31,6 @@ inline fun <reified Component : DispatcherComponent> Fragment.inject(): Componen
             )
         )
     }
-    val androidInjector = dispatcherContainer.androidInjector(Component::class)
+    val androidInjector = dispatcherContainer.componentInjector(Component::class)
     return androidInjector.getComponent {} as Component
 }

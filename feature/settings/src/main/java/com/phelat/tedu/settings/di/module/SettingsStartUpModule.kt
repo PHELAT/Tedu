@@ -2,8 +2,8 @@ package com.phelat.tedu.settings.di.module
 
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.dependencyinjection.StartupTasks
-import com.phelat.tedu.dependencyinjection.feature.FeatureScope
 import com.phelat.tedu.settings.di.qualifier.SettingsStartupTasks
+import com.phelat.tedu.settings.di.scope.SettingsScope
 import com.phelat.tedu.settings.entity.UserInterfaceMode
 import dagger.Module
 import dagger.Provides
@@ -20,7 +20,7 @@ interface SettingsStartUpModule {
 
     companion object {
         @Provides
-        @FeatureScope
+        @SettingsScope
         @IntoMap
         @StringKey("SetUserInterfaceModeTask")
         @SettingsStartupTasks

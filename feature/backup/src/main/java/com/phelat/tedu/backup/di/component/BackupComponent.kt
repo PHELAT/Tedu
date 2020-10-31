@@ -2,7 +2,7 @@ package com.phelat.tedu.backup.di.component
 
 import com.phelat.tedu.analytics.di.component.AnalyticsComponent
 import com.phelat.tedu.androidcore.di.component.AndroidCoreComponent
-import com.phelat.tedu.androiddagger.DispatcherComponent
+import com.phelat.tedu.dependencyinjection.DispatcherComponent
 import com.phelat.tedu.androidresource.di.component.AndroidResourceComponent
 import com.phelat.tedu.backup.di.module.BackupStartupTasksModule
 import com.phelat.tedu.backup.di.module.WebDavBindingsModule

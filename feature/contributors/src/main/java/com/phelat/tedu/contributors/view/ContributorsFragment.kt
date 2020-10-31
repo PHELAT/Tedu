@@ -39,7 +39,7 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        inject<ContributorsComponent>()
+        inject<ContributorsComponent>().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
