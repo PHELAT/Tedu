@@ -1,4 +1,4 @@
-package com.phelat.tedu.androiddagger
+package com.phelat.tedu.daggercore
 
 import android.app.Activity
 import androidx.fragment.app.Fragment

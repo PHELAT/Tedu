@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.multidex.MultiDex
 import com.phelat.tedu.addtodo.di.builder.AddTodoComponentBuilder
 import com.phelat.tedu.androidcore.di.builder.AndroidCoreComponentBuilder
-import com.phelat.tedu.androiddagger.DaggerAndroidApplication
+import com.phelat.tedu.daggercore.DaggerAndroidApplication
 import com.phelat.tedu.backup.di.builder.BackupComponentBuilder
 import com.phelat.tedu.contributors.di.builder.ContributorsComponentBuilder
 import com.phelat.tedu.settings.di.builder.SettingsComponentBuilder

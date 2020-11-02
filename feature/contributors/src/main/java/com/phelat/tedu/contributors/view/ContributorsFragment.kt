@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.phelat.tedu.androiddagger.inject
+import com.phelat.tedu.daggercore.inject
 import com.phelat.tedu.contributors.R
 import com.phelat.tedu.contributors.di.component.ContributorsComponent
 import com.phelat.tedu.contributors.entity.ContributorSheetEntity

@@ -1,4 +1,4 @@
-package com.phelat.tedu.androiddagger
+package com.phelat.tedu.daggercore
 
 import com.phelat.tedu.dependencyinjection.ComponentBuilder
 import kotlin.reflect.KClass
