@@ -16,5 +16,4 @@ dependencies {
     implementation project(":library:datasource")
     implementation project(":library:mapper")
     implementation project(":library:dependencyinjection")
-
 }

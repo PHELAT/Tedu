@@ -11,7 +11,7 @@ import com.phelat.tedu.addtodo.di.component.AddTodoComponent
 import com.phelat.tedu.addtodo.view.calendar.CalendarSheet
 import com.phelat.tedu.addtodo.viewmodel.AddTodoViewModel
 import com.phelat.tedu.addtodo.viewmodel.DateViewModel
-import com.phelat.tedu.androiddagger.inject
+import com.phelat.tedu.daggercore.inject
 import com.phelat.tedu.designsystem.ext.makeLongSnackBar
 import com.phelat.tedu.lifecycle.ViewModelFactory
 import com.phelat.tedu.navigation.observeNavigation
@@ -41,7 +41,7 @@ class AddTodoFragment : PlauginFragment(R.layout.fragment_addtodo) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        inject<AddTodoComponent>()
+        inject<AddTodoComponent>().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

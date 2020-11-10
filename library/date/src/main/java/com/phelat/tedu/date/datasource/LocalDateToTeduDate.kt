@@ -2,7 +2,6 @@ package com.phelat.tedu.date.datasource
 
 import com.phelat.tedu.date.TeduDate
 import com.phelat.tedu.date.di.qualifier.NowDate
-import com.phelat.tedu.dependencyinjection.library.LibraryScope
 import com.phelat.tedu.mapper.Mapper
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
@@ -10,7 +9,6 @@ import org.threeten.bp.ZoneId
 import java.text.DateFormat
 import javax.inject.Inject
 
-@LibraryScope
 class LocalDateToTeduDate @Inject constructor(
     @NowDate private val nowDate: Lazy<@JvmSuppressWildcards LocalDate>,
     private val zoneId: Lazy<@JvmSuppressWildcards ZoneId>

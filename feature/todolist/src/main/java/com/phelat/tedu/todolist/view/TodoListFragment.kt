@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.phelat.tedu.androiddagger.inject
+import com.phelat.tedu.daggercore.inject
 import com.phelat.tedu.designsystem.component.view.BottomSheetView
 import com.phelat.tedu.designsystem.entity.BottomSheetEntity
 import com.phelat.tedu.lifecycle.ViewModelFactory
@@ -33,7 +33,7 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        inject<TodoListComponent>()
+        inject<TodoListComponent>().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

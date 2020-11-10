@@ -1,0 +1,3 @@
+package com.phelat.tedu.dependencyinjection
+
+interface DispatcherComponent

@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.phelat.tedu.androiddagger.inject
+import com.phelat.tedu.daggercore.inject
 import com.phelat.tedu.contributors.R
 import com.phelat.tedu.contributors.di.component.ContributorsComponent
 import com.phelat.tedu.contributors.entity.ContributorSheetEntity
@@ -39,7 +39,7 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        inject<ContributorsComponent>()
+        inject<ContributorsComponent>().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

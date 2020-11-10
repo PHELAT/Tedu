@@ -17,7 +17,6 @@ interface ContributorsViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(ContributorsViewModel::class)
-    @ContributorsScope
     fun bindTodoListViewModel(input: ContributorsViewModel): ViewModel
 
     companion object {

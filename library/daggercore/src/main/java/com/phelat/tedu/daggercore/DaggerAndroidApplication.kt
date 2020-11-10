@@ -1,20 +1,19 @@
-package com.phelat.tedu.androiddagger
+package com.phelat.tedu.daggercore
 
 import android.app.Application
 import com.phelat.tedu.dependencyinjection.ComponentBuilder
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
+import com.phelat.tedu.dependencyinjection.DispatcherComponent
 import kotlin.reflect.KClass
 import kotlin.time.ExperimentalTime
 import kotlin.time.TimeSource
 
 abstract class DaggerAndroidApplication : Application(), DispatcherContainer {
 
-    protected val dispatchers = mutableMapOf<KClass<*>, DispatchingAndroidInjector<Any>>()
+    protected val dispatchers = mutableMapOf<KClass<*>, ComponentBuilder<*>>()
 
     protected val startupTasks = LinkedHashMap<String, Runnable>()
 
-    override fun androidInjector(dispatcherComponent: KClass<*>): AndroidInjector<Any> {
+    override fun componentInjector(dispatcherComponent: KClass<*>): ComponentBuilder<*> {
         return requireNotNull(dispatchers[dispatcherComponent])
     }
 
@@ -34,10 +33,17 @@ abstract class DaggerAndroidApplication : Application(), DispatcherContainer {
         return mark.elapsedNow().inMilliseconds
     }
 
+    protected inline fun <reified T : DispatcherComponent> prepareFeature(
+        componentBuilder: ComponentBuilder<T>
+    ) {
+        dispatchers += T::class to componentBuilder
+    }
+
     protected inline fun <reified T : DispatcherComponent> installFeature(
         componentBuilder: ComponentBuilder<T>
     ) {
-        val component = componentBuilder.getComponent(startupTasks::putAll)
-        dispatchers += T::class to component.dispatcher()
+        componentBuilder.getComponent(startupTasks::putAll)
+        dispatchers += T::class to componentBuilder
     }
+
 }

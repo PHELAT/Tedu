@@ -1,10 +1,11 @@
-package com.phelat.tedu.androiddagger
+package com.phelat.tedu.daggercore
 
 import android.app.Activity
 import androidx.fragment.app.Fragment
+import com.phelat.tedu.dependencyinjection.DispatcherComponent
 import java.util.Locale
 
-inline fun <reified Component : DispatcherComponent> Fragment.inject() {
+inline fun <reified Component : DispatcherComponent> Fragment.inject(): Component {
     var dispatcherContainer: DispatcherContainer? = null
     var parentFragment: Fragment? = this
     while (parentFragment?.parentFragment?.also { parentFragment = it } != null) {
@@ -30,6 +31,6 @@ inline fun <reified Component : DispatcherComponent> Fragment.inject() {
             )
         )
     }
-    val androidInjector = dispatcherContainer.androidInjector(Component::class)
-    androidInjector.inject(this)
+    val androidInjector = dispatcherContainer.componentInjector(Component::class)
+    return androidInjector.getComponent {} as Component
 }

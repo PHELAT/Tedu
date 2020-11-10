@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
-import com.phelat.tedu.androiddagger.inject
+import com.phelat.tedu.daggercore.inject
 import com.phelat.tedu.designsystem.component.view.BottomSheetView
 import com.phelat.tedu.designsystem.entity.BottomSheetEntity
 import com.phelat.tedu.lifecycle.ViewModelFactory
@@ -37,7 +37,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        inject<SettingsComponent>()
+        inject<SettingsComponent>().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -26,7 +26,7 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$library.dagger"
 
     implementation project(":library:dependencyinjection")
-    implementation project(":library:androiddagger")
+    implementation project(':library:daggercore')
     implementation project(":library:navigation")
 
 }

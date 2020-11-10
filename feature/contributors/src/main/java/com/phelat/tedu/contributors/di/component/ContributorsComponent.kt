@@ -1,20 +1,23 @@
 package com.phelat.tedu.contributors.di.component
 
 import com.phelat.tedu.analytics.di.component.AnalyticsComponent
-import com.phelat.tedu.androiddagger.DispatcherComponent
+import com.phelat.tedu.dependencyinjection.DispatcherComponent
 import com.phelat.tedu.androidresource.di.component.AndroidResourceComponent
-import com.phelat.tedu.contributors.di.module.ContributorsFragmentModule
+import com.phelat.tedu.contributors.di.module.ContributionsDataModule
+import com.phelat.tedu.contributors.di.module.ContributorsNetworkModule
+import com.phelat.tedu.contributors.di.module.ContributorsViewModelModule
+import com.phelat.tedu.contributors.di.scope.ContributorsScope
+import com.phelat.tedu.contributors.view.ContributorsFragment
 import com.phelat.tedu.coroutines.di.component.ThreadComponent
-import com.phelat.tedu.dependencyinjection.feature.FeatureScope
 import com.phelat.tedu.networking.di.component.NetworkingComponent
 import dagger.Component
-import dagger.android.AndroidInjectionModule
 
-@FeatureScope
+@ContributorsScope
 @Component(
     modules = [
-        AndroidInjectionModule::class,
-        ContributorsFragmentModule::class
+        ContributorsViewModelModule::class,
+        ContributorsNetworkModule::class,
+        ContributionsDataModule::class
     ],
     dependencies = [
         NetworkingComponent::class,
@@ -23,4 +26,6 @@ import dagger.android.AndroidInjectionModule
         AndroidResourceComponent::class
     ]
 )
-interface ContributorsComponent : DispatcherComponent
+interface ContributorsComponent : DispatcherComponent {
+    fun inject(contributorsFragment: ContributorsFragment)
+}

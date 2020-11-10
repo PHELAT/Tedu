@@ -12,7 +12,6 @@ import com.phelat.tedu.androidresource.input.StringArg
 import com.phelat.tedu.androidresource.input.StringId
 import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.contributors.R
-import com.phelat.tedu.contributors.di.scope.ContributorsScope
 import com.phelat.tedu.contributors.entity.ContributorEntity
 import com.phelat.tedu.contributors.entity.ContributorSheetEntity
 import com.phelat.tedu.contributors.repository.ContributionsReadable
@@ -29,10 +28,9 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.Locale
+import java.util.*
 import javax.inject.Inject
 
-@ContributorsScope
 class ContributorsViewModel @Inject constructor(
     private val dataSource: ContributionsReadable,
     private val dispatcher: Dispatcher,
