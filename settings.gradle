@@ -6,6 +6,7 @@ include ':feature:todolist',
         ':feature:settings',
         ':feature:backup',
         ':feature:contributors'
+        ':feature:futuretodolist'
 // Common Modules
 include ':common:designsystem',
         ':common:todo',
