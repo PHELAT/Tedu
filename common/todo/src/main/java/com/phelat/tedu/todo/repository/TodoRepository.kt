@@ -11,5 +11,9 @@ interface TodoRepository {
 
     suspend fun processAction(entity: ActionEntity): Response<Unit, TodoErrorContext>
 
-    fun getTodos(date: Date): Flow<List<TodoEntity>>
+    fun getTodosFromDate(date: Date): Flow<List<TodoEntity>>
+
+    fun getTodosBeforeDate(date: Date): Flow<List<TodoEntity>>
+
+    fun getTodosBetween(from: Date, to: Date): Flow<List<TodoEntity>>
 }

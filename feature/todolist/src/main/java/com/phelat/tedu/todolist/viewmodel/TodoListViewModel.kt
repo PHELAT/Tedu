@@ -81,7 +81,7 @@ class TodoListViewModel @Inject constructor(
 
     private suspend fun fetchTodos() {
         val tomorrow = dateDataSourceReadable.read(TeduDate.Tomorrow)
-        todoRepository.getTodos(tomorrow)
+        todoRepository.getTodosBeforeDate(tomorrow)
             .onEach { delay(UPDATE_DELAY_IN_MILLIS) }
             .mapForEach { todoEntity ->
                 TodoListItem(

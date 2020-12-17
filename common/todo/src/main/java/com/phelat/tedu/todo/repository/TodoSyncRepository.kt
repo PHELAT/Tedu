@@ -12,6 +12,7 @@ import com.phelat.tedu.todo.datasource.TodoDataSourceUpdatable
 import com.phelat.tedu.todo.datasource.TodoDataSourceWritable
 import com.phelat.tedu.todo.entity.Action
 import com.phelat.tedu.todo.entity.ActionEntity
+import com.phelat.tedu.todo.entity.DatePeriod
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.error.TodoErrorContext
 import kotlinx.coroutines.flow.Flow
@@ -60,7 +61,15 @@ class TodoSyncRepository @Inject constructor(
         return todoDeleteResult
     }
 
-    override fun getTodos(date: Date): Flow<List<TodoEntity>> {
-        return todoReadable.read(date)
+    override fun getTodosBeforeDate(date: Date): Flow<List<TodoEntity>> {
+        return todoReadable.read(DatePeriod(to = date))
+    }
+
+    override fun getTodosBetween(from: Date, to: Date): Flow<List<TodoEntity>> {
+        return todoReadable.read(DatePeriod(from = from, to = to))
+    }
+
+    override fun getTodosFromDate(date: Date): Flow<List<TodoEntity>> {
+        return todoReadable.read(DatePeriod(from = date))
     }
 }
