@@ -12,10 +12,10 @@ import com.phelat.tedu.functional.mapForEach
 import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.todo.database.dao.TodoEntityDao
 import com.phelat.tedu.todo.database.entity.TodoDatabaseEntity
+import com.phelat.tedu.todo.entity.DatePeriod
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.error.TodoErrorContext
 import kotlinx.coroutines.flow.Flow
-import java.util.Date
 import javax.inject.Inject
 
 @CommonScope
@@ -37,8 +37,8 @@ internal class TodoDataSource @Inject constructor(
         }
     }
 
-    override fun read(input: Date): Flow<List<TodoEntity>> {
-        return todoEntityDao.selectAllTodosBefore(input)
+    override fun read(input: DatePeriod): Flow<List<TodoEntity>> {
+        return todoEntityDao.selectAllTodosBetween(input.from, input.to)
             .mapForEach(mapper::mapFirstToSecond)
     }
 
@@ -69,7 +69,8 @@ typealias TodoDataSourceDeletable = Deletable.Suspendable.IO<TodoEntity,
 typealias TodoDataSourceUpdatable = Updatable.Suspendable.IO<TodoEntity,
         @JvmSuppressWildcards Response<Unit, TodoErrorContext>>
 
-typealias TodoDataSourceReadable = Readable.IO<Date, Flow<@JvmSuppressWildcards List<TodoEntity>>>
+typealias TodoDataSourceReadable = Readable.IO<DatePeriod,
+        Flow<@JvmSuppressWildcards List<TodoEntity>>>
 
 typealias TodoDataSourceWritable = Writable.Suspendable.IO<TodoEntity,
         @JvmSuppressWildcards Response<Unit, TodoErrorContext>>
