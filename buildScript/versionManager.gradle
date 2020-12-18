@@ -24,8 +24,7 @@ ext {
             lifecycle          : '2.2.0',
             coroutines         : '1.4.2',
             groupie            : '2.8.1',
-            calendarView       : '0.3.2',
-            threetenABP        : '1.2.3',
+            calendarView       : '1.0.0',
             constraintlayout   : '1.1.3',
             annotation         : '1.1.0',
             dagger             : '2.27',
@@ -41,7 +40,8 @@ ext {
             core               : '1.3.0',
             retrofit           : '2.6.4',
             moshi              : '1.9.3',
-            okhttp             : '3.12.12'
+            okhttp             : '3.12.12',
+            desugar            : '1.1.1'
     ]
 
 }

@@ -23,8 +23,8 @@ import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.sdkextensions.Visibility
 import com.phelat.tedu.todo.entity.TodoEntity
-import org.threeten.bp.LocalDate
-import org.threeten.bp.format.TextStyle.FULL
+import java.time.LocalDate
+import java.time.format.TextStyle.FULL
 import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
