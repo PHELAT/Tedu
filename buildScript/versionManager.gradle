@@ -18,7 +18,7 @@ ext {
             navigation         : '2.3.2',
             material           : '1.2.1',
             recyclerview       : '1.1.0',
-            fragment           : '1.2.4',
+            fragment           : '1.2.5',
             room               : '2.2.5',
             inject             : '1',
             lifecycle          : '2.2.0',
