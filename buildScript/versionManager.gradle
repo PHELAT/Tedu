@@ -32,7 +32,7 @@ ext {
             googleServices     : '4.3.4',
             firebaseAnalytics  : '18.0.0',
             crashlyticsPlugin  : '2.4.1',
-            firebaseCrashlytics: '17.1.1',
+            firebaseCrashlytics: '17.3.0',
             firebaseMessaging  : '20.2.3',
             multidex           : '2.0.1',
             vectordrawable     : '1.1.0',
