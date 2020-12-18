@@ -23,7 +23,7 @@ ext {
             inject             : '1',
             lifecycle          : '2.2.0',
             coroutines         : '1.4.2',
-            groupie            : '2.8.0',
+            groupie            : '2.8.1',
             calendarView       : '0.3.2',
             threetenABP        : '1.2.3',
             constraintlayout   : '1.1.3',
