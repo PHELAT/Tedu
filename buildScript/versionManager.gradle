@@ -29,7 +29,7 @@ ext {
             annotation         : '1.1.0',
             dagger             : '2.30.1',
             detekt             : '1.9.0',
-            googleServices     : '4.3.3',
+            googleServices     : '4.3.4',
             firebaseAnalytics  : '17.3.0',
             crashlyticsPlugin  : '2.2.0',
             firebaseCrashlytics: '17.1.1',
