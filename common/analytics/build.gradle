@@ -19,7 +19,7 @@ dependencies {
 
     implementation "androidx.core:core-ktx:$library.core"
 
-    implementation "com.google.firebase:firebase-crashlytics:$library.firebaseCrashlytics"
+    implementation "com.google.firebase:firebase-crashlytics-ktx:$library.firebaseCrashlytics"
     implementation "com.google.firebase:firebase-messaging:$library.firebaseMessaging"
 
     implementation "com.google.dagger:dagger:$library.dagger"
