@@ -15,7 +15,7 @@ ext {
     library = [
             kotlin             : '1.4.21',
             appcompat          : '1.2.0',
-            navigation         : '2.2.2',
+            navigation         : '2.3.2',
             material           : '1.1.0',
             recyclerview       : '1.1.0',
             fragment           : '1.2.4',
