@@ -8,8 +8,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.kizitonwose.calendarview.CalendarView
 import com.phelat.tedu.addtodo.R
 import com.phelat.tedu.addtodo.viewmodel.DateViewModel
-import org.threeten.bp.YearMonth
-import org.threeten.bp.temporal.WeekFields
+import java.time.YearMonth
+import java.time.temporal.WeekFields
 import java.util.Locale
 
 class CalendarSheet(
