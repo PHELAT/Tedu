@@ -3,7 +3,6 @@ package com.phelat.tedu.addtodo.view.calendar
 import android.content.Context
 import android.view.LayoutInflater
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.observe
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.kizitonwose.calendarview.CalendarView
 import com.phelat.tedu.addtodo.R
@@ -35,6 +34,7 @@ class CalendarSheet(
     }
 
     companion object {
+
         private const val MONTHS_IN_A_YEAR = 12L
     }
 }
