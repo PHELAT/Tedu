@@ -40,6 +40,9 @@ subprojects {
                         experimental = true
                     }
                 }
+                buildFeatures {
+                    viewBinding true
+                }
             }
             dependencies {
                 coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$library.desugar"
