@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion build.compileSdkVersion
@@ -82,11 +81,13 @@ dependencies {
     implementation project(":feature:backup")
     implementation project(":feature:contributors")
     implementation project(":common:designsystem")
+    implementation project(":common:plugins")
     implementation project(':library:navigation')
     implementation project(":library:translation")
     implementation project(":library:dependencyinjection")
     implementation project(":library:androiddagger")
     implementation project(":library:androidcore")
+    implementation project(":library:plaugin")
 
 }
 
