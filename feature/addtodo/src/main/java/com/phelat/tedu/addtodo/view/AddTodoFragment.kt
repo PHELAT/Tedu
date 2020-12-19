@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import com.phelat.tedu.addtodo.R
 import com.phelat.tedu.addtodo.di.component.AddTodoComponent
 import com.phelat.tedu.addtodo.view.calendar.CalendarSheet
