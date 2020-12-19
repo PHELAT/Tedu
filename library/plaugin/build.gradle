@@ -8,5 +8,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$library.kotlin"
 
     implementation "androidx.appcompat:appcompat:$library.appcompat"
+    implementation "androidx.activity:activity-ktx:$library.activity"
 
 }
