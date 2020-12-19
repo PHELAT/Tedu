@@ -31,7 +31,8 @@ subprojects {
                 kotlinOptions {
                     jvmTarget = "1.8"
                     freeCompilerArgs += [
-                            "-Xopt-in=kotlin.RequiresOptIn"
+                            "-Xopt-in=kotlin.RequiresOptIn",
+                            "-Xinline-classes"
                     ]
                 }
                 if (project.getPlugins().hasPlugin('kotlin-android-extensions')) {
