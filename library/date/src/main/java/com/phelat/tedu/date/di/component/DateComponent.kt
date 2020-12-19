@@ -8,7 +8,7 @@ import com.phelat.tedu.date.di.qualifier.NowDate
 import com.phelat.tedu.dependencyinjection.library.LibraryScope
 import com.phelat.tedu.mapper.Mapper
 import dagger.Component
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 @LibraryScope
 @Component(modules = [DateModule::class, DateBindingModule::class])

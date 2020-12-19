@@ -12,6 +12,7 @@ android {
         versionCode app.versionCode
         versionName app.versionName
         vectorDrawables.useSupportLibrary true
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -21,7 +22,6 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            multiDexEnabled false
         }
         debug {
             if (file("google-services.json").exists()) {
@@ -33,15 +33,19 @@ android {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            multiDexEnabled true
         }
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs += [
+                "-Xopt-in=kotlin.RequiresOptIn",
+                "-Xinline-classes"
+        ]
     }
 }
 
@@ -63,9 +67,11 @@ dependencies {
     implementation "com.google.dagger:dagger:$library.dagger"
     implementation "com.google.dagger:dagger-android-support:$library.dagger"
 
-    implementation "com.google.firebase:firebase-analytics:$library.firebaseAnalytics"
+    implementation "com.google.firebase:firebase-analytics-ktx:$library.firebaseAnalytics"
 
     implementation "androidx.multidex:multidex:$library.multidex"
+
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$library.desugar"
 
     implementation project(":feature:addtodo")
     implementation project(":feature:todolist")

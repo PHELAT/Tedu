@@ -6,13 +6,16 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-29.0.3
-    - android-29
     - extra
   licenses:
     - 'android-sdk-preview-license-52d11cd2'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
+
+before_install:
+  - touch $HOME/.android/repositories.cfg
+  - yes | sdkmanager "platforms;android-30"
+  - yes | sdkmanager "build-tools;30.0.3"
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

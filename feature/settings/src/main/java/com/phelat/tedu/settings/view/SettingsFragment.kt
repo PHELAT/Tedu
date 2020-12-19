@@ -7,16 +7,15 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import com.phelat.tedu.androiddagger.inject
 import com.phelat.tedu.designsystem.component.view.BottomSheetView
 import com.phelat.tedu.designsystem.entity.BottomSheetEntity
 import com.phelat.tedu.lifecycle.ViewModelFactory
+import com.phelat.tedu.navigation.observeNavigation
 import com.phelat.tedu.settings.R
 import com.phelat.tedu.settings.di.component.SettingsComponent
 import com.phelat.tedu.settings.state.SettingsViewState
 import com.phelat.tedu.settings.viewmodel.SettingsViewModel
-import com.phelat.tedu.navigation.observeNavigation
 import kotlinx.android.synthetic.main.fragment_settings.backupClick
 import kotlinx.android.synthetic.main.fragment_settings.backupStatus
 import kotlinx.android.synthetic.main.fragment_settings.backupStatusArrow

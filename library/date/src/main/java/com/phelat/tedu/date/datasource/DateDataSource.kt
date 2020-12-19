@@ -4,9 +4,9 @@ import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.date.TeduDate
 import com.phelat.tedu.date.di.qualifier.NowDate
 import com.phelat.tedu.dependencyinjection.library.LibraryScope
-import org.threeten.bp.LocalDate
-import org.threeten.bp.ZoneId
 import java.text.DateFormat
+import java.time.LocalDate
+import java.time.ZoneId
 import java.util.Date
 import javax.inject.Inject
 

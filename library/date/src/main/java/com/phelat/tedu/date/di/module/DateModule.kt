@@ -4,8 +4,8 @@ import com.phelat.tedu.date.di.qualifier.NowDate
 import com.phelat.tedu.dependencyinjection.library.LibraryScope
 import dagger.Module
 import dagger.Provides
-import org.threeten.bp.LocalDate
-import org.threeten.bp.ZoneId
+import java.time.LocalDate
+import java.time.ZoneId
 
 @Module
 class DateModule {

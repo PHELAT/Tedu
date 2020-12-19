@@ -24,8 +24,6 @@ dependencies {
     implementation "com.google.dagger:dagger:$library.dagger"
     kapt "com.google.dagger:dagger-compiler:$library.dagger"
 
-    implementation "com.jakewharton.threetenabp:threetenabp:$library.threetenABP"
-
     implementation project(":library:lifecycle")
     implementation project(":library:mapper")
     implementation project(":library:datasource")

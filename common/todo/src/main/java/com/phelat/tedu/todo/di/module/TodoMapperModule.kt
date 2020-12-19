@@ -11,7 +11,7 @@ import com.phelat.tedu.todo.mapper.DateToLocalDate
 import com.phelat.tedu.todo.mapper.TodoDatabaseEntityToTodoEntity
 import dagger.Binds
 import dagger.Module
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import java.util.Date
 
 @Module

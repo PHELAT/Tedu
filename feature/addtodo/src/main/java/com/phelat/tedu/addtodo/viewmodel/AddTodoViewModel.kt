@@ -27,7 +27,7 @@ import com.phelat.tedu.todo.error.TodoErrorContext
 import com.phelat.tedu.todo.repository.TodoRepository
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import java.util.Date
 import javax.inject.Inject
 

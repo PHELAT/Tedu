@@ -13,8 +13,4 @@ object TodoComponentBuilder : ComponentBuilder<TodoComponent>() {
             .androidCoreComponent(AndroidCoreComponentBuilder.getComponent(addStartupTask))
             .build()
     }
-
-    override fun getStartupTasks(component: TodoComponent): StartupTasks? {
-        return component.getTodoStartupTasks()
-    }
 }
