@@ -69,6 +69,7 @@ dependencies {
 
     implementation project(":feature:addtodo")
     implementation project(":feature:todolist")
+    implementation project(":feature:futuretodolist")
     implementation project(":feature:settings")
     implementation project(":feature:backup")
     implementation project(":feature:contributors")

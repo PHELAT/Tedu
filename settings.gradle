@@ -5,7 +5,7 @@ include ':feature:todolist',
         ':feature:addtodo',
         ':feature:settings',
         ':feature:backup',
-        ':feature:contributors'
+        ':feature:contributors',
         ':feature:futuretodolist'
 // Common Modules
 include ':common:designsystem',
