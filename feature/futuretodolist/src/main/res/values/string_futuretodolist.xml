@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="todolist_todo_sheet_delete">Delete todo forever</string>
+    <string name="futureTodolist_feature_title_name">Future Todos</string>
+    <string name="todolist_todo_sheet_edit">Edit todo</string>
+    <string name="todolist_undo_deletion_action">Undo</string>
+
+    <string name="todolist_todo_deletion_message">Todo deleted successfully</string>
+
+</resources>
