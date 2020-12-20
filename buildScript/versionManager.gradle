@@ -41,7 +41,8 @@ ext {
             retrofit           : '2.6.4',
             moshi              : '1.11.0',
             okhttp             : '3.12.12',
-            desugar            : '1.1.1'
+            desugar            : '1.1.1',
+            activity           : '1.1.0'
     ]
 
 }

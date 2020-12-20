@@ -1,17 +1,22 @@
 package com.phelat.tedu.todolist.view
 
+import android.view.View
 import com.phelat.tedu.todolist.R
-import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
-import com.xwray.groupie.kotlinandroidextensions.Item
+import com.phelat.tedu.todolist.databinding.ItemAddTodoBinding
+import com.xwray.groupie.viewbinding.BindableItem
 
 class AddTodoItem(
     private val onAddTodoClickListener: () -> Unit
-) : Item(Long.MAX_VALUE) {
+) : BindableItem<ItemAddTodoBinding>(Long.MAX_VALUE) {
 
-    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        viewHolder.itemView.setOnClickListener {
+    override fun bind(viewBinding: ItemAddTodoBinding, position: Int) {
+        viewBinding.viewRoot.setOnClickListener {
             onAddTodoClickListener.invoke()
         }
+    }
+
+    override fun initializeViewBinding(view: View): ItemAddTodoBinding {
+        return ItemAddTodoBinding.bind(view)
     }
 
     override fun getLayout(): Int {
