@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_click_rectangle"
+    android:clickable="true"
+    android:focusable="true"
+    android:minHeight="56dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/todoTitle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:textColor="@color/text_primary_color"
+        android:textSize="@dimen/font_size_regular"
+        app:fontFamily="@font/robotoslab_medium"
+        tools:text="Implement settings page" />
+
+</RelativeLayout>
