@@ -10,7 +10,6 @@ import com.phelat.tedu.androidresource.ResourceProvider
 import com.phelat.tedu.androidresource.input.StringId
 import com.phelat.tedu.androidresource.resource.StringResource
 import com.phelat.tedu.coroutines.Dispatcher
-import com.phelat.tedu.date.TeduDate
 import com.phelat.tedu.date.datasource.DateDataSourceReadable
 import com.phelat.tedu.designsystem.entity.BottomSheetEntity
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
@@ -79,8 +78,7 @@ class FutureTodoListViewModel @Inject constructor(
     }
 
     private suspend fun fetchFutureTodos() {
-        val tomorrow = dateDataSourceReadable.read(TeduDate.Tomorrow)
-        todoRepository.getTodosFromDate(tomorrow)
+        todoRepository.getFutureTodos()
             .onEach { delay(UPDATE_DELAY_IN_MILLIS) }
             .map { list ->
                 list.sortedBy { it.date }

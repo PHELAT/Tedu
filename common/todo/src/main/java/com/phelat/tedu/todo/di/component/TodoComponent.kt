@@ -1,6 +1,7 @@
 package com.phelat.tedu.todo.di.component
 
 import com.phelat.tedu.androidcore.di.component.AndroidCoreComponent
+import com.phelat.tedu.date.di.component.DateComponent
 import com.phelat.tedu.dependencyinjection.StartupTasks
 import com.phelat.tedu.dependencyinjection.common.CommonScope
 import com.phelat.tedu.mapper.Mapper
@@ -28,7 +29,10 @@ import java.util.Date
         TodoArchiveDataSourceModule::class,
         TodoStartupTasksModule::class
     ],
-    dependencies = [AndroidCoreComponent::class]
+    dependencies = [
+        AndroidCoreComponent::class,
+        DateComponent::class
+    ]
 )
 interface TodoComponent {
 

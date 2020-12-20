@@ -38,6 +38,7 @@ dependencies {
     implementation project(":library:sdkextensions")
     implementation project(":library:androidresource")
     implementation project(":library:navigation")
+    implementation project(":library:date")
     implementation project(":library:networking")
 
 }

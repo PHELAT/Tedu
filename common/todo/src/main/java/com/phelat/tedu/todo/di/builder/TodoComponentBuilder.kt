@@ -1,6 +1,7 @@
 package com.phelat.tedu.todo.di.builder
 
 import com.phelat.tedu.androidcore.di.builder.AndroidCoreComponentBuilder
+import com.phelat.tedu.date.di.builder.DateComponentBuilder
 import com.phelat.tedu.dependencyinjection.ComponentBuilder
 import com.phelat.tedu.dependencyinjection.StartupTasks
 import com.phelat.tedu.todo.di.component.DaggerTodoComponent
@@ -11,6 +12,7 @@ object TodoComponentBuilder : ComponentBuilder<TodoComponent>() {
     override fun initializeComponent(addStartupTask: (StartupTasks) -> Unit): TodoComponent {
         return DaggerTodoComponent.builder()
             .androidCoreComponent(AndroidCoreComponentBuilder.getComponent(addStartupTask))
+            .dateComponent(DateComponentBuilder.getComponent(addStartupTask))
             .build()
     }
 
