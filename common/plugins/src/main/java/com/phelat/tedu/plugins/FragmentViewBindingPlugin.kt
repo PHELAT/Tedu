@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.phelat.tedu.plaugin.FragmentPlugin
 
-fun <T : ViewBinding> Fragment.viewBinding(block: () -> T): Pair<FragmentPlugin, () -> T?> {
+fun <T : ViewBinding> Fragment.viewBinding(
+    block: (inflater: LayoutInflater, container: ViewGroup?) -> T
+): Pair<FragmentPlugin, () -> T?> {
     var binding: T? = null
     val bindingFunction: () -> T? = { binding }
     return object : FragmentPlugin {
@@ -17,7 +19,7 @@ fun <T : ViewBinding> Fragment.viewBinding(block: () -> T): Pair<FragmentPlugin,
             container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View {
-            binding = block.invoke()
+            binding = block.invoke(inflater, container)
             return requireNotNull(binding).root
         }
 
