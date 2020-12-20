@@ -15,8 +15,4 @@ object TodoComponentBuilder : ComponentBuilder<TodoComponent>() {
             .dateComponent(DateComponentBuilder.getComponent(addStartupTask))
             .build()
     }
-
-    override fun getStartupTasks(component: TodoComponent): StartupTasks? {
-        return component.getTodoStartupTasks()
-    }
 }

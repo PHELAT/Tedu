@@ -1,9 +1,9 @@
 ext {
 
     build = [
-            compileSdkVersion: 29,
-            buildToolsVersion: '29.0.3',
-            targetSdkVersion : 29,
+            compileSdkVersion: 30,
+            buildToolsVersion: '30.0.3',
+            targetSdkVersion : 30,
             minSdkVersion    : 17
     ]
 
@@ -13,35 +13,35 @@ ext {
     ]
 
     library = [
-            kotlin             : '1.3.72',
-            appcompat          : '1.1.0',
-            navigation         : '2.2.2',
-            material           : '1.1.0',
+            kotlin             : '1.4.21',
+            appcompat          : '1.2.0',
+            navigation         : '2.3.2',
+            material           : '1.2.1',
             recyclerview       : '1.1.0',
-            fragment           : '1.2.4',
-            room               : '2.2.5',
+            fragment           : '1.2.5',
+            room               : '2.2.6',
             inject             : '1',
             lifecycle          : '2.2.0',
-            coroutines         : '1.3.5',
-            groupie            : '2.8.0',
-            calendarView       : '0.3.2',
-            threetenABP        : '1.2.3',
-            constraintlayout   : '1.1.3',
+            coroutines         : '1.4.2',
+            groupie            : '2.8.1',
+            calendarView       : '1.0.0',
+            constraintlayout   : '2.0.4',
             annotation         : '1.1.0',
-            dagger             : '2.27',
+            dagger             : '2.30.1',
             detekt             : '1.9.0',
-            googleServices     : '4.3.3',
-            firebaseAnalytics  : '17.3.0',
-            crashlyticsPlugin  : '2.2.0',
-            firebaseCrashlytics: '17.1.1',
-            firebaseMessaging  : '20.2.3',
+            googleServices     : '4.3.4',
+            firebaseAnalytics  : '18.0.0',
+            crashlyticsPlugin  : '2.4.1',
+            firebaseCrashlytics: '17.3.0',
+            firebaseMessaging  : '21.0.1',
             multidex           : '2.0.1',
             vectordrawable     : '1.1.0',
             sardine            : '0.6',
-            core               : '1.3.0',
+            core               : '1.3.2',
             retrofit           : '2.6.4',
-            moshi              : '1.9.3',
-            okhttp             : '3.12.12'
+            moshi              : '1.11.0',
+            okhttp             : '3.12.12',
+            desugar            : '1.1.1'
     ]
 
 }
