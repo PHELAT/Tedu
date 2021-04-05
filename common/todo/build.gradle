@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android.defaultConfig.javaCompileOptions {
@@ -17,6 +18,12 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$library.kotlin"
 
+    implementation "androidx.appcompat:appcompat:$library.appcompat"
+    implementation "androidx.recyclerview:recyclerview:$library.recyclerview"
+
+    implementation "com.xwray:groupie:$library.groupie"
+    implementation "com.xwray:groupie-kotlin-android-extensions:$library.groupie"
+
     implementation "androidx.room:room-runtime:$library.room"
     implementation "androidx.room:room-ktx:$library.room"
     kapt "androidx.room:room-compiler:$library.room"
@@ -24,6 +31,7 @@ dependencies {
     implementation "com.google.dagger:dagger:$library.dagger"
     kapt "com.google.dagger:dagger-compiler:$library.dagger"
 
+    implementation project(":common:designsystem")
     implementation project(":library:lifecycle")
     implementation project(":library:mapper")
     implementation project(":library:datasource")

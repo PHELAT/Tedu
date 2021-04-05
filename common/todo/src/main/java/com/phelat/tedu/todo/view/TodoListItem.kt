@@ -1,9 +1,9 @@
-package com.phelat.tedu.futuretodolist.view
+package com.phelat.tedu.todo.view
 
 import android.graphics.Paint
 import androidx.core.content.ContextCompat
 import com.phelat.tedu.todo.entity.TodoEntity
-import com.phelat.tedu.futuretodolist.R
+import com.phelat.tedu.todo.R
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.item_todo.todoTitle

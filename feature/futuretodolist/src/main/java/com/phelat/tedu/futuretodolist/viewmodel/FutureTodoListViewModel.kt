@@ -20,7 +20,6 @@ import com.phelat.tedu.functional.otherwise
 import com.phelat.tedu.futuretodolist.R
 import com.phelat.tedu.futuretodolist.di.scope.FutureTodoListScope
 import com.phelat.tedu.futuretodolist.view.TodoDateItem
-import com.phelat.tedu.futuretodolist.view.TodoListItem
 import com.phelat.tedu.lifecycle.SingleLiveData
 import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.navigation.Navigate
@@ -28,6 +27,7 @@ import com.phelat.tedu.todo.entity.Action
 import com.phelat.tedu.todo.entity.ActionEntity
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.repository.TodoRepository
+import com.phelat.tedu.todo.view.TodoListItem
 import com.xwray.groupie.Section
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
