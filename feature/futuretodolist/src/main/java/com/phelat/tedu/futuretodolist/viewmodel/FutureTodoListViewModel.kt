@@ -1,4 +1,4 @@
-package com.phelat.tedu.todolist.viewmodel
+package com.phelat.tedu.futuretodolist.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,16 +17,17 @@ import com.phelat.tedu.functional.ifNotSuccessful
 import com.phelat.tedu.functional.ifSuccessful
 import com.phelat.tedu.functional.mapForEach
 import com.phelat.tedu.functional.otherwise
+import com.phelat.tedu.futuretodolist.R
+import com.phelat.tedu.futuretodolist.di.scope.FutureTodoListScope
+import com.phelat.tedu.futuretodolist.view.TodoDateItem
 import com.phelat.tedu.lifecycle.SingleLiveData
+import com.phelat.tedu.mapper.Mapper
 import com.phelat.tedu.navigation.Navigate
 import com.phelat.tedu.todo.entity.Action
 import com.phelat.tedu.todo.entity.ActionEntity
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.repository.TodoRepository
 import com.phelat.tedu.todo.view.TodoListItem
-import com.phelat.tedu.todolist.R
-import com.phelat.tedu.todolist.di.scope.TodoListScope
-import com.phelat.tedu.todolist.view.AddTodoItem
 import com.xwray.groupie.Section
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
@@ -35,21 +36,19 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
+import java.util.Date
 import javax.inject.Inject
 
-@TodoListScope
-class TodoListViewModel @Inject constructor(
+@FutureTodoListScope
+class FutureTodoListViewModel @Inject constructor(
     private val dispatcher: Dispatcher,
     private val todoRepository: TodoRepository,
+    private val mapper: Mapper<Date, LocalDate>,
     private val dateDataSourceReadable: DateDataSourceReadable,
     private val stringResourceProvider: ResourceProvider<StringId, StringResource>,
     @NonFatal private val nonFatalLogger: ExceptionLogger
 ) : ViewModel() {
-
-    private val headerSection = Section().apply {
-        add(AddTodoItem(onAddTodoClickListener = ::onAddTodoClick))
-    }
-    private val todoSection = Section()
 
     private val _todoObservable = MutableLiveData<List<Section>>()
     val todoObservable: LiveData<List<Section>> = _todoObservable
@@ -60,11 +59,11 @@ class TodoListViewModel @Inject constructor(
     private val _dismissTodoSheetObservable = SingleLiveData<Unit>()
     val dismissTodoSheetObservable: LiveData<Unit> = _dismissTodoSheetObservable
 
-    private val _todoDeletionObservable = SingleLiveData<Unit>()
-    val todoDeletionObservable: LiveData<Unit> = _todoDeletionObservable
-
     private val _navigationObservable = SingleLiveData<Navigate>()
     val navigationObservable: LiveData<Navigate> = _navigationObservable
+
+    private val _todoDeletionObservable = SingleLiveData<Unit>()
+    val todoDeletionObservable: LiveData<Unit> = _todoDeletionObservable
 
     private val _snackBarObservable = SingleLiveData<String>()
     val snackBarObservable: LiveData<String> = _snackBarObservable
@@ -74,23 +73,36 @@ class TodoListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            fetchTodos()
+            fetchFutureTodos()
         }
     }
 
-    private suspend fun fetchTodos() {
-        todoRepository.getTodayTodos()
+    private suspend fun fetchFutureTodos() {
+        todoRepository.getFutureTodos()
             .onEach { delay(UPDATE_DELAY_IN_MILLIS) }
-            .mapForEach { todoEntity ->
-                TodoListItem(
-                    todoEntity,
-                    onClickListener = ::onTodoClick,
-                    onLongClickListener = ::onTodoLongClick
-                )
+            .map { list ->
+                list.sortedBy { it.date }
+                    .groupBy { mapper.mapFirstToSecond(it.date) }
+                    .toList()
+            }
+            .mapForEach {
+                Pair(TodoDateItem(it.first.toString()), it.second.map { todoEntity ->
+                    TodoListItem(
+                        todoEntity,
+                        onClickListener = ::onTodoClick,
+                        onLongClickListener = ::onTodoLongClick
+                    )
+                })
             }
             .flowOn(dispatcher.iO)
-            .onEach { todoSection.update(it) }
-            .map { listOf(headerSection, todoSection) }
+            .map { pairList ->
+                arrayListOf<Section>().apply {
+                    pairList.forEach {
+                        add(Section().apply { add(it.first) })
+                        add(Section().apply { update(it.second) })
+                    }
+                }
+            }
             .flowOn(dispatcher.main)
             .collect { todos -> _todoObservable.postValue(todos) }
     }
@@ -164,14 +176,6 @@ class TodoListViewModel @Inject constructor(
                 showGeneralFailureMessage()
             }
         }
-    }
-
-    private fun onAddTodoClick() {
-        val deepLinkId = StringId(R.string.deeplink_addtodo)
-        stringResourceProvider.getResource(deepLinkId)
-            .resource
-            .run(Navigate::ToDeepLink)
-            .also(_navigationObservable::setValue)
     }
 
     fun onTodoDeletionUndoClick() {

@@ -1,5 +1,7 @@
 package com.phelat.tedu.todo.repository
 
+import com.phelat.tedu.date.TeduDate
+import com.phelat.tedu.date.datasource.DateDataSourceReadable
 import com.phelat.tedu.dependencyinjection.common.CommonScope
 import com.phelat.tedu.functional.Failure
 import com.phelat.tedu.functional.Response
@@ -12,10 +14,10 @@ import com.phelat.tedu.todo.datasource.TodoDataSourceUpdatable
 import com.phelat.tedu.todo.datasource.TodoDataSourceWritable
 import com.phelat.tedu.todo.entity.Action
 import com.phelat.tedu.todo.entity.ActionEntity
+import com.phelat.tedu.todo.entity.DatePeriod
 import com.phelat.tedu.todo.entity.TodoEntity
 import com.phelat.tedu.todo.error.TodoErrorContext
 import kotlinx.coroutines.flow.Flow
-import java.util.Date
 import javax.inject.Inject
 
 @CommonScope
@@ -24,6 +26,7 @@ class TodoSyncRepository @Inject constructor(
     private val todoWritable: TodoDataSourceWritable,
     private val todoUpdatable: TodoDataSourceUpdatable,
     private val todoDeletable: TodoDataSourceDeletable,
+    private val dateDataSourceReadable: DateDataSourceReadable,
     private val actionsWritable: TodoActionsWritable
 ) : TodoRepository {
 
@@ -60,7 +63,13 @@ class TodoSyncRepository @Inject constructor(
         return todoDeleteResult
     }
 
-    override fun getTodos(date: Date): Flow<List<TodoEntity>> {
-        return todoReadable.read(date)
+    override fun getTodayTodos(): Flow<List<TodoEntity>> {
+        val tomorrow = dateDataSourceReadable.read(TeduDate.Tomorrow)
+        return todoReadable.read(DatePeriod(to = tomorrow))
+    }
+
+    override fun getFutureTodos(): Flow<List<TodoEntity>> {
+        val tomorrow = dateDataSourceReadable.read(TeduDate.Tomorrow)
+        return todoReadable.read(DatePeriod(from = tomorrow))
     }
 }

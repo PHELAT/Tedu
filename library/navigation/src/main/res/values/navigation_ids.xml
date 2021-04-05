@@ -2,6 +2,7 @@
 <resources>
 
     <id name="navigation_todolist" />
+    <id name="navigation_futuretodolist" />
     <id name="navigation_addtodo" />
     <id name="navigation_settings" />
 

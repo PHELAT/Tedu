@@ -15,8 +15,14 @@ internal interface TodoEntityDao {
     @Insert(entity = TodoDatabaseEntity::class)
     suspend fun insertTodo(todo: TodoDatabaseEntity): Long
 
-    @Query("SELECT * FROM todo_table WHERE date < :before ORDER BY isDone ASC, todoId DESC")
-    fun selectAllTodosBefore(before: Date): Flow<List<TodoDatabaseEntity>>
+    @Query(
+        """SELECT * FROM todo_table 
+                 WHERE (:from IS NULL AND date < :to)
+                 OR (:to IS NULL AND date > :from)
+                 OR (date BETWEEN :from AND :to)
+                 ORDER BY isDone ASC, todoId DESC """
+    )
+    fun selectAllTodosBetween(from: Date?, to: Date?): Flow<List<TodoDatabaseEntity>>
 
     @Query("SELECT * FROM todo_table WHERE date < :before AND isDone = 1")
     suspend fun selectAllDoneTodosBefore(before: Date): List<TodoDatabaseEntity>

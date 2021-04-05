@@ -9,36 +9,37 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$library.kotlin"
 
-    implementation "com.google.android.material:material:$library.material"
+    implementation "androidx.recyclerview:recyclerview:$library.recyclerview"
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$library.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$library.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$library.lifecycle"
 
     implementation "androidx.navigation:navigation-fragment-ktx:$library.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$library.navigation"
-
-    implementation "androidx.constraintlayout:constraintlayout:$library.constraintlayout"
 
     implementation "com.google.dagger:dagger:$library.dagger"
     kapt "com.google.dagger:dagger-compiler:$library.dagger"
     implementation "com.google.dagger:dagger-android-support:$library.dagger"
     kapt "com.google.dagger:dagger-android-processor:$library.dagger"
 
-    implementation "com.thegrizzlylabs.sardine-android:sardine-android:$library.sardine"
+    implementation "com.xwray:groupie:$library.groupie"
+    implementation "com.xwray:groupie-kotlin-android-extensions:$library.groupie"
 
     implementation project(":common:designsystem")
     implementation project(":common:todo")
     implementation project(":common:analytics")
-    implementation project(":common:sync")
+    implementation project(':library:navigation')
     implementation project(":library:lifecycle")
-    implementation project(":library:androiddagger")
-    implementation project(":library:dependencyinjection")
+    implementation project(':library:thread')
     implementation project(":library:datasource")
-    implementation project(":library:functional")
+    implementation project(":library:translation")
+    implementation project(":library:dependencyinjection")
     implementation project(":library:androidcore")
-    implementation project(":library:thread")
+    implementation project(":library:androiddagger")
     implementation project(":library:mapper")
-    implementation project(":library:sdkextensions")
-    implementation project(":library:androidresource")
-    implementation project(":library:navigation")
+    implementation project(":library:functional")
     implementation project(":library:date")
-    implementation project(":library:networking")
+    implementation project(":library:androidresource")
 
 }
