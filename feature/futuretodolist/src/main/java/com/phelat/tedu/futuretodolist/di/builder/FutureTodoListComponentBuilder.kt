@@ -13,8 +13,9 @@ import com.phelat.tedu.todo.di.builder.TodoComponentBuilder
 
 object FutureTodoListComponentBuilder : ComponentBuilder<FutureTodoListComponent>() {
 
-    override fun initializeComponent(addStartupTask: (StartupTasks) -> Unit):
-            FutureTodoListComponent {
+    override fun initializeComponent(
+        addStartupTask: (StartupTasks) -> Unit
+    ): FutureTodoListComponent {
         return DaggerFutureTodoListComponent.builder()
             .threadComponent(ThreadComponentBuilder.getComponent(addStartupTask))
             .todoComponent(TodoComponentBuilder.getComponent(addStartupTask))
