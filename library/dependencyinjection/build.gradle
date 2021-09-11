@@ -10,3 +10,7 @@ dependencies {
     implementation "com.google.dagger:dagger:$library.dagger"
 
 }
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
