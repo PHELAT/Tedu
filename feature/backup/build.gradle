@@ -20,7 +20,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$library.dagger"
     kapt "com.google.dagger:dagger-android-processor:$library.dagger"
 
-    implementation "com.thegrizzlylabs.sardine-android:sardine-android:$library.sardine"
+    implementation "com.github.thegrizzlylabs:sardine-android:$library.sardine"
 
     implementation project(":common:designsystem")
     implementation project(":common:todo")

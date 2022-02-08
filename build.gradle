@@ -2,11 +2,11 @@ buildscript {
     apply from: "$rootDir/buildScript/versionManager.gradle"
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:7.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$library.kotlin"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$library.detekt"
         classpath "com.google.gms:google-services:$library.googleServices"
@@ -18,7 +18,7 @@ allprojects {
     apply from: "$rootDir/buildScript/versionManager.gradle"
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url "https://jitpack.io" }
     }
 }
@@ -30,11 +30,11 @@ subprojects {
         config = files("${rootDir}/detekt.yml")
         parallel = true
         reports {
-            xml.enabled = false
-            txt.enabled = false
+            xml.required = false
+            txt.required = false
             html {
-                enabled = true
-                destination = file("${rootDir}/build/reports/detekt_${project.name}.html")
+                required = true
+                outputLocation = file("${rootDir}/build/reports/detekt_${project.name}.html")
             }
         }
     }
