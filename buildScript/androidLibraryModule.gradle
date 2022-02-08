@@ -47,7 +47,7 @@ subprojects {
             dependencies {
                 coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$library.desugar"
             }
-            preBuild.dependsOn "detekt"
+            // preBuild.dependsOn "detekt"
         }
     }
 }
