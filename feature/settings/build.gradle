@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 dependencies {
@@ -30,6 +29,7 @@ dependencies {
     implementation project(":common:designsystem")
     implementation project(":common:todo")
     implementation project(":common:sync")
+    implementation project(":common:plugins")
     implementation project(":library:datasource")
     implementation project(":library:androiddagger")
     implementation project(":library:dependencyinjection")
@@ -40,5 +40,6 @@ dependencies {
     implementation project(":library:sdkextensions")
     implementation project(":library:functional")
     implementation project(":library:thread")
+    implementation project(":library:plaugin")
 
 }
