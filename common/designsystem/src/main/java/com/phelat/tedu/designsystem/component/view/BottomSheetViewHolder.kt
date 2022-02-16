@@ -4,14 +4,15 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
+import com.phelat.tedu.designsystem.databinding.ItemBottomSheetBinding
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
-import kotlinx.android.synthetic.main.item_bottom_sheet.view.itemIcon
-import kotlinx.android.synthetic.main.item_bottom_sheet.view.itemTitle
 
-internal class BottomSheetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+internal class BottomSheetViewHolder(
+    binding: ItemBottomSheetBinding
+) : RecyclerView.ViewHolder(binding.root) {
 
-    private val itemIcon: AppCompatImageView = view.itemIcon
-    private val itemTitle: AppCompatTextView = view.itemTitle
+    private val itemIcon: AppCompatImageView = binding.itemIcon
+    private val itemTitle: AppCompatTextView = binding.itemTitle
 
     fun bind(item: BottomSheetItemEntity, onClick: () -> Unit) {
         if (item.itemIconResource != null) {

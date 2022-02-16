@@ -3,26 +3,28 @@ package com.phelat.tedu.todolist.view
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.phelat.tedu.androiddagger.inject
 import com.phelat.tedu.designsystem.component.view.BottomSheetView
 import com.phelat.tedu.designsystem.entity.BottomSheetEntity
 import com.phelat.tedu.lifecycle.ViewModelFactory
+import com.phelat.tedu.navigation.observeNavigation
+import com.phelat.tedu.plaugin.FragmentPlugin
+import com.phelat.tedu.plaugin.PlauginFragment
+import com.phelat.tedu.plugins.invoke
+import com.phelat.tedu.plugins.plugin
+import com.phelat.tedu.plugins.viewBinding
 import com.phelat.tedu.todolist.R
+import com.phelat.tedu.todolist.databinding.FragmentTodolistBinding
 import com.phelat.tedu.todolist.di.component.TodoListComponent
 import com.phelat.tedu.todolist.viewmodel.TodoListViewModel
-import com.phelat.tedu.navigation.observeNavigation
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
-import kotlinx.android.synthetic.main.fragment_todolist.todoListRecycler
-import kotlinx.android.synthetic.main.fragment_todolist.viewRoot
+import com.xwray.groupie.viewbinding.GroupieViewHolder
 import javax.inject.Inject
 
-class TodoListFragment : Fragment(R.layout.fragment_todolist) {
+class TodoListFragment : PlauginFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -31,6 +33,10 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
 
     private var todoSheet: BottomSheetView? = null
 
+    private val viewBinding = viewBinding { inflater, viewGroup ->
+        FragmentTodolistBinding.inflate(inflater, viewGroup, false)
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         inject<TodoListComponent>()
@@ -38,8 +44,8 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val groupAdapter = GroupAdapter<GroupieViewHolder>()
-        todoListRecycler.apply {
+        val groupAdapter = GroupAdapter<GroupieViewHolder<*>>()
+        viewBinding().todoListRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = groupAdapter
         }
@@ -54,11 +60,13 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
     }
 
     private fun observeTodoDeletion() {
-        Snackbar.make(viewRoot, R.string.todolist_todo_deletion_message, Snackbar.LENGTH_LONG)
-            .setAction(R.string.todolist_undo_deletion_action) {
-                todoListViewModel.onTodoDeletionUndoClick()
-            }
-            .show()
+        Snackbar.make(
+            viewBinding().viewRoot,
+            R.string.todolist_todo_deletion_message,
+            Snackbar.LENGTH_LONG
+        ).setAction(R.string.todolist_undo_deletion_action) {
+            todoListViewModel.onTodoDeletionUndoClick()
+        }.show()
     }
 
     private fun observeTodoSheet(entity: BottomSheetEntity) {
@@ -73,7 +81,7 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
     }
 
     private fun showSnackBar(message: String) {
-        Snackbar.make(viewRoot, message, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(viewBinding().viewRoot, message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun dismissTodoSheet() {
@@ -87,4 +95,6 @@ class TodoListFragment : Fragment(R.layout.fragment_todolist) {
         super.onDestroyView()
         dismissTodoSheet()
     }
+
+    override fun plugins(): MutableList<FragmentPlugin> = mutableListOf(viewBinding.plugin)
 }

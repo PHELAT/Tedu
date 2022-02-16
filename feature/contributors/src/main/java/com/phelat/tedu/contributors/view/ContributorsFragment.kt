@@ -7,28 +7,27 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.phelat.tedu.androiddagger.inject
-import com.phelat.tedu.contributors.R
+import com.phelat.tedu.contributors.databinding.FragmentContributorsBinding
 import com.phelat.tedu.contributors.di.component.ContributorsComponent
 import com.phelat.tedu.contributors.entity.ContributorSheetEntity
 import com.phelat.tedu.contributors.state.ContributionsViewState
 import com.phelat.tedu.contributors.viewmodel.ContributorsViewModel
 import com.phelat.tedu.designsystem.ext.makeLongSnackBar
 import com.phelat.tedu.lifecycle.ViewModelFactory
+import com.phelat.tedu.plaugin.FragmentPlugin
+import com.phelat.tedu.plaugin.PlauginFragment
+import com.phelat.tedu.plugins.invoke
+import com.phelat.tedu.plugins.plugin
+import com.phelat.tedu.plugins.viewBinding
 import com.phelat.tedu.sdkextensions.onReachTheEnd
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
-import kotlinx.android.synthetic.main.fragment_contributors.contributionProgress
-import kotlinx.android.synthetic.main.fragment_contributors.contributorsRecycler
-import kotlinx.android.synthetic.main.fragment_contributors.errorGroup
-import kotlinx.android.synthetic.main.fragment_contributors.retryButton
+import com.xwray.groupie.viewbinding.GroupieViewHolder
 import javax.inject.Inject
 
-class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
+class ContributorsFragment : PlauginFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -37,6 +36,10 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
 
     private var contributorSheet: ContributorSheet? = null
 
+    private val viewBinding = viewBinding { inflater, viewGroup ->
+        FragmentContributorsBinding.inflate(inflater, viewGroup, false)
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         inject<ContributorsComponent>()
@@ -44,13 +47,13 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = GroupAdapter<GroupieViewHolder>()
-        contributorsRecycler.apply {
+        val adapter = GroupAdapter<GroupieViewHolder<*>>()
+        viewBinding().contributorsRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
             this.adapter = adapter
             onReachTheEnd { viewModel.onReachTheEndOfList() }
         }
-        retryButton.setOnClickListener {
+        viewBinding().retryButton.setOnClickListener {
             viewModel.onRetryButtonClick()
         }
         viewModel.apply {
@@ -66,9 +69,11 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
     }
 
     private fun observeViewState(state: ContributionsViewState) {
-        contributionProgress.isVisible = state.isProgressVisible
-        errorGroup.isVisible = state.isErrorVisible
-        contributorsRecycler.isVisible = state.isListVisible
+        viewBinding().apply {
+            contributionProgress.isVisible = state.isProgressVisible
+            errorGroup.isVisible = state.isErrorVisible
+            contributorsRecycler.isVisible = state.isListVisible
+        }
     }
 
     private fun observeContributorDetailSheetObservable(entity: ContributorSheetEntity) {
@@ -98,4 +103,6 @@ class ContributorsFragment : Fragment(R.layout.fragment_contributors) {
     private fun observeSnackBar(message: String) {
         requireActivity().makeLongSnackBar(message).show()
     }
+
+    override fun plugins(): MutableList<FragmentPlugin> = mutableListOf(viewBinding.plugin)
 }

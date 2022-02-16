@@ -5,7 +5,7 @@ import com.phelat.tedu.addtodo.entity.SelectedDate
 import com.phelat.tedu.datasource.Readable
 import com.phelat.tedu.datasource.Writable
 import com.phelat.tedu.date.di.qualifier.NowDate
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import javax.inject.Inject
 
 @AddTodoScope

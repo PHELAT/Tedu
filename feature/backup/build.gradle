@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 dependencies {
@@ -21,12 +20,13 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$library.dagger"
     kapt "com.google.dagger:dagger-android-processor:$library.dagger"
 
-    implementation "com.thegrizzlylabs.sardine-android:sardine-android:$library.sardine"
+    implementation "com.github.thegrizzlylabs:sardine-android:$library.sardine"
 
     implementation project(":common:designsystem")
     implementation project(":common:todo")
     implementation project(":common:analytics")
     implementation project(":common:sync")
+    implementation project(":common:plugins")
     implementation project(":library:lifecycle")
     implementation project(":library:androiddagger")
     implementation project(":library:dependencyinjection")
@@ -39,5 +39,6 @@ dependencies {
     implementation project(":library:androidresource")
     implementation project(":library:navigation")
     implementation project(":library:networking")
+    implementation project(":library:plaugin")
 
 }

@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion build.compileSdkVersion
@@ -12,6 +11,7 @@ android {
         versionCode app.versionCode
         versionName app.versionName
         vectorDrawables.useSupportLibrary true
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -21,7 +21,6 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            multiDexEnabled false
         }
         debug {
             if (file("google-services.json").exists()) {
@@ -33,15 +32,22 @@ android {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            multiDexEnabled true
         }
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs += [
+                "-Xopt-in=kotlin.RequiresOptIn",
+                "-Xinline-classes"
+        ]
+    }
+    buildFeatures {
+        viewBinding true
     }
 }
 
@@ -63,9 +69,11 @@ dependencies {
     implementation "com.google.dagger:dagger:$library.dagger"
     implementation "com.google.dagger:dagger-android-support:$library.dagger"
 
-    implementation "com.google.firebase:firebase-analytics:$library.firebaseAnalytics"
+    implementation "com.google.firebase:firebase-analytics-ktx:$library.firebaseAnalytics"
 
     implementation "androidx.multidex:multidex:$library.multidex"
+
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$library.desugar"
 
     implementation project(":feature:addtodo")
     implementation project(":feature:todolist")
@@ -73,11 +81,13 @@ dependencies {
     implementation project(":feature:backup")
     implementation project(":feature:contributors")
     implementation project(":common:designsystem")
+    implementation project(":common:plugins")
     implementation project(':library:navigation')
     implementation project(":library:translation")
     implementation project(":library:dependencyinjection")
     implementation project(":library:androiddagger")
     implementation project(":library:androidcore")
+    implementation project(":library:plaugin")
 
 }
 

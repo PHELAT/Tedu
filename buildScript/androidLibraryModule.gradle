@@ -11,6 +11,7 @@ subprojects {
                     versionName app.versionName
                     consumerProguardFiles 'consumer-rules.pro'
                     vectorDrawables.useSupportLibrary true
+                    multiDexEnabled true
                 }
                 buildTypes {
                     release {
@@ -23,19 +24,25 @@ subprojects {
                     }
                 }
                 compileOptions {
+                    coreLibraryDesugaringEnabled true
                     sourceCompatibility JavaVersion.VERSION_1_8
                     targetCompatibility JavaVersion.VERSION_1_8
                 }
                 kotlinOptions {
                     jvmTarget = "1.8"
+                    freeCompilerArgs += [
+                            "-Xopt-in=kotlin.RequiresOptIn",
+                            "-Xinline-classes"
+                    ]
                 }
-                if (project.getPlugins().hasPlugin('kotlin-android-extensions')) {
-                    androidExtensions {
-                        experimental = true
-                    }
+                buildFeatures {
+                    viewBinding true
                 }
             }
-            preBuild.dependsOn "detekt"
+            dependencies {
+                coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$library.desugar"
+            }
+            // preBuild.dependsOn "detekt"
         }
     }
 }

@@ -3,6 +3,7 @@ package com.phelat.tedu.addtodo.view.calendar
 import android.view.View
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.ui.DayBinder
+import com.phelat.tedu.addtodo.databinding.ItemCalendarCellBinding
 import com.phelat.tedu.addtodo.viewmodel.DateViewModel
 
 class CellViewBinder(private val dateViewModel: DateViewModel) : DayBinder<CellViewHolder> {
@@ -12,6 +13,6 @@ class CellViewBinder(private val dateViewModel: DateViewModel) : DayBinder<CellV
     }
 
     override fun create(view: View): CellViewHolder {
-        return CellViewHolder(view, dateViewModel)
+        return CellViewHolder(ItemCalendarCellBinding.bind(view), dateViewModel)
     }
 }

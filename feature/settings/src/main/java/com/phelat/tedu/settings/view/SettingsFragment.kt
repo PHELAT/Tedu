@@ -5,27 +5,24 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import com.phelat.tedu.androiddagger.inject
 import com.phelat.tedu.designsystem.component.view.BottomSheetView
 import com.phelat.tedu.designsystem.entity.BottomSheetEntity
 import com.phelat.tedu.lifecycle.ViewModelFactory
-import com.phelat.tedu.settings.R
+import com.phelat.tedu.navigation.observeNavigation
+import com.phelat.tedu.plaugin.FragmentPlugin
+import com.phelat.tedu.plaugin.PlauginFragment
+import com.phelat.tedu.plugins.invoke
+import com.phelat.tedu.plugins.plugin
+import com.phelat.tedu.plugins.viewBinding
+import com.phelat.tedu.settings.databinding.FragmentSettingsBinding
 import com.phelat.tedu.settings.di.component.SettingsComponent
 import com.phelat.tedu.settings.state.SettingsViewState
 import com.phelat.tedu.settings.viewmodel.SettingsViewModel
-import com.phelat.tedu.navigation.observeNavigation
-import kotlinx.android.synthetic.main.fragment_settings.backupClick
-import kotlinx.android.synthetic.main.fragment_settings.backupStatus
-import kotlinx.android.synthetic.main.fragment_settings.backupStatusArrow
-import kotlinx.android.synthetic.main.fragment_settings.contributorsClick
-import kotlinx.android.synthetic.main.fragment_settings.userInterfaceMode
-import kotlinx.android.synthetic.main.fragment_settings.userInterfaceModeClick
 import javax.inject.Inject
 
-class SettingsFragment : Fragment(R.layout.fragment_settings) {
+class SettingsFragment : PlauginFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -35,6 +32,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private var userInterfaceModeSheet: BottomSheetView? = null
     private var backupMethodSheet: BottomSheetView? = null
 
+    private val viewBinding = viewBinding { inflater, viewGroup ->
+        FragmentSettingsBinding.inflate(inflater, viewGroup, false)
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         inject<SettingsComponent>()
@@ -42,13 +43,13 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        userInterfaceModeClick.setOnClickListener {
+        viewBinding().userInterfaceModeClick.setOnClickListener {
             settingsViewModel.onChangeUserInterfaceModeClick()
         }
-        backupClick.setOnClickListener {
+        viewBinding().backupClick.setOnClickListener {
             settingsViewModel.onBackUpClick()
         }
-        contributorsClick.setOnClickListener {
+        viewBinding().contributorsClick.setOnClickListener {
             settingsViewModel.onContributorsClick()
         }
         settingsViewModel.apply {
@@ -61,7 +62,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 viewLifecycleOwner,
                 ::observeBackupMethodSheet
             )
-            userInterfaceTitleObservable.observe(viewLifecycleOwner, userInterfaceMode::setText)
+            userInterfaceTitleObservable.observe(
+                viewLifecycleOwner,
+                viewBinding().userInterfaceMode::setText
+            )
             viewStateObservable.observe(viewLifecycleOwner, ::observeViewState)
         }
     }
@@ -90,9 +94,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private fun observeViewState(state: SettingsViewState) {
         state.apply {
-            backupStatus.text = syncStateText
-            backupStatus.isInvisible = isSyncStateTextVisible.not()
-            backupStatusArrow.isVisible = isSyncArrowVisible
+            viewBinding().backupStatus.text = syncStateText
+            viewBinding().backupStatus.isInvisible = isSyncStateTextVisible.not()
+            viewBinding().backupStatusArrow.isVisible = isSyncArrowVisible
         }
     }
 
@@ -105,4 +109,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
         super.onDestroyView()
     }
+
+    override fun plugins(): MutableList<FragmentPlugin> = mutableListOf(viewBinding.plugin)
 }

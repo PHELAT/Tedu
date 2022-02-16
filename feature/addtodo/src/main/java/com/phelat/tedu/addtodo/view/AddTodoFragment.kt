@@ -5,8 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
-import com.phelat.tedu.addtodo.R
+import com.phelat.tedu.addtodo.databinding.FragmentAddtodoBinding
 import com.phelat.tedu.addtodo.di.component.AddTodoComponent
 import com.phelat.tedu.addtodo.view.calendar.CalendarSheet
 import com.phelat.tedu.addtodo.viewmodel.AddTodoViewModel
@@ -18,17 +17,16 @@ import com.phelat.tedu.navigation.observeNavigation
 import com.phelat.tedu.plaugin.FragmentPlugin
 import com.phelat.tedu.plaugin.PlauginFragment
 import com.phelat.tedu.plugins.SerializableImnPlugin
+import com.phelat.tedu.plugins.invoke
+import com.phelat.tedu.plugins.plugin
+import com.phelat.tedu.plugins.viewBinding
 import com.phelat.tedu.sdkextensions.Visibility
 import com.phelat.tedu.sdkextensions.hideKeyboard
 import com.phelat.tedu.sdkextensions.showKeyboard
 import com.phelat.tedu.todo.entity.TodoEntity
-import kotlinx.android.synthetic.main.fragment_addtodo.dateClick
-import kotlinx.android.synthetic.main.fragment_addtodo.saveTodo
-import kotlinx.android.synthetic.main.fragment_addtodo.todoDate
-import kotlinx.android.synthetic.main.fragment_addtodo.todoInput
 import javax.inject.Inject
 
-class AddTodoFragment : PlauginFragment(R.layout.fragment_addtodo) {
+class AddTodoFragment : PlauginFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -39,6 +37,10 @@ class AddTodoFragment : PlauginFragment(R.layout.fragment_addtodo) {
 
     private var calendarSheet: CalendarSheet? = null
 
+    private val viewBinding = viewBinding { inflater, viewGroup ->
+        FragmentAddtodoBinding.inflate(inflater, viewGroup, false)
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         inject<AddTodoComponent>()
@@ -46,35 +48,37 @@ class AddTodoFragment : PlauginFragment(R.layout.fragment_addtodo) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        saveTodo.setOnClickListener {
-            val todo = todoInput.text.toString()
-            addTodoViewModel.onSaveTodoClicked(todo)
-        }
-        dateClick.setOnClickListener {
-            dateViewModel.onSelectDateClick()
-        }
-        todoInput.addTextChangedListener(onTextChanged = { text, _, _, _ ->
-            addTodoViewModel.onTodoTextChange(text)
-        })
-        addTodoViewModel.apply {
-            todoTextObservable.observe(viewLifecycleOwner, todoInput::setText)
-            navigationObservable.observeNavigation(this@AddTodoFragment)
-            snackBarObservable.observe(viewLifecycleOwner, ::showSnackBar)
-            viewStateObservable.observe(viewLifecycleOwner, ::handleViewState)
-        }
-        dateViewModel.apply {
-            todoDateObservable.observe(viewLifecycleOwner, todoDate::setText)
-            todoDateSheetObservable.observe(viewLifecycleOwner, ::handleCalendarSheetVisibility)
+        viewBinding().apply {
+            saveTodo.setOnClickListener {
+                val todo = todoInput.text.toString()
+                addTodoViewModel.onSaveTodoClicked(todo)
+            }
+            dateClick.setOnClickListener {
+                dateViewModel.onSelectDateClick()
+            }
+            todoInput.addTextChangedListener(onTextChanged = { text, _, _, _ ->
+                addTodoViewModel.onTodoTextChange(text)
+            })
+            addTodoViewModel.apply {
+                todoTextObservable.observe(viewLifecycleOwner, todoInput::setText)
+                navigationObservable.observeNavigation(this@AddTodoFragment)
+                snackBarObservable.observe(viewLifecycleOwner, ::showSnackBar)
+                viewStateObservable.observe(viewLifecycleOwner, ::handleViewState)
+            }
+            dateViewModel.apply {
+                todoDateObservable.observe(viewLifecycleOwner, todoDate::setText)
+                todoDateSheetObservable.observe(viewLifecycleOwner, ::handleCalendarSheetVisibility)
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        showKeyboard(inputToFocus = todoInput)
+        showKeyboard(inputToFocus = viewBinding().todoInput)
     }
 
     private fun showSnackBar(message: String) {
-        hideKeyboard(todoInput.windowToken)
+        hideKeyboard(viewBinding().todoInput.windowToken)
         requireActivity().makeLongSnackBar(message).show()
     }
 
@@ -99,13 +103,13 @@ class AddTodoFragment : PlauginFragment(R.layout.fragment_addtodo) {
 
     private fun handleViewState(viewState: AddTodoViewState) {
         viewState.apply {
-            saveTodo.isEnabled = isSaveTodoButtonEnabled
+            viewBinding().saveTodo.isEnabled = isSaveTodoButtonEnabled
         }
     }
 
     override fun onPause() {
         super.onPause()
-        hideKeyboard(todoInput.windowToken)
+        hideKeyboard(viewBinding().todoInput.windowToken)
     }
 
     override fun onDestroyView() {
@@ -117,6 +121,7 @@ class AddTodoFragment : PlauginFragment(R.layout.fragment_addtodo) {
         SerializableImnPlugin(fragment = this) { fragmentArgument: TodoEntity ->
             addTodoViewModel.onFragmentArgumentReceived(fragmentArgument)
             dateViewModel.onFragmentArgumentReceived(fragmentArgument)
-        }
+        },
+        viewBinding.plugin
     )
 }

@@ -8,7 +8,7 @@ import com.phelat.tedu.dependencyinjection.library.LibraryScope
 import com.phelat.tedu.mapper.Mapper
 import dagger.Binds
 import dagger.Module
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 @Module
 internal interface DateBindingModule {
