@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.phelat.tedu.designsystem.R
+import com.phelat.tedu.designsystem.databinding.ItemBottomSheetBinding
 import com.phelat.tedu.designsystem.entity.BottomSheetItemEntity
 
 internal class BottomSheetAdapter(
@@ -12,9 +13,12 @@ internal class BottomSheetAdapter(
 ) : RecyclerView.Adapter<BottomSheetViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BottomSheetViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_bottom_sheet, parent, false)
-        return BottomSheetViewHolder(view)
+        val binding = ItemBottomSheetBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return BottomSheetViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
