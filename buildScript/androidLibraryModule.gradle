@@ -35,11 +35,6 @@ subprojects {
                             "-Xinline-classes"
                     ]
                 }
-                if (project.getPlugins().hasPlugin('kotlin-android-extensions')) {
-                    androidExtensions {
-                        experimental = true
-                    }
-                }
                 buildFeatures {
                     viewBinding true
                 }
