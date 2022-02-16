@@ -1,19 +1,21 @@
 package com.phelat.tedu.addtodo.view.calendar
 
 import android.graphics.Paint
-import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.ui.ViewContainer
+import com.phelat.tedu.addtodo.databinding.ItemCalendarCellBinding
 import com.phelat.tedu.addtodo.view.TextStyle
 import com.phelat.tedu.addtodo.viewmodel.DateViewModel
-import kotlinx.android.synthetic.main.item_calendar_cell.view.cellTextView
 
-class CellViewHolder(view: View, private val dateViewModel: DateViewModel) : ViewContainer(view) {
+class CellViewHolder(
+    binding: ItemCalendarCellBinding,
+    private val dateViewModel: DateViewModel
+) : ViewContainer(binding.root) {
 
-    private val cellTextView: AppCompatTextView = view.cellTextView
+    private val cellTextView: AppCompatTextView = binding.cellTextView
 
     fun bind(day: CalendarDay) {
         dateViewModel.onBindCalendarCell(day).apply {
